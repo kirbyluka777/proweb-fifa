@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacto</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: 0 auto; }
+        input, textarea { padding: 0.5rem; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <form>
+            <label>Nombre:</label>
+            <input type="text" required>
+            <label>Email:</label>
+            <input type="email" required>
+            <label>Mensaje:</label>
+            <textarea rows="5" required></textarea>
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+    </main>
+</body>
+</html>

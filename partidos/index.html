@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Partidos - FIFA World Cup 2026</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .filters { background: #eee; padding: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .match-card { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 1rem; border: 1px solid #ccc; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <div class="filters">
+            <select><option>Filtro: Ciudad</option></select>
+            <select><option>Filtro: Ronda</option></select>
+            <select><option>Filtro: Estatus</option></select>
+            <select><option>Filtro: Grupo</option></select>
+            <select><option>Filtro: Equipo</option></select>
+            <button class="btn">Aplicar Filtros</button>
+        </div>
+        <section>
+            <div class="match-card">
+                <span><strong>México</strong> vs <strong>Polonia</strong></span>
+                <span>Grupo A | Ciudad de México</span>
+                <a href="partido-detalle/index.html" class="btn">Ver Detalles</a>
+            </div>
+            <div class="match-card">
+                <span><strong>EEUU</strong> vs <strong>Inglaterra</strong></span>
+                <span>Grupo B | Nueva York</span>
+                <a href="partido-detalle/index.html" class="btn">Ver Detalles</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

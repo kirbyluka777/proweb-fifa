@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Archivos del Torneo</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <div class="grid">
+            <div class="card">
+                <h3>Qatar 2022 - Resumen Final</h3>
+                <a href="archivo-detalle/index.html" class="btn">Ver Video</a>
+            </div>
+            <div class="card">
+                <h3>Rusia 2018 - Mejores Goles</h3>
+                <a href="archivo-detalle/index.html" class="btn">Ver Video</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

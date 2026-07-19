@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acerca del Proyecto</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <section>
+            <h2>Materia: Programación Orientada a la Web</h2>
+            <p>Este sitio web es un proyecto académico desarrollado para cubrir los requerimientos de diseño e implementación del portal de la Copa Mundial de la FIFA 2026.</p>
+            <h3>Integrantes del Grupo</h3>
+            <ul>
+                <li>Estudiante 1</li>
+                <li>Estudiante 2</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

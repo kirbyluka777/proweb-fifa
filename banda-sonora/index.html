@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Banda Sonora</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>.banner-music { background: #333; color: white; padding: 3rem; text-align: center; }</style>
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <div class="banner-music">
+            <h2>Álbum Oficial FIFA World Cup 2026</h2>
+        </div>
+        <p style="text-align:center; margin-top:2rem;">Disfruta de las canciones oficiales del mundial.</p>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="https://spotify.com" target="_blank" class="btn">Escuchar en Streaming (Enlace Externo)</a>
+        </div>
+    </main>
+</body>
+</html>

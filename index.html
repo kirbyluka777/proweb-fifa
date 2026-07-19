@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - FIFA World Cup 2026</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .slider { background: #ddd; height: 300px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #555; margin-bottom: 2rem; }
+        .quick-links { display: flex; gap: 1rem; justify-content: space-around; background: #eee; padding: 1rem; }
+    </style>
+</head>
+<body>
+
+    <iframe src="header.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
+
+    <main>
+        <div class="slider">Slider Banners Alusivos al Torneo</div>
+        
+        <section>
+            <h2>Últimas Noticias</h2>
+            <p>Resumen de las noticias más recientes...</p>
+            <a href="noticias.html" class="btn">Ver todas las noticias</a>
+        </section>
+
+        <section class="grid">
+            <div>
+                <h2>Próximos Partidos</h2>
+                <ul>
+                    <li>México vs. Polonia</li>
+                    <li>Canadá vs. Bélgica</li>
+                    <!-- 8 a 12 partidos -->
+                </ul>
+                <a href="partidos.html" class="btn">Ver todos</a>
+            </div>
+            <div>
+                <h2>Equipos Participantes</h2>
+                <ul>
+                    <li>Argentina</li>
+                    <li>Francia</li>
+                    <!-- 8 a 12 equipos -->
+                </ul>
+                <a href="equipos.html" class="btn">Ver todos</a>
+            </div>
+            <div>
+                <h2>Ciudades Anfitrionas</h2>
+                <ul>
+                    <li>Ciudad de México</li>
+                    <li>Nueva York/Nueva Jersey</li>
+                    <!-- Hasta 8 ciudades -->
+                </ul>
+                <a href="ciudades.html" class="btn">Ver todas</a>
+            </div>
+        </section>
+
+        <section class="quick-links">
+            <a href="balon.html">Balón Oficial</a>
+            <a href="mascotas.html">Mascotas Oficiales</a>
+            <a href="banda-sonora.html">Banda Sonora</a>
+        </section>
+
+        <section class="grid">
+            <div>
+                <h2>Próximos Eventos y Torneos</h2>
+                <p>Resumen de eventos futuros.</p>
+                <a href="torneos.html" class="btn">Ver listado</a>
+            </div>
+            <div>
+                <h2>Archivos del Torneo</h2>
+                <p>Videos de mundiales anteriores.</p>
+                <a href="archivos.html" class="btn">Ver archivos</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 FIFA World Cup. <a href="acerca.html" style="color:white;">Acerca del Proyecto</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clasificación - FIFA World Cup</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+        th { background: #eee; }
+        .bracket { display: flex; justify-content: space-between; overflow-x: auto; padding: 1rem; background: #fff; border: 1px solid #ddd; }
+        .round { display: flex; flex-direction: column; justify-content: space-around; min-width: 150px; margin-right: 1rem; }
+        .match-box { border: 1px solid #333; padding: 0.5rem; text-align: center; background: #f9f9f9; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <section>
+            <h2>Fase de Grupos</h2>
+            <select><option>Ver Todos los Grupos</option><option>Grupo A</option></select>
+            <table>
+                <tr><th>Equipo</th><th>Pts</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th></tr>
+                <tr><td>México</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Llaves de Eliminación Directa</h2>
+            <div class="bracket">
+                <div class="round">
+                    <h4>16avos</h4>
+                    <div class="match-box">1A vs 2B</div>
+                    <div class="match-box">1C vs 2D</div>
+                </div>
+                <div class="round">
+                    <h4>Octavos</h4>
+                    <div class="match-box">Ganador 1 vs Ganador 2</div>
+                </div>
+                <div class="round">
+                    <h4>Cuartos</h4>
+                    <div class="match-box">TBD</div>
+                </div>
+                <!-- Extendible a Semis, Tercer Lugar y Final -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>

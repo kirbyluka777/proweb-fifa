@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Noticias - FIFA World Cup 2026</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .news-item { border-bottom: 1px solid #ccc; padding-bottom: 1rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <section>
+            <article class="news-item">
+                <h3>Preparativos finales en el Estadio Azteca</h3>
+                <p>Las renovaciones están por concluir de cara al partido inaugural...</p>
+            </article>
+            <article class="news-item">
+                <h3>Llegan las primeras selecciones a Norteamérica</h3>
+                <p>Los equipos comienzan su aclimatación para el torneo...</p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

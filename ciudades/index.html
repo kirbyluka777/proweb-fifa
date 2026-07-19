@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciudades Anfitrionas</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <div style="margin-bottom:1rem;">
+            <select><option>Filtro: País (México, EEUU, Canadá)</option></select>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Ciudad de México</h3>
+                <p>País: México</p>
+                <a href="ciudad-detalle/index.html" class="btn">Ver Ciudad</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

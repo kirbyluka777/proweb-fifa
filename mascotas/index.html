@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mascotas Oficiales</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
+    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
+    </iframe>
+    <main>
+        <div style="text-align: center;">
+            <img src="mascotas.png" alt="Mascotas" style="max-width:300px;">
+            <p>Conoce la historia y el significado cultural de las mascotas de este mundial...</p>
+        </div>
+    </main>
+</body>
+</html>
