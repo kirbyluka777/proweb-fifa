@@ -6,10 +6,23 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
-    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
-    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
-    </iframe>
+
+    <iframe src="../header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
+        header.querySelectorAll('a').forEach(a => {
+            a.setAttribute('href', a.href);
+            const linkPath = new window.URL(a.href).pathname.replace(/\/index\.html$/, '/');
+            if (linkPath === currentPath) {
+                a.classList.add('nav-active');
+            }
+        });
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
+
     <main>
         <div style="margin-bottom:1rem;">
             <select><option>Filtro: País (México, EEUU, Canadá)</option></select>

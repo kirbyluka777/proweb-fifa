@@ -1,6 +1,29 @@
 /* styles.css */
+:root{
+    --fifa-pink: #7b2cbf;
+    --fifa-blue: #4cc9f0;
+    --fifa-lime: #b8ff52;
+    --fifa-gold: #f5c80a;
+
+    --text-main: #f4f4f4;
+    --text-blue: #004d98;
+
+    --bg-gradient: radial-gradient(circle at top right, rgba(76, 201, 240, 0.16), transparent 28%), radial-gradient(circle at left center, rgba(123, 44, 191, 0.22), transparent 32%), linear-gradient(135deg, #10101a 0%, #2a1b42 50%, #15152a 100%);
+    --a-gradient: linear-gradient(90deg, var(--fifa-pink) 0%, var(--fifa-blue) 100%);
+
+    --skew: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 body {
     font-family: Arial, sans-serif;
+    font-weight: bold;
+
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -8,7 +31,7 @@ body {
 }
 
 header {
-    background-color: #004d98;
+    background: var(--bg-gradient);
     color: white;
     padding: 1rem;
     text-align: center;
@@ -28,29 +51,64 @@ nav ul {
 }
 
 nav a {
-    color: white;
     text-decoration: none;
     font-weight: bold;
+    border: solid 1px transparent;
+
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+
+    clip-path: var(--skew);
+
+    transition: color 0.2s ease;
+    z-index: 1;
 }
 
-nav a:hover {
-    text-decoration: underline;
+nav a::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: var(--a-gradient);
+    clip-path: inherit;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.1s ease;
+
+    z-index: -1;
+}
+
+nav a:hover::before{
+    transform: scaleX(1);
+}
+
+.nav-active{
+    background: var(--a-gradient);
+    clip-path: var(--skew);
 }
 
 main {
     padding: 2rem;
     max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
+    margin: 2rem auto;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    height: 100%;
+    background: var(--bg-gradient)
 }
 
 section {
     margin-bottom: 2rem;
 }
 
-h1, h2, h3 {
-    color: #004d98;
+h1, h2, h3, p, li {
+    color: white;
 }
 
 .grid {
@@ -66,18 +124,59 @@ h1, h2, h3 {
 }
 
 .btn {
+    position: relative;
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #e3000f;
+    overflow: hidden;
+
+    background-color: black;
+
+    padding: 0.1rem 1rem;
     color: white;
     text-decoration: none;
-    border-radius: 4px;
+
+    clip-path: var(--skew);
+
+    transition: color 0.2s ease;
+    z-index: 1;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: var(--fifa-lime);
+    clip-path: inherit;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.1s ease;
+
+    z-index: -1;
+}
+
+.btn:hover {
+    color: black;
+}
+
+.btn:hover::before {
+    transform: scaleX(1);
 }
 
 footer {
     text-align: center;
     padding: 1rem;
     background-color: #333;
-    color: white;
     margin-top: 2rem;
+}
+footer p{
+    font-weight: normal;
+    color: #676767;
+}
+footer a{
+    text-decoration: none;
+    color: white;
+}
+footer a:hover{
+    text-decoration: underline;
 }

@@ -10,16 +10,26 @@
     </style>
 </head>
 <body>
+    <iframe src="header.html" onload="
+        const header = (this.contentDocument.body || this.contentDocument).children[0];
+        const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
 
-    <iframe src="header.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
+        header.querySelectorAll('a').forEach(a => {
+            // Resolve relative href against current location
+            const linkPath = new window.URL(a.getAttribute('href'), window.location.href).pathname.replace(/\/index\.html$/, '/');
+            if (linkPath === currentPath) a.classList.add('nav-active');
+        });
 
+        this.before(header);
+        this.remove();
+    "></iframe>
     <main>
         <div class="slider">Slider Banners Alusivos al Torneo</div>
         
         <section>
             <h2>Últimas Noticias</h2>
             <p>Resumen de las noticias más recientes...</p>
-            <a href="noticias.html" class="btn">Ver todas las noticias</a>
+            <a href="noticias/index.html" class="btn">Ver todas las noticias</a>
         </section>
 
         <section class="grid">
@@ -30,7 +40,7 @@
                     <li>Canadá vs. Bélgica</li>
                     <!-- 8 a 12 partidos -->
                 </ul>
-                <a href="partidos.html" class="btn">Ver todos</a>
+                <a href="partidos/index.html" class="btn">Ver todos</a>
             </div>
             <div>
                 <h2>Equipos Participantes</h2>
@@ -39,7 +49,7 @@
                     <li>Francia</li>
                     <!-- 8 a 12 equipos -->
                 </ul>
-                <a href="equipos.html" class="btn">Ver todos</a>
+                <a href="equipos/index.html" class="btn">Ver todos</a>
             </div>
             <div>
                 <h2>Ciudades Anfitrionas</h2>
@@ -48,31 +58,40 @@
                     <li>Nueva York/Nueva Jersey</li>
                     <!-- Hasta 8 ciudades -->
                 </ul>
-                <a href="ciudades.html" class="btn">Ver todas</a>
+                <a href="ciudades/index.html" class="btn">Ver todas</a>
             </div>
         </section>
 
         <section class="quick-links">
-            <a href="balon.html">Balón Oficial</a>
-            <a href="mascotas.html">Mascotas Oficiales</a>
-            <a href="banda-sonora.html">Banda Sonora</a>
+            <div class="card">
+                <img src="https://placehold.net/main.svg">
+                <a href="balon/index.html">Balón Oficial</a>
+            </div>
+            <div class="card">
+                <img src="https://placehold.net/main.svg">
+                <a href="mascotas/index.html">Mascotas Oficiales</a>
+            </div>
+            <div class="card">
+                <img src="https://placehold.net/main.svg">
+                <a href="banda-sonora/index.html">Banda Sonora</a>
+            </div>
         </section>
 
         <section class="grid">
             <div>
                 <h2>Próximos Eventos y Torneos</h2>
                 <p>Resumen de eventos futuros.</p>
-                <a href="torneos.html" class="btn">Ver listado</a>
+                <a href="torneos/index.html" class="btn">Ver listado</a>
             </div>
             <div>
                 <h2>Archivos del Torneo</h2>
                 <p>Videos de mundiales anteriores.</p>
-                <a href="archivos.html" class="btn">Ver archivos</a>
+                <a href="archivos/index.html" class="btn">Ver archivos</a>
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2026 FIFA World Cup. <a href="acerca.html" style="color:white;">Acerca del Proyecto</a></p>
-    </footer>
+    
+    <iframe src="footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
+
 </body>
 </html>
