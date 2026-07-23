@@ -1,0 +1,261 @@
+.ball-img{
+    position: relative;
+}
+.ball-img::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #201836 100%);
+    
+    pointer-events: none;
+}
+#img{
+    height: 50%;
+    width: auto;
+}
+#title{
+
+}
+
+#desc{
+    position: relative;
+    margin-top: -5rem;
+    padding: 0 2rem;
+}
+
+.ball-hero {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.ball-hero__heading {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    max-width: 34rem;
+    padding: clamp(1.25rem, 4vw, 3rem);
+}
+
+.ball-hero__eyebrow,
+.ball-features__eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--fifa-lime);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+#title {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(2.25rem, 6vw, 5rem);
+    line-height: 0.95;
+}
+
+.ball-img {
+    min-height: 28rem;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.ball-img img {
+    width: 100%;
+    height: clamp(28rem, 62vw, 45rem);
+    object-fit: cover;
+}
+
+.ball-features {
+    margin-bottom: 0;
+}
+
+.ball-features__heading {
+    margin-bottom: 1.5rem;
+}
+
+.ball-features__heading h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+.feature-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1.25rem;
+}
+
+.card.feature-card {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    background: var(--bg-gradient);
+    box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.16);
+}
+
+.feature-card__title {
+    min-height: 3.25rem;
+    margin: 0;
+    padding: 1.25rem 1.25rem 0.75rem;
+    color: var(--text-main);
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.feature-card__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #201836;
+}
+
+.feature-card__body {
+    padding: 1.25rem;
+}
+
+.feature-card__body p {
+    margin: 0 0 0.75rem;
+    color: var(--text-main);
+    line-height: 1.55;
+}
+
+.feature-card__body p:last-child {
+    margin-bottom: 0;
+}
+
+.ball-status {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 2rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .ball-hero__heading {
+        position: relative;
+    }
+
+    .ball-img,
+    .ball-img img {
+        min-height: 21rem;
+        height: 21rem;
+    }
+}
+
+.ball-hero {
+    border-top: 0.35rem solid var(--fifa-lime);
+}
+
+.ball-hero::after {
+    content: "FIFA WORLD CUP 26  /  OFFICIAL MATCH BALL";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 0.45rem 0.8rem;
+    background: var(--fifa-lime);
+    color: #10101a;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.ball-hero__heading {
+    border-left: 0.35rem solid var(--fifa-blue);
+}
+
+.ball-hero__eyebrow,
+.ball-features__eyebrow {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: #10101a;
+}
+
+.ball-features__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 28rem);
+    align-items: end;
+    gap: 1rem 2rem;
+    padding: 0 0 1rem 1rem;
+    border-left: 0.35rem solid var(--fifa-pink);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.ball-features__heading .ball-features__eyebrow {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-bottom: -0.4rem;
+}
+
+.ball-features__intro {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.45;
+}
+
+.feature-grid {
+    counter-reset: ball-feature;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card.feature-card {
+    counter-increment: ball-feature;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-top: 0.35rem solid var(--fifa-blue);
+    background: var(--bg-gradient);
+    box-shadow: none;
+}
+
+.card.feature-card:nth-child(even) {
+    border-top-color: var(--fifa-pink);
+}
+
+.feature-card__title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    min-height: auto;
+    padding: 1rem;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+}
+
+.feature-card__title::before {
+    content: "0" counter(ball-feature);
+    color: var(--fifa-pink);
+    font-size: 0.72rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.feature-card__image {
+    aspect-ratio: 16 / 9;
+    border-block: 1px solid #d4d4d4;
+    filter: saturate(0.9) contrast(1.04);
+}
+
+.feature-card__body {
+    padding: 1rem;
+    border-left: 0.25rem solid var(--fifa-lime);
+}
+
+.feature-card__body p {
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+    .ball-hero::after {
+        content: "OFFICIAL MATCH BALL";
+    }
+
+    .ball-features__heading,
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}

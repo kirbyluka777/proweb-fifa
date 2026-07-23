@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Balón Oficial</title>
+    <script src="../script.js"></script>
+    <script src="scrip.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -11,10 +15,26 @@
     header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
     </iframe>
     <main>
-        <div style="text-align: center;">
-            <img src="balon.png" alt="Foto del Balón Oficial" style="max-width:300px; border:1px solid #ccc;">
-            <p>Descripción de la tecnología y el diseño utilizado en el balón oficial del torneo...</p>
-        </div>
+        <section class="ball-hero" aria-labelledby="title">
+            <div class="ball-img">
+                <img src="" id="img" alt="">
+            </div>
+            <div class="ball-hero__heading">
+                <p class="ball-hero__eyebrow">Balón oficial del torneo</p>
+                <h1 id="title"></h1>
+            </div>
+        </section>
+
+        <section class="ball-features" aria-labelledby="features-title">
+            <div class="ball-features__heading">
+                <p class="ball-features__eyebrow">Conoce el balón</p>
+                <h2 id="features-title">Diseñado para el juego</h2>
+                <p class="ball-features__intro">Tecnología, precisión y una identidad creada para el escenario más grande.</p>
+            </div>
+            <div class="grid feature-grid" id="feature-grid" aria-live="polite">
+                <p class="ball-status" id="ball-status">Cargando información del balón…</p>
+            </div>
+        </section>
     </main>
 </body>
 </html>

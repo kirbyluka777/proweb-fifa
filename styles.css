@@ -1,5 +1,8 @@
 /* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,600;0,800;1,400;1,800&display=swap');
+
 :root{
+    font-family: 'Kanit', sans-serif;
     --fifa-pink: #7b2cbf;
     --fifa-blue: #4cc9f0;
     --fifa-lime: #b8ff52;
@@ -21,8 +24,6 @@ img {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    font-weight: bold;
 
     margin: 0;
     padding: 0;
@@ -110,6 +111,9 @@ section {
 h1, h2, h3, p, li {
     color: white;
 }
+h1,h2{
+    font-style: italic;
+}
 
 .grid {
     display: grid;
@@ -120,7 +124,26 @@ h1, h2, h3, p, li {
 .card {
     border: 1px solid #ddd;
     padding: 1rem;
-    background: #fafafa;
+    background: var(--bg-gradient);
+}
+
+.card {
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-top: 0.35rem solid var(--fifa-blue);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.card:nth-child(even) {
+    border-top-color: var(--fifa-pink);
+}
+
+.card h2,
+.card h3,
+.card p,
+.card li,
+.card a {
+    color: var(--text-main);
 }
 
 .btn {

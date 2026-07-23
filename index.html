@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .slider { background: #ddd; height: 300px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #555; margin-bottom: 2rem; }
-        .quick-links { display: flex; gap: 1rem; justify-content: space-around; background: #eee; padding: 1rem; }
-    </style>
+    <link rel="stylesheet" href="home.css">
+    <script src="home.js" defer></script>
 </head>
 <body>
     <iframe src="header.html" onload="
@@ -15,7 +14,6 @@
         const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
 
         header.querySelectorAll('a').forEach(a => {
-            // Resolve relative href against current location
             const linkPath = new window.URL(a.getAttribute('href'), window.location.href).pathname.replace(/\/index\.html$/, '/');
             if (linkPath === currentPath) a.classList.add('nav-active');
         });
@@ -23,75 +21,97 @@
         this.before(header);
         this.remove();
     "></iframe>
+
     <main>
-        <div class="slider">Slider Banners Alusivos al Torneo</div>
-        
-        <section>
-            <h2>Últimas Noticias</h2>
-            <p>Resumen de las noticias más recientes...</p>
+        <section class="slider" id="welcome-hero" aria-labelledby="welcome-title">
+            <div class="slider__content">
+                <p class="eyebrow">Canadá · México · Estados Unidos</p>
+                <h1 id="welcome-title">La Copa Mundial más grande de la historia</h1>
+                <p>48 selecciones. Tres países anfitriones. Un solo mundo.</p>
+                <a href="partidos/index.html" class="btn">Explorar el torneo</a>
+            </div>
+            <p class="slider__edition" aria-hidden="true">26</p>
+        </section>
+
+        <section class="home-section home-news" aria-labelledby="news-title">
+            <div class="section-heading">
+                <p class="eyebrow">Actualidad</p>
+                <h2 id="news-title">Últimas Noticias</h2>
+            </div>
+            <div class="home-news__story" id="featured-news"></div>
             <a href="noticias/index.html" class="btn">Ver todas las noticias</a>
         </section>
 
-        <section class="grid">
-            <div>
+        <section class="grid home-overview" aria-label="Resumen del torneo">
+            <article class="home-panel">
+                <p class="home-panel__number">01</p>
                 <h2>Próximos Partidos</h2>
-                <ul>
-                    <li>México vs. Polonia</li>
-                    <li>Canadá vs. Bélgica</li>
-                    <!-- 8 a 12 partidos -->
-                </ul>
+                <ul id="home-matches"></ul>
                 <a href="partidos/index.html" class="btn">Ver todos</a>
-            </div>
-            <div>
+            </article>
+            <article class="home-panel">
+                <p class="home-panel__number">02</p>
                 <h2>Equipos Participantes</h2>
-                <ul>
-                    <li>Argentina</li>
-                    <li>Francia</li>
-                    <!-- 8 a 12 equipos -->
-                </ul>
+                <ul id="home-teams"></ul>
                 <a href="equipos/index.html" class="btn">Ver todos</a>
-            </div>
-            <div>
+            </article>
+            <article class="home-panel">
+                <p class="home-panel__number">03</p>
                 <h2>Ciudades Anfitrionas</h2>
-                <ul>
-                    <li>Ciudad de México</li>
-                    <li>Nueva York/Nueva Jersey</li>
-                    <!-- Hasta 8 ciudades -->
-                </ul>
+                <ul id="home-cities"></ul>
                 <a href="ciudades/index.html" class="btn">Ver todas</a>
+            </article>
+        </section>
+
+        <section class="home-section" aria-labelledby="discover-title">
+            <div class="section-heading">
+                <p class="eyebrow">Descubre</p>
+                <h2 id="discover-title">Más que noventa minutos</h2>
+            </div>
+            <div class="quick-links">
+                <article class="card home-card">
+                    <img id="home-ball-image" src="" alt="" hidden>
+                    <div class="home-card__body">
+                        <p class="home-meta">Dentro del juego</p>
+                        <h3>Balón Oficial</h3>
+                        <a href="balon/index.html">Conocer el balón</a>
+                    </div>
+                </article>
+                <article class="card home-card">
+                    <div class="home-card__media" id="home-mascot-media"></div>
+                    <div class="home-card__body">
+                        <p class="home-meta">Los anfitriones</p>
+                        <h3>Mascotas Oficiales</h3>
+                        <a href="mascotas/index.html">Conocer las mascotas</a>
+                    </div>
+                </article>
+                <article class="card home-card">
+                    <img id="home-sound-image" src="" alt="" hidden>
+                    <div class="home-card__body">
+                        <p class="home-meta">El sonido del torneo</p>
+                        <h3>Banda Sonora</h3>
+                        <a href="banda-sonora/index.html">Escuchar ahora</a>
+                    </div>
+                </article>
             </div>
         </section>
 
-        <section class="quick-links">
-            <div class="card">
-                <img src="https://placehold.net/main.svg">
-                <a href="balon/index.html">Balón Oficial</a>
-            </div>
-            <div class="card">
-                <img src="https://placehold.net/main.svg">
-                <a href="mascotas/index.html">Mascotas Oficiales</a>
-            </div>
-            <div class="card">
-                <img src="https://placehold.net/main.svg">
-                <a href="banda-sonora/index.html">Banda Sonora</a>
-            </div>
-        </section>
-
-        <section class="grid">
-            <div>
+        <section class="grid home-more" aria-label="Más contenido">
+            <article class="home-panel">
+                <p class="home-panel__number">04</p>
                 <h2>Próximos Eventos y Torneos</h2>
-                <p>Resumen de eventos futuros.</p>
+                <div id="home-event"></div>
                 <a href="torneos/index.html" class="btn">Ver listado</a>
-            </div>
-            <div>
+            </article>
+            <article class="home-panel">
+                <p class="home-panel__number">05</p>
                 <h2>Archivos del Torneo</h2>
-                <p>Videos de mundiales anteriores.</p>
+                <p>Revive goles, partidos y momentos que hicieron historia.</p>
                 <a href="archivos/index.html" class="btn">Ver archivos</a>
-            </div>
+            </article>
         </section>
     </main>
-    
-    <iframe src="footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
 
+    <iframe src="footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
 </body>
 </html>
