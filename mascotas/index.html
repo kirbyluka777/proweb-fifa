@@ -2,19 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mascotas Oficiales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas Oficiales | Mundial 2026</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
     const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
     header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
     </iframe>
-    <main>
-        <div style="text-align: center;">
-            <img src="mascotas.png" alt="Mascotas" style="max-width:300px;">
-            <p>Conoce la historia y el significado cultural de las mascotas de este mundial...</p>
-        </div>
+
+    <main style="padding: 20px; max-width: 1100px; margin: 0 auto;">
+        <header class="mascotas-header">
+            <p class="mascotas-eyebrow">Copa Mundial 2026</p>
+            <h1>Mascotas Oficiales</h1>
+            <p class="mascotas-intro">
+                Conoce la historia, características y detalles oficiales de las mascotas que darán vida al torneo.
+            </p>
+        </header>
+
+        <section class="mascotas-section">
+            <div id="mascotas-container" class="mascotas-grid">
+                <div id="loading-state" class="mascotas-loading">
+                    Cargando...
+                </div>
+            </div>
+        </section>
     </main>
 </body>
 </html>

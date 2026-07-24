@@ -1,0 +1,157 @@
+.mascotas-header {
+    margin-bottom: 3rem;
+    padding: clamp(1.5rem, 4vw, 3rem) 0 1.5rem 1.25rem;
+    border-left: 0.35rem solid var(--fifa-pink, #e91e63);
+    background: transparent;
+    text-align: left;
+}
+
+.mascotas-eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--fifa-lime, #ccff00);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.mascotas-header h1 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-style: italic;
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: white;
+}
+
+.mascotas-intro {
+    max-width: 40rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.mascotas-section {
+    margin-bottom: 4rem;
+}
+
+.mascotas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1.5rem;
+}
+
+.mascota-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1.5rem;
+    border: 0.0625rem solid var(--bracket-border-mid, #a5acbb);
+    border-radius: 0.75rem;
+    background: var(--bracket-card, rgb(21, 3, 48));
+    color: white;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mascota-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--fifa-lime, #ccff00);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.mascota-card__image-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 14rem;
+    margin-bottom: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+}
+
+.mascota-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.mascota-card:hover .mascota-card__image {
+    transform: scale(1.05);
+}
+
+.mascota-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.mascota-card__title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-style: italic;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: white;
+}
+
+.mascota-card__country {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    color: var(--fifa-lime, #ccff00);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.mascota-card__flag {
+    width: 1.5rem;
+    height: 1rem;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.mascota-card__bio {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.mascotas-loading,
+.mascotas-error {
+    grid-column: 1 / -1;
+    padding: 3rem 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mascotas-error {
+    color: var(--fifa-pink, #e91e63);
+}
+
+@media (max-width: 760px) {
+    .mascotas-header {
+        padding: 1rem 0 1rem 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .mascotas-grid {
+        grid-template-columns: 1fr;
+    }
+}
