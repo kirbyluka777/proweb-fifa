@@ -1,8 +1,10 @@
 
 .events-main {
+    box-sizing: border-box;
+    width: calc(100% - 2rem);
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 0 1.5rem;
+    padding: 1.5rem;
     color: #ffffff;
 }
 
@@ -28,7 +30,7 @@
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
     gap: 2rem;
     align-items: stretch;
 }
@@ -84,6 +86,7 @@
     font-weight: 700;
     margin: 0 0 0.8rem 0;
     color: #ffffff;
+    overflow-wrap: anywhere;
 }
 
 .event-description {
@@ -92,6 +95,7 @@
     line-height: 1.6;
     margin-bottom: 1.5rem;
     flex: 1;
+    overflow-wrap: anywhere;
 }
 
 .btn-event-official {
