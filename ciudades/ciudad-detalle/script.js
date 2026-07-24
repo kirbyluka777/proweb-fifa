@@ -30,6 +30,7 @@ function validateImageUrl(url) {
 
 async function loadCityDetails(id) {
     const endpointUrl = `https://wc-api-u378.onrender.com/wc-api/api/v1/cities/${id}`;
+    const main = document.getElementById('main-content');
 
     try {
         let cityData = await fetchApiData(endpointUrl);
@@ -49,13 +50,16 @@ async function loadCityDetails(id) {
     } catch (error) {
         console.error("Error al cargar detalles:", error);
         showError("No se pudo conectar con el servidor para cargar los datos de la ciudad.");
+    } finally {
+        main?.setAttribute('aria-busy', 'false');
     }
 }
 
 async function renderCityDetails(city) {
     document.title = `${city.name || 'Ciudad'} - Detalle Mundial 2026`;
 
-    document.getElementById('city-title').textContent = `${city.name || 'Ciudad'} (${city.country || ''})`;
+    document.getElementById('city-title').textContent = city.name || 'Ciudad';
+    document.getElementById('city-country').textContent = city.country || 'Copa Mundial de la FIFA 2026';
 
     const banner = document.getElementById('city-banner');
 
@@ -72,10 +76,12 @@ async function renderCityDetails(city) {
     banner.style.backgroundImage = `url('${imageUrl}')`;
 
     const logoImg = document.getElementById('city-logo');
+    const logoShell = document.getElementById('city-logo-shell');
     if (city.logo_url) {
         logoImg.src = city.logo_url;
-        logoImg.style.display = 'inline-block';
-        logoImg.onerror = () => { logoImg.style.display = 'none'; };
+        logoImg.alt = `Emblema de ${city.name || 'la ciudad anfitriona'}`;
+        logoShell.hidden = false;
+        logoImg.onerror = () => { logoShell.hidden = true; };
     }
 
     const descContainer = document.getElementById('city-description');
@@ -92,7 +98,7 @@ async function renderCityDetails(city) {
     }
 
     if (city.stadium) {
-        document.getElementById('stadium-section').style.display = 'block';
+        document.getElementById('stadium-section').hidden = false;
         document.getElementById('stadium-name').textContent = city.stadium.name || 'Estadio por definir';
 
         const stadiumImg = document.getElementById('stadium-img');
@@ -110,7 +116,9 @@ async function renderCityDetails(city) {
         if (city.stadium.coordinates) {
             const lat = city.stadium.coordinates.latitude;
             const lon = city.stadium.coordinates.longitude;
-            document.getElementById('stadium-coords').textContent = `${lat}° N, ${lon}° W`;
+            const latDirection = lat >= 0 ? 'N' : 'S';
+            const lonDirection = lon >= 0 ? 'E' : 'W';
+            document.getElementById('stadium-coords').textContent = `${Math.abs(lat)}° ${latDirection}, ${Math.abs(lon)}° ${lonDirection}`;
         } else {
             document.getElementById('stadium-coords').textContent = 'No disponibles';
         }
@@ -127,7 +135,7 @@ async function renderCityDetails(city) {
         }
         extraContainer.innerHTML = extraHtml;
     } else {
-        extraContainer.style.display = 'none';
+        extraContainer.hidden = true;
     }
 }
 
@@ -177,7 +185,10 @@ function renderMatchesList(matches) {
 
     matches.forEach(match => {
         const li = document.createElement('li');
+        const link = document.createElement('a');
         li.className = 'match-item';
+        link.className = 'match-link';
+        link.href = `/partidos/partido-detalle/?id=${encodeURIComponent(match.id)}`;
 
         const homeTeam = match.home_id || 'Local';
         const awayTeam = match.away_id || 'Visitante';
@@ -198,10 +209,11 @@ function renderMatchesList(matches) {
 
         const dateText = match.date || 'Fecha por confirmar';
 
-        li.innerHTML = `
-            <span><strong>${matchTitle}</strong></span>
+        link.innerHTML = `
+            <strong class="match-title">${matchTitle}</strong>
             <span class="match-date">${dateText}${roundText}</span>
         `;
+        li.appendChild(link);
         matchesList.appendChild(li);
     });
 }
@@ -209,13 +221,11 @@ function renderMatchesList(matches) {
 function showError(message) {
     const main = document.getElementById('main-content');
     main.innerHTML = `
-        <div class="content-container">
-            <div class="card-detalle" style="text-align: center; color: #dc3545;">
-                <h2>¡Ocurrió un error!</h2>
-                <p>${message}</p>
-                <br>
-                <a href="/ciudades/" class="btn-back" style="background:#1a1a2e;">Volver al Catálogo</a>
-            </div>
-        </div>
+        <a class="back-link" href="/ciudades/"><span aria-hidden="true">←</span> Volver a ciudades</a>
+        <section class="detail-error detail-card">
+            <p class="city-eyebrow">Información no disponible</p>
+            <h1>Ocurrió un error</h1>
+            <p>${message}</p>
+        </section>
     `;
 }

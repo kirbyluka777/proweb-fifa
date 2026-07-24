@@ -2,60 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Ciudad - Mundial 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Información de la ciudad anfitriona, su estadio y los partidos de la Copa Mundial de la FIFA 2026.">
+    <title>Detalle de Ciudad - FIFA World Cup 2026</title>
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/ciudades/ciudad-detalle/styles.css">
     <script src="/script.js" defer></script>
+    <script src="/ciudades/ciudad-detalle/script.js" defer></script>
 </head>
 <body>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => {
+            a.setAttribute('href', a.href);
+            if (new window.URL(a.href).pathname.includes('/ciudades/')) {
+                a.classList.add('nav-active');
+            }
+        });
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        header.querySelectorAll('source').forEach(source => source.setAttribute('src', source.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
 
-    <header class="detalle-header">
-        <a href="/ciudades/" class="btn-back">← Volver a Ciudades</a>
-    </header>
+    <main class="city-detail-page" id="main-content" aria-live="polite" aria-busy="true">
+        <a class="back-link" href="/ciudades/">
+            <span aria-hidden="true">←</span>
+            Volver a ciudades
+        </a>
 
-    <main id="main-content">
+        <section id="city-banner" class="city-hero detail-card">
+            <div class="city-hero__overlay"></div>
+            <div class="city-hero__content">
+                <p class="city-eyebrow">Ciudad anfitriona</p>
+                <h1 id="city-title">Cargando ciudad...</h1>
+                <p id="city-country" class="city-country">Copa Mundial de la FIFA 2026</p>
+            </div>
+            <div class="city-logo-shell" id="city-logo-shell" hidden>
+                <img id="city-logo" src="" alt="">
+            </div>
+        </section>
 
-        <div id="city-banner" class="banner">
-            <div class="banner-dark-overlay"></div>
-            <h1 id="city-title" class="banner-title">Cargando ciudad...</h1>
-        </div>
-
-        <div class="content-container">
-
-            <section class="city-overview card-detalle">
-                <div class="logo-container">
-                    <img id="city-logo" src="" alt="Logo Ciudad Mundial" style="display: none;">
+        <section class="city-overview detail-card">
+            <div class="section-heading">
+                <div>
+                    <p>Conoce la sede</p>
+                    <h2>Sobre la ciudad</h2>
                 </div>
-                <div id="city-description" class="city-text">
-                    <p class="status-msg">Cargando información de la ciudad...</p>
-                </div>
-            </section>
+            </div>
+            <div id="city-description" class="city-text">
+                <p class="status-msg">Cargando información de la ciudad...</p>
+            </div>
+        </section>
 
-            <section id="stadium-section" class="stadium-info card-detalle" style="display: none;">
-                <h2 id="stadium-name">Nombre del Estadio</h2>
-                <div class="stadium-grid">
-                    <div class="stadium-img-wrapper">
-                        <img id="stadium-img" src="" alt="Foto Estadio">
-                    </div>
-                    <div class="stadium-data">
-                        <p><strong>Capacidad:</strong> <span id="stadium-capacity">--</span></p>
-                        <p><strong>Coordenadas:</strong> <span id="stadium-coords">--</span></p>
-                        <div id="stadium-extra" class="extra-info"></div>
-                    </div>
+        <section id="stadium-section" class="stadium-info detail-card" hidden>
+            <div class="section-heading">
+                <div>
+                    <p>Escenario mundialista</p>
+                    <h2 id="stadium-name">Estadio por definir</h2>
                 </div>
-            </section>
+            </div>
+            <div class="stadium-grid">
+                <div class="stadium-img-wrapper">
+                    <img id="stadium-img" src="" alt="Estadio de la ciudad anfitriona">
+                </div>
+                <div class="stadium-data">
+                    <dl class="stadium-facts">
+                        <div>
+                            <dt>Capacidad</dt>
+                            <dd id="stadium-capacity">--</dd>
+                        </div>
+                        <div>
+                            <dt>Coordenadas</dt>
+                            <dd id="stadium-coords">--</dd>
+                        </div>
+                    </dl>
+                    <div id="stadium-extra" class="extra-info"></div>
+                </div>
+            </div>
+        </section>
 
-            <section class="matches-section card-detalle">
-                <h3>Partidos en esta Ciudad</h3>
-                <ul id="matches-list" class="matches-list">
-                    <li class="status-msg">Buscando calendario de partidos...</li>
-                </ul>
-            </section>
-        </div>
+        <section class="matches-section detail-card">
+            <div class="section-heading">
+                <div>
+                    <p>Calendario de la sede</p>
+                    <h2>Partidos en esta ciudad</h2>
+                </div>
+            </div>
+            <ul id="matches-list" class="matches-list">
+                <li class="status-msg">Buscando calendario de partidos...</li>
+            </ul>
+        </section>
     </main>
-
-    <script src="/ciudades/ciudad-detalle/script.js"></script>
 </body>
 </html>
