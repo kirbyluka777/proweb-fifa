@@ -1,10 +1,11 @@
-// Variable global para almacenar catálogos en caché y no saturar las peticiones
+// Global cache for catalogs
 let teamsMap = {};
+let teamFlagsMap = {};
 let citiesMap = {};
 let roundsMap = {};
 let catalogosCargados = false;
 
-// Verificación robusta de carga del DOM
+// DOM Load Verification
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', iniciarPagina);
 } else {
@@ -32,17 +33,17 @@ function iniciarPagina() {
         });
     }
 
-    // Carga inicial sin filtros
+    // Initial load with no filters
     loadMatchesData({});
 }
 
-// Función inteligente: intenta petición directa primero (vital para Render) y proxy como respaldo
+// Resilient API Fetch with Proxy Fallback
 async function fetchApiData(endpointUrl) {
     try {
         const res = await fetch(endpointUrl);
         if (res.ok) return await res.json();
     } catch (e) {
-        console.warn(`[Intento directo fallido para ${endpointUrl}], probando con proxy CORS...`, e);
+        console.warn(`[Intento directo fallido para ${endpointUrl}], probando proxy CORS...`, e);
     }
     
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
@@ -61,11 +62,11 @@ async function loadMatchesData(filterParams = {}) {
     const filtroEquipo = document.getElementById('filtro-equipo');
 
     if (container) {
-        container.innerHTML = '<p class="loading-text">Cargando partidos (si el servidor de la API estaba en reposo, puede tardar hasta 50 segundos en despertar)...</p>';
+        container.innerHTML = '<p class="loading-text">Cargando partidos...</p>';
     }
 
     try {
-        // 1. Cargar catálogos de traducción una sola vez y guardarlos en memoria
+        // 1. Load catalogs once
         if (!catalogosCargados) {
             try {
                 const [citiesData, teamsData, roundsData] = await Promise.all([
@@ -88,7 +89,11 @@ async function loadMatchesData(filterParams = {}) {
                     list.forEach(t => {
                         const id = t.id !== undefined ? t.id : (t.team_id !== undefined ? t.team_id : (t.code !== undefined ? t.code : t.abbreviation));
                         const name = t.name || t.team_name || t.country || String(id);
-                        if (id !== undefined) teamsMap[String(id).trim().toLowerCase()] = name;
+                        if (id !== undefined) {
+                            const key = String(id).trim().toLowerCase();
+                            teamsMap[key] = name;
+                            teamFlagsMap[key] = t.flag_url || t.flag_uri || '';
+                        }
                     });
                 }
 
@@ -103,11 +108,11 @@ async function loadMatchesData(filterParams = {}) {
 
                 catalogosCargados = true;
             } catch (e) {
-                console.warn('No se pudieron cargar los catálogos secundarios. Se mostrarán los identificadores directos.');
+                console.warn('Catálogos secundarios inaccesibles, mostrando identificadores por defecto.');
             }
         }
 
-        // 2. Construir la URL exacta con parámetros para la API /matches
+        // 2. Build URL query parameters
         let matchesUrl = `${baseUrl}matches`;
         const queryParts = [];
         
@@ -120,7 +125,7 @@ async function loadMatchesData(filterParams = {}) {
             matchesUrl += `?${queryParts.join('&')}`;
         }
 
-        // 3. Petición a los partidos
+        // 3. Fetch Matches
         const matchesData = await fetchApiData(matchesUrl);
         const allMatches = Array.isArray(matchesData) ? matchesData : (matchesData.matches || matchesData.data || []);
 
@@ -131,7 +136,7 @@ async function loadMatchesData(filterParams = {}) {
             return;
         }
 
-        // 4. Cruzar IDs con los nombres legibles
+        // 4. Map IDs to human-readable names
         const parsedMatches = allMatches.map(match => {
             const homeIdStr = (match.home_id !== undefined && match.home_id !== null) ? String(match.home_id).trim() : '';
             const awayIdStr = (match.away_id !== undefined && match.away_id !== null) ? String(match.away_id).trim() : '';
@@ -143,7 +148,7 @@ async function loadMatchesData(filterParams = {}) {
             const cityName = citiesMap[cityIdStr.toLowerCase()] || (cityIdStr ? `Sede ${cityIdStr}` : 'Sede por definir');
             const roundName = roundsMap[roundIdStr.toLowerCase()] || (roundIdStr ? `Ronda ${roundIdStr}` : 'Fase de Grupos');
             
-            let groupName = match.group || 'Fase Final';
+            let groupName = match.group || '';
             if (groupName && !String(groupName).toLowerCase().includes('grupo') && !String(groupName).toLowerCase().includes('fase')) {
                 groupName = `Grupo ${groupName}`;
             }
@@ -156,6 +161,8 @@ async function loadMatchesData(filterParams = {}) {
                 roundIdStr,
                 homeName,
                 awayName,
+                homeFlag: teamFlagsMap[homeIdStr.toLowerCase()] || '',
+                awayFlag: teamFlagsMap[awayIdStr.toLowerCase()] || '',
                 cityName,
                 roundName,
                 groupName,
@@ -163,7 +170,7 @@ async function loadMatchesData(filterParams = {}) {
             };
         });
 
-        // 5. Filtrado local inteligente de Equipo (cubre tanto partidos de local como de visitante)
+        // 5. Local team filter
         let partidosFinales = parsedMatches;
         if (filterParams.team_id) {
             partidosFinales = parsedMatches.filter(m => 
@@ -171,18 +178,18 @@ async function loadMatchesData(filterParams = {}) {
             );
         }
 
-        // 6. Poblar los menús desplegables solo al cargar inicialmente
+        // 6. Populate filter selects on initial load
         if (Object.keys(filterParams).length === 0) {
             configurarLos5Filtros(parsedMatches, { filtroCiudad, filtroRonda, filtroEstatus, filtroGrupo, filtroEquipo });
         }
 
-        // 7. Renderizar en el contenedor
+        // 7. Render
         renderMatches(partidosFinales, container);
 
     } catch (error) {
         console.error("Error al cargar los partidos:", error);
         if (container) {
-            container.innerHTML = `<p class="no-results">No se pudo cargar la información. Error: ${error.message || 'Fallo de conexión'}. Si el error persiste, presiona F12 y revisa la pestaña Console.</p>`;
+            container.innerHTML = `<p class="no-results">Error al obtener información de partidos: ${error.message || 'Error de red'}</p>`;
         }
     }
 }
@@ -239,26 +246,177 @@ function renderMatches(matchesToRender, container) {
     container.innerHTML = '';
 
     if (matchesToRender.length === 0) {
-        container.innerHTML = '<p class="no-results">No hay partidos que coincidan con los filtros seleccionados.</p>';
+        container.innerHTML = '<p class="no-results">No hay partidos disponibles con estos criterios.</p>';
         return;
     }
 
-    matchesToRender.forEach(match => {
-        const id = match.id || 1;
-        const home = match.homeName;
-        const away = match.awayName;
-        const grupo = match.groupName;
-        const ciudad = match.cityName;
-
-        const card = document.createElement('div');
-        card.className = 'match-card';
-        
-        card.innerHTML = `
-            <span class="match-teams"><strong>${home}</strong> vs <strong>${away}</strong></span>
-            <span class="match-info">${grupo} | ${ciudad}</span>
-            <a href="partido-detalle/index.html?id=${id}" class="btn-slanted">Ver Detalles</a>
-        `;
-
-        container.appendChild(card);
+    const sortedMatches = [...matchesToRender].sort((a, b) =>
+        `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`)
+    );
+    const matchesByDate = new Map();
+    sortedMatches.forEach(match => {
+        const date = match.date || '';
+        if (!matchesByDate.has(date)) matchesByDate.set(date, []);
+        matchesByDate.get(date).push(match);
     });
+
+    matchesByDate.forEach((matches, date) => {
+        const day = document.createElement('section');
+        const heading = document.createElement('h2');
+        const games = document.createElement('div');
+
+        day.className = 'match-day';
+        heading.className = 'match-day__heading';
+        heading.textContent = formatMatchDayHeader(date);
+        games.className = 'match-day__games';
+
+        matches.forEach(match => games.append(createMatchCard(match)));
+        day.append(heading, games);
+        container.append(day);
+    });
+}
+
+function formatMatchDayHeader(date) {
+    if (!date) return 'Fecha por confirmar';
+    const parsedDate = new Date(`${date}T00:00:00`);
+    return new Intl.DateTimeFormat('es-ES', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric'
+    }).format(parsedDate);
+}
+
+function formatMatchTime(time) {
+    return String(time || '').slice(0, 5);
+}
+
+function formatMatchCardDate(date, time) {
+    if (!date) return formatMatchTime(time) || 'TBD';
+    const parsedDate = new Date(`${date}T00:00:00`);
+    const dateLabel = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+    }).format(parsedDate);
+    return dateLabel;
+}
+
+function matchStatus(status) {
+    const normalized = String(status || '').toLowerCase();
+    if (normalized === 'ended') return 'FT';
+    if (normalized === 'halftime') return 'HT';
+    if (normalized === 'in progress') return 'LIVE';
+    return 'SCHEDULED';
+}
+
+function matchWinner(match) {
+    if (String(match.status).toLowerCase() !== 'ended') return '';
+    const homePenalty = Number(match.home_score?.penalty);
+    const awayPenalty = Number(match.away_score?.penalty);
+    if (
+        Number.isFinite(homePenalty) &&
+        Number.isFinite(awayPenalty) &&
+        homePenalty !== awayPenalty
+    ) {
+        return homePenalty > awayPenalty ? 'home' : 'away';
+    }
+
+    const homeScore = Number(match.home_score?.total);
+    const awayScore = Number(match.away_score?.total);
+    if (homeScore === awayScore) return '';
+    return homeScore > awayScore ? 'home' : 'away';
+}
+
+// Generates Team Row conforming to Reference Spec
+function createTeamRow(name, flagUrl, score, isWinner) {
+    const row = document.createElement('div');
+    row.className = `match-team${isWinner ? ' is-winner' : ''}`;
+
+    if (flagUrl) {
+        const flag = document.createElement('img');
+        flag.className = 'match-team__flag';
+        flag.src = flagUrl;
+        flag.alt = '';
+        row.append(flag);
+    } else {
+        const flagSpace = document.createElement('span');
+        flagSpace.className = 'match-team__flag-space';
+        row.append(flagSpace);
+    }
+
+    const teamName = document.createElement('span');
+    teamName.className = 'match-team__name';
+    teamName.textContent = name;
+
+    const scoreWrap = document.createElement('div');
+    scoreWrap.className = 'match-team__score-wrap';
+
+    const teamScore = document.createElement('span');
+    teamScore.className = 'match-team__score';
+    teamScore.textContent = score;
+
+    scoreWrap.append(teamScore);
+
+    if (isWinner) {
+        const arrow = document.createElement('span');
+        arrow.className = 'match-team__winner-arrow';
+        arrow.textContent = '◄';
+        scoreWrap.append(arrow);
+    }
+
+    row.append(teamName, scoreWrap);
+    return row;
+}
+
+// Creates Exact Reference Layout (image_76bf1f.png)
+function createMatchCard(match) {
+    const card = document.createElement('a');
+    card.className = 'match-card';
+    card.href = `partido-detalle/index.html?id=${match.id}`;
+    card.setAttribute('aria-label', `${match.homeName} vs ${match.awayName}`);
+
+    const winner = matchWinner(match);
+    const matchEnded = String(match.status).toLowerCase() === 'ended';
+    const homeScore = matchEnded ? match.home_score?.total ?? '0' : '-';
+    const awayScore = matchEnded ? match.away_score?.total ?? '0' : '-';
+
+    // 1. Stage Subtitle (e.g., "Third place play-off" / "Grupo A")
+    const stageHeader = document.createElement('div');
+    stageHeader.className = 'match-card__stage';
+    stageHeader.textContent = match.groupName ? `${match.roundName} - ${match.groupName}` : match.roundName;
+
+    // 2. Main Content Grid
+    const content = document.createElement('div');
+    content.className = 'match-card__content';
+
+    // Teams Column
+    const teams = document.createElement('div');
+    teams.className = 'match-card__teams';
+    teams.append(
+        createTeamRow(match.homeName, match.homeFlag, homeScore, winner === 'home'),
+        createTeamRow(match.awayName, match.awayFlag, awayScore, winner === 'away')
+    );
+
+    // Vertical Divider
+    const divider = document.createElement('div');
+    divider.className = 'match-card__divider';
+
+    // Right Meta (Status + Date Stack)
+    const meta = document.createElement('div');
+    meta.className = 'match-card__meta';
+
+    const status = document.createElement('span');
+    status.className = 'match-card__status';
+    status.textContent = matchStatus(match.status);
+
+    const date = document.createElement('time');
+    date.className = 'match-card__date';
+    date.dateTime = `${match.date || ''}T${match.time || ''}`;
+    date.textContent = formatMatchCardDate(match.date, match.time);
+
+    meta.append(status, date);
+    content.append(teams, divider, meta);
+    card.append(stageHeader, content);
+
+    return card;
 }

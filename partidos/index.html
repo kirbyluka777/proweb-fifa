@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Partidos - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="styles.css">
@@ -23,18 +24,58 @@
         this.remove();
     "></iframe>
 
-    <main class="matches-page-wrapper">
-        <div class="filters">
-            <select id="filtro-ciudad"><option value="">Filtro: Ciudad</option></select>
-            <select id="filtro-ronda"><option value="">Filtro: Ronda</option></select>
-            <select id="filtro-estatus"><option value="">Filtro: Estatus</option></select>
-            <select id="filtro-grupo"><option value="">Filtro: Grupo</option></select>
-            <select id="filtro-equipo"><option value="">Filtro: Equipo</option></select>
-            <button id="btn-aplicar-filtros" class="btn-slanted">Aplicar Filtros</button>
-        </div>
+    <main>
+        <header class="page-header">
+            <span class="page-eyebrow">Copa Mundial de la FIFA 2026</span>
+            <h1>CALENDARIO DE PARTIDOS</h1>
+            <p>Explora el fixture oficial en tiempo real. Filtra por ciudad sede, ronda eliminatoria, grupo o selección nacional.</p>
+        </header>
 
-        <section id="matches-container">
-            <p class="loading-text">Cargando partidos...</p>
+        <!-- Filter Controls -->
+        <section class="filters" aria-labelledby="filters-title">
+            <div class="filters__heading">
+                <span class="matches-eyebrow">Búsqueda Avanzada</span>
+                <h2 id="filters-title">Filtrar Partidos</h2>
+            </div>
+
+            <div class="filters__grid">
+                <label class="field">
+                    <span>Ciudad Sede</span>
+                    <select class="form-select" id="filtro-ciudad">
+                        <option value="">Todas las ciudades</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span>Ronda</span>
+                    <select class="form-select" id="filtro-ronda">
+                        <option value="">Todas las rondas</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span>Estatus</span>
+                    <select class="form-select" id="filtro-estatus">
+                        <option value="">Todos los estatus</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span>Grupo</span>
+                    <select class="form-select" id="filtro-grupo">
+                        <option value="">Todos los grupos</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span>Equipo</span>
+                    <select class="form-select" id="filtro-equipo">
+                        <option value="">Todos los equipos</option>
+                    </select>
+                </label>
+                <button id="btn-aplicar-filtros" class="btn" type="button">APLICAR FILTROS</button>
+            </div>
+        </section>
+
+        <!-- Dynamic Matches Grid -->
+        <section class="matches-grid" id="matches-container" aria-live="polite" aria-label="Partidos">
+            <p class="loading-text">Cargando partidos desde el servidor...</p>
         </section>
     </main>
 

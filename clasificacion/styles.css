@@ -2,7 +2,6 @@
     margin-bottom: 3rem;
     padding: clamp(1.5rem, 4vw, 3rem) 0 1.5rem 1.25rem;
     border-left: 0.35rem solid var(--fifa-pink);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
     background: transparent;
     text-align: left;
 }
@@ -13,11 +12,6 @@
     font-style: italic;
     line-height: 0.9;
     text-transform: uppercase;
-}
-
-.standings-header > p:last-child {
-    margin-bottom: 0;
-    color: rgba(255, 255, 255, 0.72);
 }
 
 .standings-eyebrow {
@@ -34,8 +28,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: min(100%, 28rem);
     margin: 0 auto 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: var(--bg-gradient);
+    border: none;
 }
 
 .classification-tab {
@@ -43,7 +36,7 @@
     border: 0;
     border-bottom: 0.25rem solid transparent;
     background: transparent;
-    color: rgba(255, 255, 255, 0.7);
+    color: #7e778e;
     font: inherit;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -51,13 +44,8 @@
     cursor: pointer;
 }
 
-.classification-tab + .classification-tab {
-    border-left: 1px solid rgba(255, 255, 255, 0.28);
-}
-
 .classification-tab:hover,
 .classification-tab:focus-visible {
-    background: rgba(255, 255, 255, 0.08);
     color: white;
 }
 
@@ -100,12 +88,6 @@
 
 .group-table {
     min-width: 0;
-    background: var(--bg-gradient);
-    border-top: 0.3rem solid var(--fifa-blue);
-}
-
-.group-table:nth-child(even) {
-    border-top-color: var(--fifa-pink);
 }
 
 .group-table h3 {
@@ -115,7 +97,9 @@
     font-style: italic;
     text-transform: uppercase;
 }
-
+.group-table tr:hover{
+    background-color: white;
+}
 .group-table .data-table th:first-child,
 .group-table .data-table td:first-child {
     width: 100%;
