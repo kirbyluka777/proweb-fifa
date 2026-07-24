@@ -2,33 +2,106 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ranking FIFA</title>
-    <link rel="stylesheet" href="../styles.css">
-    <style> table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; } th { background: #eee; } </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ranking FIFA de las selecciones participantes en la Copa Mundial 2026.">
+    <title>Ranking FIFA - FIFA World Cup 2026</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/ranking/styles.css">
+    <script src="/script.js" defer></script>
+    <script src="/ranking/script.js" defer></script>
 </head>
 <body>
     <iframe src="../header.html" hidden onload="
         const doc = this.contentDocument;
         const header = (doc.body || doc).children[0];
-        const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
+        const normalizePath = path => path.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
+        const currentPath = normalizePath(window.location.pathname);
         header.querySelectorAll('a').forEach(a => {
             a.setAttribute('href', a.href);
-            const linkPath = new window.URL(a.href).pathname.replace(/\/index\.html$/, '/');
-            if (linkPath === currentPath) {
-                a.classList.add('nav-active');
-            }
+            const linkPath = normalizePath(new window.URL(a.href).pathname);
+            if (linkPath === currentPath) a.classList.add('nav-active');
         });
         header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        header.querySelectorAll('source').forEach(source => source.setAttribute('src', source.src));
         this.before(header);
         this.remove();
     "></iframe>
-    <main>
-        <table>
-            <tr><th>Posición</th><th>Equipo</th><th>Puntos</th></tr>
-            <tr><td>1</td><td>Argentina</td><td>1855.20</td></tr>
-            <tr><td>2</td><td>Francia</td><td>1845.44</td></tr>
-        </table>
+
+    <main class="ranking-page">
+        <header class="page-header ranking-heading">
+            <p class="page-eyebrow">Copa Mundial de la FIFA 2026</p>
+            <h1>Ranking FIFA</h1>
+            <p>Consulta la posición mundial, los puntos y la evolución de las 48 selecciones participantes.</p>
+        </header>
+
+        <section class="ranking-overview" aria-labelledby="podium-title">
+            <div class="podium-panel">
+                <p class="section-kicker">Líderes mundiales</p>
+                <h2 class="section-heading" id="podium-title">El podio</h2>
+                <div class="podium" id="ranking-podium" aria-live="polite">
+                    <div class="ranking-status">
+                        <span class="loading-spinner" aria-hidden="true"></span>
+                        <p>Cargando líderes...</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="ranking-summary" aria-label="Resumen del ranking">
+                <div class="summary-item">
+                    <span class="summary-label">Selecciones</span>
+                    <strong class="summary-value" id="teams-total">—</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Confederaciones</span>
+                    <strong class="summary-value" id="confederations-total">—</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Número uno</span>
+                    <strong class="summary-value" id="ranking-leader">—</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="ranking-controls" aria-label="Filtros del ranking">
+            <label class="search-field" for="team-search">
+                <span class="control-label">Buscar selección</span>
+                <input
+                    class="search-input"
+                    id="team-search"
+                    type="search"
+                    placeholder="Nombre o código FIFA"
+                    autocomplete="off"
+                >
+            </label>
+
+            <div>
+                <p class="control-label">Confederación</p>
+                <div class="confederation-filter" id="confederation-filter">
+                    <button class="filter-button active" type="button" data-confederation="all" aria-pressed="true">Todas</button>
+                    <button class="filter-button" type="button" data-confederation="AFC" aria-pressed="false">AFC</button>
+                    <button class="filter-button" type="button" data-confederation="CAF" aria-pressed="false">CAF</button>
+                    <button class="filter-button" type="button" data-confederation="CONCACAF" aria-pressed="false">Concacaf</button>
+                    <button class="filter-button" type="button" data-confederation="CONMEBOL" aria-pressed="false">Conmebol</button>
+                    <button class="filter-button" type="button" data-confederation="OFC" aria-pressed="false">OFC</button>
+                    <button class="filter-button" type="button" data-confederation="UEFA" aria-pressed="false">UEFA</button>
+                </div>
+            </div>
+
+            <p class="results-count" id="results-count" aria-live="polite"></p>
+        </section>
+
+        <section class="ranking-table-panel" aria-labelledby="ranking-table-title">
+            <div class="ranking-table-heading">
+                <h2 id="ranking-table-title">Clasificación mundial</h2>
+                <p class="updated-label">Ranking de selecciones participantes</p>
+            </div>
+            <div id="ranking-content" aria-live="polite" aria-busy="true">
+                <div class="ranking-status">
+                    <span class="loading-spinner" aria-hidden="true"></span>
+                    <p>Cargando ranking FIFA...</p>
+                </div>
+            </div>
+        </section>
     </main>
 </body>
 </html>
