@@ -1,0 +1,369 @@
+* {
+    box-sizing: border-box;
+}
+
+.teams-page {
+    max-width: 1200px;
+}
+
+.teams-heading {
+    margin-bottom: 3rem;
+}
+
+.teams-heading > p:last-child {
+    max-width: 42rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+}
+
+.teams-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 0.35rem solid var(--fifa-blue);
+    background: #15161d;
+    box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.05);
+}
+
+.filter-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.filter-heading svg {
+    width: 1.15rem;
+    fill: var(--fifa-blue);
+}
+
+.filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.filter-button {
+    min-width: 4rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #090a0e;
+    color: rgba(255, 255, 255, 0.7);
+    clip-path: var(--skew);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-button:hover,
+.filter-button:focus-visible {
+    border-color: var(--fifa-blue);
+    color: #fff;
+}
+
+.filter-button:focus-visible {
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 2px;
+}
+
+.filter-button.active {
+    border-color: transparent;
+    background: var(--a-gradient);
+    color: #fff;
+}
+
+.results-count {
+    min-width: max-content;
+    margin: 0;
+    color: var(--fifa-lime);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.countries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.25rem;
+}
+
+.country-card {
+    position: relative;
+    display: flex;
+    min-height: 340px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-top: 0.35rem solid var(--fifa-blue);
+    background: var(--bg-gradient);
+    box-shadow: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.country-card:nth-child(even) {
+    border-top-color: var(--fifa-pink);
+}
+
+.country-card:hover,
+.country-card:focus-within {
+    transform: translateY(-0.35rem);
+    border-right-color: rgba(255, 255, 255, 0.62);
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+    border-left-color: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.country-card-link {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.55rem 1.15rem 1.1rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.country-card-link:focus-visible {
+    outline: 3px solid var(--fifa-lime);
+    outline-offset: -3px;
+}
+
+.card-header {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.flag-shell {
+    display: grid;
+    width: 88px;
+    height: 62px;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 0.2rem;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.flag-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.flag-fallback {
+    color: #171725;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.country-name {
+    margin: 1rem 0 0.55rem;
+    color: #fff;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-style: italic;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.confederation-tag,
+.fifa-code-tag,
+.host-tag {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    color: var(--fifa-blue);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.confederation-tag {
+    border: 1px solid rgba(76, 201, 240, 0.45);
+    background: rgba(76, 201, 240, 0.08);
+}
+
+.team-meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.fifa-code-tag {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.host-tag {
+    margin-top: 0.4rem;
+    background: var(--fifa-lime);
+    color: #11131d;
+    clip-path: var(--skew);
+}
+
+.team-palette {
+    display: grid;
+    width: min(100%, 10rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0.7rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.team-color {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.team-color-primary {
+    background: var(--team-primary);
+    color: var(--team-primary-text);
+}
+
+.team-color-secondary {
+    background: var(--team-secondary);
+    color: var(--team-secondary-text);
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.22);
+}
+
+.stat-col {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.25rem;
+    text-align: center;
+}
+
+.stat-col:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.63rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    margin-top: 0.2rem;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.teams-status {
+    grid-column: 1 / -1;
+    display: grid;
+    min-height: 15rem;
+    place-items: center;
+    align-content: center;
+    gap: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 0.35rem solid var(--fifa-blue);
+    background: var(--bg-gradient);
+    text-align: center;
+}
+
+.teams-status p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.teams-status.error p {
+    color: #ffb3c1;
+}
+
+.loading-spinner {
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: var(--fifa-lime);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.retry-button {
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 850px) {
+    .teams-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 0.2rem 0.1rem 0.65rem;
+        scrollbar-width: thin;
+    }
+
+    .filter-button {
+        flex: 0 0 auto;
+    }
+
+    .results-count {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .teams-page {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .teams-heading {
+        padding-left: 0.8rem;
+    }
+
+    .countries-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .country-card,
+    .filter-button {
+        transition: none;
+    }
+
+    .loading-spinner {
+        animation-duration: 1.8s;
+    }
+}

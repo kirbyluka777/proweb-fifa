@@ -2,38 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Equipo</title>
-    <link rel="stylesheet" href="../../styles.css">
-    <style>
-        .team-header { display: flex; align-items: center; gap: 1rem; border-bottom: 2px solid #004d98; padding-bottom: 1rem; }
-        .flag { width: 100px; border: 1px solid #ccc; }
-    </style>
-    <script src="../../script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plantilla y datos de la selección participante en la Copa Mundial de la FIFA 2026.">
+    <title>Detalle de Equipo - FIFA World Cup 2026</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/equipos/equipo-detalle/styles.css?v=3">
+    <script src="/script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Perfil del Equipo</h1>
-        <a href="../index.html" style="color:white;">Volver a Equipos</a>
-    </header>
-    <main>
-        <div class="team-header">
-            <img src="flag-placeholder.png" alt="Bandera" class="flag">
-            <div>
-                <h2>Argentina</h2>
-                <p><strong>Confederación:</strong> CONMEBOL</p>
-                <p><strong>Grupo:</strong> C | <strong>Ranking FIFA:</strong> 1 | <strong>Participaciones:</strong> 18</p>
-            </div>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => {
+            a.setAttribute('href', a.href);
+            if (new window.URL(a.href).pathname.includes('/equipos/')) {
+                a.classList.add('nav-active');
+            }
+        });
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        header.querySelectorAll('source').forEach(source => source.setAttribute('src', source.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
+
+    <main class="team-detail-page" id="team-detail" aria-live="polite" aria-busy="true">
+        <a class="back-link" href="/equipos/index.html">
+            <span aria-hidden="true">←</span>
+            Volver a equipos
+        </a>
+
+        <div class="detail-status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <p>Cargando información del equipo...</p>
         </div>
-        <section>
-            <h3>Cuerpo Técnico y Jugadores</h3>
-            <p><strong>Director Técnico:</strong> Lionel Scaloni</p>
-            <h4>Convocados</h4>
-            <ul>
-                <li>Emiliano Martínez (POR)</li>
-                <li>Lionel Messi (DEL)</li>
-                <!-- Resto de la lista -->
-            </ul>
-        </section>
     </main>
+
+    <script src="/equipos/equipo-detalle/script.js?v=4"></script>
 </body>
 </html>
