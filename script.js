@@ -1,3 +1,4 @@
+
 async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
     const cacheKey = `cache_${url}`;
     const cachedItem = localStorage.getItem(cacheKey);
