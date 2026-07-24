@@ -94,6 +94,17 @@ nav a:hover::before{
     clip-path: var(--skew);
 }
 
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
 main {
     padding: 2rem;
     max-width: 1200px;
