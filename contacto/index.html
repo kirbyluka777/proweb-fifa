@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Contacto</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <style>
         form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: 0 auto; }
         input, textarea { padding: 0.5rem; font-size: 1rem; }
     </style>
 </head>
 <body>
-    <iframe src="../header.html" hidden onload="
+    <iframe src="/header.html" hidden onload="
         const doc = this.contentDocument;
         const header = (doc.body || doc).children[0];
         const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');

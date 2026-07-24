@@ -6,7 +6,7 @@ let observer;
 function createLink(news, label) {
     const link = document.createElement('a');
     link.className = 'news-link';
-    link.href = `details/index.html?id=${encodeURIComponent(news.id)}`;
+    link.href = `/noticias/details/?id=${encodeURIComponent(news.id)}`;
     link.textContent = label;
     return link;
 }
@@ -40,7 +40,7 @@ function createNewsCard(news) {
     const readMore = document.createElement('span');
 
     card.className = 'card news-card';
-    card.href = `details/index.html?id=${encodeURIComponent(news.id)}`;
+    card.href = `/noticias/details/?id=${encodeURIComponent(news.id)}`;
     heading.className = 'news-card__heading';
     title.textContent = news.title;
     heading.append(title);

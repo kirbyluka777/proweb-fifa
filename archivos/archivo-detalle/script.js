@@ -83,7 +83,7 @@ function showError(message) {
         <div class="status-msg" style="color: #ff6b6b; border-color: rgba(255, 107, 107, 0.3);">
             <h2>¡Ocurrió un problema!</h2>
             <p style="margin: 1rem 0 1.5rem 0; color: #cccccc;">${message}</p>
-            <a href="../index.html" class="btn-back" style="display:inline-block; background: #ff007f; border-color: #ff007f;">Volver al Catálogo</a>
+            <a href="/archivos/" class="btn-back" style="display:inline-block; background: #ff007f; border-color: #ff007f;">Volver al Catálogo</a>
         </div>
     `;
 }

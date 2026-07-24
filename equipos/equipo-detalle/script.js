@@ -318,7 +318,7 @@ function renderError(message, allowRetry) {
     }
     const back = document.createElement('a');
     back.className = 'btn';
-    back.href = '/equipos/index.html';
+    back.href = '/equipos/';
     back.textContent = 'Ver equipos';
     actions.append(back);
     status.append(actions);

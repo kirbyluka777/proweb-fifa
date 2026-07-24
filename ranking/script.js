@@ -166,7 +166,7 @@ function createPodiumCard(entry) {
     link.className = 'podium-card';
     link.dataset.rank = entry.rank;
     link.dataset.teamId = team.id || '';
-    link.href = `../equipos/equipo-detalle/?id=${encodedId}#${encodedId}`;
+    link.href = `/equipos/equipo-detalle/?id=${encodedId}#${encodedId}`;
     link.setAttribute('aria-label', `${team.name}, posición ${entry.rank}`);
 
     const rank = document.createElement('span');
@@ -240,7 +240,7 @@ function createTeamLink(team) {
     const link = document.createElement('a');
     const encodedId = encodeURIComponent(team.id || '');
     link.className = 'team-link';
-    link.href = `../equipos/equipo-detalle/?id=${encodedId}#${encodedId}`;
+    link.href = `/equipos/equipo-detalle/?id=${encodedId}#${encodedId}`;
     link.dataset.teamId = team.id || '';
 
     const flag = createFlag(team, 'team-flag', 'flag-code');

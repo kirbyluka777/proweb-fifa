@@ -223,7 +223,7 @@ function showError(message) {
                 <h2>¡Ocurrió un error!</h2>
                 <p>${message}</p>
                 <br>
-                <a href="../index.html" class="btn-back" style="background:#1a1a2e;">Volver al Catálogo</a>
+                <a href="/ciudades/" class="btn-back" style="background:#1a1a2e;">Volver al Catálogo</a>
             </div>
         </div>
     `;

@@ -110,7 +110,7 @@ function renderRecords(records) {
                     <h2 class="record-title">${title}</h2>
                     <p class="record-subtitle">🎬 ${subtitle}</p>
                 </div>
-                <a href="archivo-detalle/index.html?id=${id}" class="btn-watch">Ver Video</a>
+                <a href="/archivos/archivo-detalle/?id=${id}" class="btn-watch">Ver Video</a>
             </div>
         `;
 

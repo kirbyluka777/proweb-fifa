@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio - FIFA World Cup 2026</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="home.css">
-    <script src="script.js" defer></script>
-    <script src="home.js" defer></script>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/home.css">
+    <script src="/script.js" defer></script>
+    <script src="/home.js" defer></script>
 </head>
 <body>
-    <iframe src="header.html" onload="
+    <iframe src="/header.html" onload="
         const header = (this.contentDocument.body || this.contentDocument).children[0];
         const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
 
@@ -31,7 +31,7 @@
                 <p class="eyebrow">Canadá · México · Estados Unidos</p>
                 <h1 id="welcome-title">La Copa Mundial más grande de la historia</h1>
                 <p>48 selecciones. Tres países anfitriones. Un solo mundo.</p>
-                <a href="partidos/index.html" class="btn">Explorar el torneo</a>
+                <a href="/partidos/" class="btn">Explorar el torneo</a>
             </div>
             <p class="slider__edition" aria-hidden="true">26</p>
         </section>
@@ -42,7 +42,7 @@
                 <h2 id="news-title">Últimas Noticias</h2>
             </div>
             <div class="home-news__story" id="featured-news"></div>
-            <a href="noticias/index.html" class="btn">Ver todas las noticias</a>
+            <a href="/noticias/" class="btn">Ver todas las noticias</a>
         </section>
 
         <section class="grid home-overview" aria-label="Resumen del torneo">
@@ -50,19 +50,19 @@
                 <p class="home-panel__number">01</p>
                 <h2>Próximos Partidos</h2>
                 <ul id="home-matches"></ul>
-                <a href="partidos/index.html" class="btn">Ver todos</a>
+                <a href="/partidos/" class="btn">Ver todos</a>
             </article>
             <article class="home-panel">
                 <p class="home-panel__number">02</p>
                 <h2>Equipos Participantes</h2>
                 <ul id="home-teams"></ul>
-                <a href="equipos/index.html" class="btn">Ver todos</a>
+                <a href="/equipos/" class="btn">Ver todos</a>
             </article>
             <article class="home-panel">
                 <p class="home-panel__number">03</p>
                 <h2>Ciudades Anfitrionas</h2>
                 <ul id="home-cities"></ul>
-                <a href="ciudades/index.html" class="btn">Ver todas</a>
+                <a href="/ciudades/" class="btn">Ver todas</a>
             </article>
         </section>
 
@@ -77,7 +77,7 @@
                     <div class="home-card__body">
                         <p class="home-meta">Dentro del juego</p>
                         <h3>Balón Oficial</h3>
-                        <a href="balon/index.html">Conocer el balón</a>
+                        <a href="/balon/">Conocer el balón</a>
                     </div>
                 </article>
                 <article class="card home-card">
@@ -85,7 +85,7 @@
                     <div class="home-card__body">
                         <p class="home-meta">Los anfitriones</p>
                         <h3>Mascotas Oficiales</h3>
-                        <a href="mascotas/index.html">Conocer las mascotas</a>
+                        <a href="/mascotas/">Conocer las mascotas</a>
                     </div>
                 </article>
                 <article class="card home-card">
@@ -93,7 +93,7 @@
                     <div class="home-card__body">
                         <p class="home-meta">El sonido del torneo</p>
                         <h3>Banda Sonora</h3>
-                        <a href="banda-sonora/index.html">Escuchar ahora</a>
+                        <a href="/banda-sonora/">Escuchar ahora</a>
                     </div>
                 </article>
             </div>
@@ -104,17 +104,17 @@
                 <p class="home-panel__number">04</p>
                 <h2>Próximos Eventos y Torneos</h2>
                 <div id="home-event"></div>
-                <a href="torneos/index.html" class="btn">Ver listado</a>
+                <a href="/torneos/" class="btn">Ver listado</a>
             </article>
             <article class="home-panel">
                 <p class="home-panel__number">05</p>
                 <h2>Archivos del Torneo</h2>
                 <p>Revive goles, partidos y momentos que hicieron historia.</p>
-                <a href="archivos/index.html" class="btn">Ver archivos</a>
+                <a href="/archivos/" class="btn">Ver archivos</a>
             </article>
         </section>
     </main>
 
-    <iframe src="footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
+    <iframe src="/footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"></iframe>
 </body>
 </html>

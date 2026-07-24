@@ -134,7 +134,7 @@ function renderCities(citiesToRender, container) {
             <div class="card-content">
                 <h3>${cityName}</h3>
                 <div class="card-action">
-                    <a href="ciudad-detalle/index.html?id=${city.id}" class="btn">Ver Ciudad</a>
+                    <a href="/ciudades/ciudad-detalle/?id=${city.id}" class="btn">Ver Ciudad</a>
                 </div>
             </div>
         `;

@@ -364,7 +364,7 @@ function createTeamRow(name, flagUrl, score, isWinner) {
 function createMatchCard(match) {
     const card = document.createElement('a');
     card.className = 'match-card';
-    card.href = `partido-detalle/index.html?id=${match.id}`;
+    card.href = `/partidos/partido-detalle/?id=${match.id}`;
     card.setAttribute('aria-label', `${match.homeName} vs ${match.awayName}`);
 
     const winner = matchWinner(match);
