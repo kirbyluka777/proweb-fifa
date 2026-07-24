@@ -10,9 +10,7 @@ let redrawBracket = () => {};
 async function fetchApi(endpoint) {
     const apiUrl = `${API_BASE}/${endpoint}`;
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`${endpoint}: ${response.status}`);
-    return response.json();
+    return await fetchWithCache(proxyUrl)
 }
 
 function asCollection(data) {

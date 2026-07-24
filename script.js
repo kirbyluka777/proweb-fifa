@@ -23,7 +23,13 @@ async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
     }
 
     console.log(`[Network Request] Fetching new data: ${url}`);
-    const data = fetchWithCache(url)
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
 
     const cacheData = {
         data: data,

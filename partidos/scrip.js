@@ -41,9 +41,7 @@ function iniciarPagina() {
 async function fetchApiData(endpointUrl) {
     
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    const resProxy = await fetch(proxyUrl);
-    if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
-    return await resProxy.json();
+    return await fetchWithCache(proxyUrl)
 }
 
 async function loadMatchesData(filterParams = {}) {

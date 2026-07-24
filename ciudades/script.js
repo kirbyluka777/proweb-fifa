@@ -28,17 +28,9 @@ function iniciarPagina() {
 
 // Conexión resiliente con proxy
 async function fetchApiData(endpointUrl) {
-    try {
-        const res = await fetch(endpointUrl);
-        if (res.ok) return await res.json();
-    } catch (e) {
-        console.warn(`[Intento directo fallido], probando proxy CORS...`, e);
-    }
     
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    const resProxy = await fetch(proxyUrl);
-    if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
-    return await resProxy.json();
+    return await fetchWithCache(proxyUrl)
 }
 
 // Transforma la estructura de objeto {"1": {...}, "2": {...}} a un Arreglo [...]

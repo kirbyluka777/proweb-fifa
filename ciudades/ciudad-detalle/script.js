@@ -15,17 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Petición multinivel con respaldo de proxies para evitar fallos de CORS
 async function fetchApiData(endpointUrl) {
-    try {
-        const res = await fetch(endpointUrl);
-        if (res.ok) return await res.json();
-    } catch (e) {
-        console.warn(`[Intento directo fallido], probando proxy CORS...`);
-    }
-
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    const resProxy = await fetch(proxyUrl);
-    if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
-    return await resProxy.json();
+    return await fetchWithCache(proxyUrl)
 }
 
 // Función auxiliar para probar si una imagen existe y carga correctamente
