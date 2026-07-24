@@ -1,0 +1,113 @@
+main {
+    background: transparent !important;
+    min-height: 85vh;
+}
+
+/* Filtro de Selección */
+.filter-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.filter-select {
+    background: rgba(16, 16, 26, 0.85);
+    color: var(--text-main, #f4f4f4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 4px solid var(--fifa-blue, #4cc9f0);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.filter-select:focus, .filter-select:hover {
+    border-color: var(--fifa-lime, #b8ff52);
+    box-shadow: 0 0 12px rgba(184, 255, 82, 0.3);
+}
+
+.filter-select option {
+    background: #10101a;
+    color: #fff;
+}
+
+/* Tarjetas de Ciudades */
+.city-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg-gradient, linear-gradient(135deg, #10101a 0%, #2a1b42 100%)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-top: 0.35rem solid var(--fifa-blue, #4cc9f0) !important;
+    padding: 0 !important; /* El padding interno va en .card-content */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.city-card:nth-child(even) {
+    border-top-color: var(--fifa-pink, #7b2cbf) !important;
+}
+
+.city-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.city-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.city-card:hover .city-img {
+    transform: scale(1.08);
+}
+
+.card-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+    color: #fff;
+    font-style: italic;
+}
+
+.city-info {
+    margin: 0.3rem 0;
+    color: #d0d5e0;
+    font-size: 0.95rem;
+}
+
+.card-action {
+    margin-top: 1.2rem;
+}
+
+/* Mensajes de Estado */
+.status-msg {
+    color: #fff;
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+}
+
+.status-msg.error {
+    color: #ff4d4d;
+}

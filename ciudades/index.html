@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ciudades Anfitrionas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciudades Anfitrionas - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -24,16 +26,22 @@
     "></iframe>
 
     <main>
-        <div style="margin-bottom:1rem;">
-            <select><option>Filtro: País (México, EEUU, Canadá)</option></select>
+        <!-- Filtro por País -->
+        <div class="filter-container">
+            <select id="country-filter" class="filter-select">
+                <option value="">Todos los Países</option>
+                <option value="Canada">Canadá</option>
+                <option value="United States">Estados Unidos</option>
+                <option value="Mexico">México</option>
+            </select>
         </div>
-        <div class="grid">
-            <div class="card">
-                <h3>Ciudad de México</h3>
-                <p>País: México</p>
-                <a href="ciudad-detalle/index.html" class="btn">Ver Ciudad</a>
-            </div>
+
+        <!-- Contenedor dinámico de Ciudades -->
+        <div class="grid" id="cities-grid">
+            <p class="status-msg">Cargando ciudades anfitrionas...</p>
         </div>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
