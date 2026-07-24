@@ -17,7 +17,6 @@
     display: block;
 }
 
-/* Gradient overlay at the bottom of the image for smooth blending */
 .ball-img::before {
     content: "";
     position: absolute;
@@ -30,11 +29,33 @@
     z-index: 1;
 }
 
-/* Overlapping Header */
 .ods-header {
     position: relative;
-    z-index: 2; /* Forces the header to sit above the image and its gradient */
-    margin-top: -5rem; /* Pulls the header up onto the image */
-    padding-left: clamp(1.5rem, 4vw, 3rem);
-    padding-right: clamp(1.5rem, 4vw, 3rem);
+    z-index: 2;
+    margin-top: -25rem;
+    padding: clamp(1.5rem, 4vw, 3rem) 0 1.5rem 1.25rem;
+    border-left: 0.35rem solid var(--fifa-pink);
+    background: transparent;
+    text-align: left;
+}
+
+.ods-header h1 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-style: italic;
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: white;
+}
+
+.ods-eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--fifa-lime);
+    background-color: black;
+    max-width: fit-content;
+    padding: 0px 10px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
