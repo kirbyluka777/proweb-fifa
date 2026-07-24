@@ -129,6 +129,68 @@ main::before {
     z-index: -1;
 }
 
+.pull-tab {
+    position: fixed;
+    bottom: 1rem;
+    right: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    clip-path: polygon(0% 0, 100% 0, 100% 100%, 15px 100%);
+    transform: translateX(calc(100% - 50px));
+    
+    transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), color 0.2s ease;
+    z-index: 1000;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--fifa-blue);
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.tab-icon {
+    height: 1.2em;
+    width: auto;
+    object-fit: contain;
+    transition: filter 0.2s ease;
+}
+
+.pull-tab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: var(--fifa-blue);
+    clip-path: inherit;
+
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.2s ease;
+
+    z-index: -1;
+}
+
+.pull-tab:hover {
+    color: black;
+    transform: translateX(0); 
+    text-decoration: underline;
+}
+
+.pull-tab:hover::before {
+    transform: scaleX(1); 
+}
+.pull-tab:hover .tab-icon {
+    filter: brightness(0);
+}
+
 section {
     margin-bottom: 2rem;
 }

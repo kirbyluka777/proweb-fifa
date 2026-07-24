@@ -1,5 +1,8 @@
 const NEWS_API = 'https://wc-api-u378.onrender.com/wc-api/api/v1/news';
-
+let allNews = [];
+let currentIndex = 1;
+const BATCH_SIZE = 6;
+let observer;
 function createLink(news, label) {
     const link = document.createElement('a');
     link.className = 'news-link';
@@ -58,17 +61,48 @@ function createNewsCard(news) {
     card.append(image, heading, body);
     return card;
 }
+function setupObserver() {
+    observer = new IntersectionObserver((entries) => {
+        const lastCardEntry = entries[0];
+        
+        if (lastCardEntry.isIntersecting) {
+            observer.unobserve(lastCardEntry.target);
+            renderNextBatch();
+        }
+    }, { rootMargin: '200px' });
+}
+function renderNextBatch() {
+    const grid = document.getElementById('news-grid');
+    const nextBatch = allNews.slice(currentIndex, currentIndex + BATCH_SIZE);
 
+    if (nextBatch.length === 0) return;
+
+    nextBatch.forEach((newsItem, index) => {
+        const card = createNewsCard(newsItem);
+        grid.append(card);
+
+        if (index === nextBatch.length - 1) {
+            observer.observe(card);
+        }
+    });
+
+    currentIndex += BATCH_SIZE;
+}
 async function loadNews() {
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(NEWS_API)}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    try {
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(NEWS_API)}`;
+        
+        allNews = await fetchWithCache(proxyUrl, 30 * 60 * 1000);
 
-    const news = await response.json();
-    if (!Array.isArray(news) || news.length === 0) return;
+        if (!Array.isArray(allNews) || allNews.length === 0) return;
 
-    renderFeaturedNews(news[0]);
-    document.getElementById('news-grid').append(...news.slice(1).map(createNewsCard));
+        renderFeaturedNews(allNews[0]);
+        setupObserver();
+        renderNextBatch();
+
+    } catch (error) {
+        console.error("Failed to load news:", error);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadNews);
