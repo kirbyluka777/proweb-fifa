@@ -24,11 +24,14 @@ img {
 }
 
 body {
-
+    position: relative;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     color: #333;
+    isolation: isolate;
 }
 
 .site-header {
@@ -192,14 +195,14 @@ body {
 }
 
 #bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+    pointer-events: none;
 }
 
 main {
