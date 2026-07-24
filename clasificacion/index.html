@@ -2,16 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Clasificación - FIFA World Cup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clasificación - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
-        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
-        th { background: #eee; }
-        .bracket { display: flex; justify-content: space-between; overflow-x: auto; padding: 1rem; background: #fff; border: 1px solid #ddd; }
-        .round { display: flex; flex-direction: column; justify-content: space-around; min-width: 150px; margin-right: 1rem; }
-        .match-box { border: 1px solid #333; padding: 0.5rem; text-align: center; background: #f9f9f9; margin: 0.5rem 0; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <iframe src="../header.html" hidden onload="
@@ -21,41 +16,77 @@
         header.querySelectorAll('a').forEach(a => {
             a.setAttribute('href', a.href);
             const linkPath = new window.URL(a.href).pathname.replace(/\/index\.html$/, '/');
-            if (linkPath === currentPath) {
-                a.classList.add('nav-active');
-            }
+            if (linkPath === currentPath) a.classList.add('nav-active');
         });
         header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
         this.before(header);
         this.remove();
     "></iframe>
+
     <main>
-        <section>
-            <h2>Fase de Grupos</h2>
-            <select><option>Ver Todos los Grupos</option><option>Grupo A</option></select>
-            <table>
-                <tr><th>Equipo</th><th>Pts</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th></tr>
-                <tr><td>México</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-            </table>
+        <header class="standings-header">
+            <p class="standings-eyebrow">Copa Mundial de la FIFA 2026</p>
+            <h1>Clasificación</h1>
+            <p>Consulta las posiciones de la fase de grupos y el camino hacia la final.</p>
+        </header>
+
+        <div class="classification-tabs" role="tablist" aria-label="Secciones de clasificación">
+            <button
+                class="classification-tab is-active"
+                id="tables-tab"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="tables-panel"
+            >Tablas</button>
+            <button
+                class="classification-tab"
+                id="brackets-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="brackets-panel"
+                tabindex="-1"
+            >Llaves</button>
+        </div>
+
+        <section
+            class="standings-section classification-panel"
+            id="tables-panel"
+            role="tabpanel"
+            aria-labelledby="tables-tab"
+        >
+            <div class="standings-section__heading">
+                <div>
+                    <p class="standings-eyebrow">Fase de grupos</p>
+                    <h2 id="groups-title">Tabla de posiciones</h2>
+                </div>
+                <div class="field">
+                    <label for="group-filter">Mostrar grupos</label>
+                    <select class="form-select" id="group-filter">
+                        <option value="all">Todos los grupos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="standings-grid" id="standings-grid"></div>
         </section>
 
-        <section>
-            <h2>Llaves de Eliminación Directa</h2>
-            <div class="bracket">
-                <div class="round">
-                    <h4>16avos</h4>
-                    <div class="match-box">1A vs 2B</div>
-                    <div class="match-box">1C vs 2D</div>
+        <section
+            class="knockout-section classification-panel"
+            id="brackets-panel"
+            role="tabpanel"
+            aria-labelledby="brackets-tab"
+            hidden
+        >
+            <div class="standings-section__heading">
+                <div>
+                    <p class="standings-eyebrow">Eliminación directa</p>
+                    <h2 id="knockout-title">Camino a la final</h2>
                 </div>
-                <div class="round">
-                    <h4>Octavos</h4>
-                    <div class="match-box">Ganador 1 vs Ganador 2</div>
-                </div>
-                <div class="round">
-                    <h4>Cuartos</h4>
-                    <div class="match-box">TBD</div>
-                </div>
-                <!-- Extendible a Semis, Tercer Lugar y Final -->
+                <p class="bracket-hint">Arrastra la ventana</p>
+            </div>
+            <div class="tournament-brackets-view" tabindex="0" aria-label="Llaves de eliminación directa">
+                <div class="tournament-brackets" id="tournament-brackets"></div>
             </div>
         </section>
     </main>
