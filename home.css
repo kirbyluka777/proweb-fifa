@@ -174,14 +174,14 @@
     margin: 0 0 1rem;
     font-size: 1.35rem;
 }
-.home-card__body a{
+/* .home-card__body a{
     font-weight: 800;
     color: var(--fifa-blue);
 }
 
 .home-card__body a:hover {
     color: white;
-}
+} */
 
 @media (max-width: 760px) {
     main {

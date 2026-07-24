@@ -10,7 +10,6 @@ async function loadMatchDetails(matchId) {
 
     const matchHeader = document.querySelector('.match-header');
     const highlightsSection = document.getElementById('highlights-section');
-    const pitchSection = document.querySelector('.pitch');
     const statsSection = document.querySelector('.stats');
     const timelineSection = document.querySelector('.timeline');
     const lineupsSection = document.getElementById('lineups-section');
@@ -91,37 +90,6 @@ async function loadMatchDetails(matchId) {
         const awayLineup = match.line_ups?.away;
         const homeStarters = homeLineup?.starting_players || [];
         const awayStarters = awayLineup?.starting_players || [];
-
-        if (homeStarters.length < 11 || awayStarters.length < 11) {
-            pitchSection.innerHTML = `
-                <div class="section-heading">
-                    <div>
-                        <p>Once inicial</p>
-                        <h2>Alineación del partido</h2>
-                    </div>
-                </div>
-                <div class="alert">Alineación no disponible: faltan titulares por confirmar.</div>
-            `;
-        } else {
-            pitchSection.innerHTML = `
-                <div class="section-heading">
-                    <div>
-                        <p>Once inicial</p>
-                        <h2>Alineación del partido</h2>
-                    </div>
-                </div>
-                <div class="pitch-lineup">
-                    <div class="team-pitch">
-                        <h3>${homeTeam} · ${homeLineup.formation || 'Por definir'}</h3>
-                        <ul>${homeStarters.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'}</li>`).join('')}</ul>
-                    </div>
-                    <div class="team-pitch">
-                        <h3>${awayTeam} · ${awayLineup.formation || 'Por definir'}</h3>
-                        <ul>${awayStarters.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'}</li>`).join('')}</ul>
-                    </div>
-                </div>
-            `;
-        }
 
         const renderPlayersList = (players) => players.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'} ${p.position ? `<span class="player-position">(${p.position})</span>` : ''}</li>`).join('');
 
