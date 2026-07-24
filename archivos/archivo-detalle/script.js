@@ -1,4 +1,7 @@
 const DEFAULT_LOGO = '/assets/2026_FIFA_World_Cup_emblem.png';
+const RECORDS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/records/';
+const RECORDS_PROXY_URL = `https://proxy.corsfix.com/?${RECORDS_API_URL}`;
+let activeHls;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -12,42 +15,89 @@ document.addEventListener('DOMContentLoaded', () => {
     loadRecordDetail(recordId);
 });
 
-async function fetchApiData(endpointUrl) {
-    const proxyUrl = `https://proxy.corsfix.com/?${endpointUrl}`;
-    const resProxy = await fetch(proxyUrl);
-    if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
-    return await resProxy.json();
+function getRecordsCollection(data) {
+    if (Array.isArray(data)) return data;
+    return data?.records || data?.data || data?.results || [];
 }
 
-function getEmbedUrl(rawUrl) {
+async function fetchRecordById(id) {
+    const data = await fetchWithCache(RECORDS_PROXY_URL, 30 * 60 * 1000);
+    return getRecordsCollection(data).find(record => String(record?.id) === String(id));
+}
+
+function getPlaybackSource(rawUrl) {
     try {
         const url = new URL(rawUrl);
 
         if (url.hostname.includes('youtube.com') && url.pathname === '/watch') {
             const videoId = url.searchParams.get('v');
-            return videoId ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}` : rawUrl;
+            return {
+                type: 'embed',
+                url: videoId
+                    ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}`
+                    : rawUrl
+            };
         }
 
         if (url.hostname === 'youtu.be') {
             const videoId = url.pathname.replace('/', '');
-            return videoId ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}` : rawUrl;
+            return {
+                type: 'embed',
+                url: videoId
+                    ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}`
+                    : rawUrl
+            };
         }
+
+        if (url.hostname.includes('sofascore.com') && url.pathname.includes('video-player')) {
+            const streamUrl = url.searchParams.get('url');
+            if (streamUrl) return { type: 'hls', url: streamUrl };
+        }
+
+        if (url.pathname.endsWith('.m3u8')) return { type: 'hls', url: rawUrl };
     } catch {
-        return rawUrl;
+        return { type: 'embed', url: rawUrl };
     }
 
-    return rawUrl;
+    return { type: 'embed', url: rawUrl };
+}
+
+function configurePlayer(record) {
+    const source = getPlaybackSource(record.url);
+    const iframe = document.getElementById('video-iframe');
+    const video = document.getElementById('video-player');
+
+    iframe.hidden = true;
+    video.hidden = true;
+
+    if (source.type === 'embed') {
+        iframe.src = source.url;
+        iframe.hidden = false;
+        return;
+    }
+
+    video.poster = record.thumbnail_url || '';
+    video.hidden = false;
+
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = source.url;
+        return;
+    }
+
+    if (window.Hls?.isSupported()) {
+        activeHls?.destroy();
+        activeHls = new window.Hls();
+        activeHls.loadSource(source.url);
+        activeHls.attachMedia(video);
+        return;
+    }
+
+    throw new Error('Este navegador no permite reproducir transmisiones HLS.');
 }
 
 async function loadRecordDetail(id) {
-    const endpointUrl = `https://wc-api-u378.onrender.com/wc-api/api/v1/records/${id}`;
-
     try {
-        let recordData = await fetchApiData(endpointUrl);
-
-        if (typeof recordData === 'string') {
-            try { recordData = JSON.parse(recordData); } catch (e) {}
-        }
+        const recordData = await fetchRecordById(id);
 
         if (!recordData || (!recordData.title && !recordData.url)) {
             throw new Error("La información de este video está incompleta o no se encuentra disponible.");
@@ -64,9 +114,8 @@ async function loadRecordDetail(id) {
 function renderPlayer(record) {
     document.title = `${record.title || 'Video'} - Archivos Mundial 2026`;
 
-    const iframe = document.getElementById('video-iframe');
     if (record.url) {
-        iframe.src = getEmbedUrl(record.url);
+        configurePlayer(record);
     } else {
         showError("El enlace de reproducción para este video no está disponible.");
         return;

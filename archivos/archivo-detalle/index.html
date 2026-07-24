@@ -7,6 +7,9 @@
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/archivos/archivo-detalle/styles.css">
+    <script src="/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1" defer></script>
+    <script src="/archivos/archivo-detalle/script.js" defer></script>
 </head>
 <body>
     <header class="detalle-header">
@@ -19,7 +22,8 @@
         <article id="record-detail-card" class="record-detail-card" style="display: none;">
 
             <div class="video-responsive-wrapper">
-                <iframe id="video-iframe" src="" title="Reproductor de Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <video id="video-player" controls playsinline preload="metadata" hidden></video>
+                <iframe id="video-iframe" src="" title="Reproductor de Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
             </div>
 
             <div class="record-info-section">
@@ -37,7 +41,5 @@
 
         </article>
     </main>
-
-    <script src="/archivos/archivo-detalle/script.js"></script>
 </body>
 </html>
