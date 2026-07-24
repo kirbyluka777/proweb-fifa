@@ -2,7 +2,7 @@ const HOME_API = 'https://wc-api-u378.onrender.com/wc-api/api/v1';
 
 async function getHomeData(endpoint) {
     const apiUrl = `${HOME_API}/${endpoint}`;
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+    const proxyUrl = `https://proxy.corsfix.com/?${apiUrl}`;
     return await fetchWithCache(proxyUrl);
 }
 
@@ -84,6 +84,21 @@ function renderBall(data) {
     showImage('home-ball-image', data.images_url?.[1] || data.images_url?.[0], `${data.name}, balón oficial`);
 }
 
+function renderMascot(data) {
+    const mascot = collection(data)[0];
+    const container = document.getElementById('home-mascot-media');
+    const imageUrl = mascot?.image_url || mascot?.image || mascot?.images?.[0];
+
+    if (!container || !imageUrl) return;
+
+    const image = document.createElement('img');
+    image.src = imageUrl;
+    image.alt = `${mascot.name || 'Mascota oficial'} del Mundial 2026`;
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    container.replaceChildren(image);
+}
+
 function renderSound(data) {
     showImage('home-sound-image', data.image_url, data.title);
 }
@@ -96,6 +111,7 @@ async function loadHome() {
         ['cities', renderCities],
         ['events', renderEvent],
         ['ball', renderBall],
+        ['mascots', renderMascot],
         ['sound', renderSound]
     ];
 
