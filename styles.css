@@ -138,7 +138,10 @@ main::before {
     align-items: center;
     gap: 10px;
 
+    max-width: 300px;
+
     clip-path: polygon(0% 0, 100% 0, 100% 100%, 15px 100%);
+    /* Since max-width caps the element, 100% safely resolves to that max width */
     transform: translateX(calc(100% - 50px));
     
     transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), color 0.2s ease;
@@ -149,17 +152,30 @@ main::before {
     cursor: pointer;
     text-decoration: none;
 
-    font-size: 1.5rem;
+    /* 2. Smaller font size to keep multi-line text compact and clean */
+    font-size: 1.1rem; 
     font-weight: 900;
     color: var(--fifa-blue);
+    
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+/* 3. Allow text inside the span to wrap naturally onto multiple lines */
+.pull-tab span {
+    display: inline-block;
+    white-space: normal; 
+    line-height: 1.2;
 }
 
 .tab-icon {
-    height: 1.2em;
+    height: 1.5em;
     width: auto;
     object-fit: contain;
+    /* 4. Prevents the icon from squishing when text wraps */
+    flex-shrink: 0; 
     transition: filter 0.2s ease;
 }
 
@@ -186,6 +202,7 @@ main::before {
 .pull-tab:hover::before, .pull-tab.is-expanded::before {
     transform: scaleX(1); 
 }
+
 .tab-icon {
     filter: brightness(0);
 }
