@@ -40,6 +40,16 @@ async function fetchApiData(endpointUrl) {
     return await fetchWithCache(proxyUrl)
 }
 
+function obtenerColeccion(data, propiedad) {
+    if (Array.isArray(data)) return data;
+
+    const contenido = data?.[propiedad] ?? data?.data ?? data;
+    if (Array.isArray(contenido)) return contenido;
+    if (contenido && typeof contenido === 'object') return Object.values(contenido);
+
+    return [];
+}
+
 async function loadMatchesData(filterParams = {}) {
     const baseUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/';
     const container = document.getElementById('matches-container');
@@ -63,7 +73,7 @@ async function loadMatchesData(filterParams = {}) {
                 ]);
 
                 if (citiesData) {
-                    const list = Array.isArray(citiesData) ? citiesData : (citiesData.cities || citiesData.data || []);
+                    const list = obtenerColeccion(citiesData, 'cities');
                     list.forEach(c => {
                         const id = c.id !== undefined ? c.id : (c.city_id !== undefined ? c.city_id : c.code);
                         const name = c.name || c.city_name || c.city || c.host_city || String(id);
@@ -72,7 +82,7 @@ async function loadMatchesData(filterParams = {}) {
                 }
 
                 if (teamsData) {
-                    const list = Array.isArray(teamsData) ? teamsData : (teamsData.teams || teamsData.data || []);
+                    const list = obtenerColeccion(teamsData, 'teams');
                     list.forEach(t => {
                         const id = t.id !== undefined ? t.id : (t.team_id !== undefined ? t.team_id : (t.code !== undefined ? t.code : t.abbreviation));
                         const name = t.name || t.team_name || t.country || String(id);
@@ -85,7 +95,7 @@ async function loadMatchesData(filterParams = {}) {
                 }
 
                 if (roundsData) {
-                    const list = Array.isArray(roundsData) ? roundsData : (roundsData.rounds || roundsData.data || []);
+                    const list = obtenerColeccion(roundsData, 'rounds');
                     list.forEach(r => {
                         const id = r.id !== undefined ? r.id : (r.round !== undefined ? r.round : r.round_number);
                         const name = r.name || r.round_name || r.title || `Ronda ${id}`;
@@ -124,7 +134,8 @@ async function loadMatchesData(filterParams = {}) {
         const parsedMatches = allMatches.map(match => {
             const homeIdStr = (match.home_id !== undefined && match.home_id !== null) ? String(match.home_id).trim() : '';
             const awayIdStr = (match.away_id !== undefined && match.away_id !== null) ? String(match.away_id).trim() : '';
-            const cityIdStr = (match.city !== undefined && match.city !== null) ? String(match.city).trim() : '';
+            const cityId = match.city_id ?? match.city?.id ?? match.city;
+            const cityIdStr = (cityId !== undefined && cityId !== null) ? String(cityId).trim() : '';
             const roundIdStr = (match.round !== undefined && match.round !== null) ? String(match.round).trim() : '';
 
             const homeName = teamsMap[homeIdStr.toLowerCase()] || homeIdStr || 'Por definir';
