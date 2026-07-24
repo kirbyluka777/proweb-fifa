@@ -1,0 +1,108 @@
+/* Contenedor principal con el fondo oscuro del diseño */
+.matches-page-wrapper {
+    background-color: #110d24; /* Tono morado/azul oscuro similar a la imagen */
+    padding: 2rem;
+    min-height: calc(100vh - 80px);
+}
+
+/* Barra de filtros blanca */
+.filters {
+    background: #ffffff;
+    padding: 1.2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.filters select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 0.9rem;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Tarjetas de partido horizontales */
+.match-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 1.2rem 2rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.match-card:hover {
+    transform: translateX(4px);
+}
+
+.match-teams {
+    font-size: 1.1rem;
+    color: #222;
+    width: 30%;
+}
+
+.match-teams strong {
+    font-weight: 800;
+}
+
+.match-info {
+    color: #555;
+    font-size: 0.95rem;
+    width: 40%;
+    text-align: center;
+}
+
+/* Botones inclinados (Estilo único de la imagen) */
+.btn-slanted {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.6rem 1.8rem;
+    border: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    /* Corta los bordes en ángulo sin deformar el texto interior */
+    clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+    transition: background-color 0.2s;
+}
+
+.btn-slanted:hover {
+    background-color: #333333;
+}
+
+/* Texto de carga y mensajes vacíos */
+.loading-text, .no-results {
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem 0;
+}
+
+/* Diseño Responsivo */
+@media (max-width: 768px) {
+    .match-card {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    .match-teams, .match-info {
+        width: 100%;
+    }
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
