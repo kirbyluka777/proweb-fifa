@@ -2,25 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Archivos del Torneo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivos y Resúmenes del Torneo - Mundial 2026</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Inyección dinámica de tu Header -->
     <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
     const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
     header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
     </iframe>
-    <main>
-        <div class="grid">
-            <div class="card">
-                <h3>Qatar 2022 - Resumen Final</h3>
-                <a href="archivo-detalle/index.html" class="btn">Ver Video</a>
-            </div>
-            <div class="card">
-                <h3>Rusia 2018 - Mejores Goles</h3>
-                <a href="archivo-detalle/index.html" class="btn">Ver Video</a>
-            </div>
+
+    <main class="archives-main">
+        <section class="archives-hero">
+            <h1>Archivos del Torneo</h1>
+            <p>Revive los mejores momentos, goles inolvidables y resúmenes de partidos históricos de la Copa Mundial.</p>
+        </section>
+
+        <!-- Contenedor dinámico de los videos -->
+        <div id="records-grid" class="records-grid">
+            <div class="status-msg">Cargando catálogo de videos...</div>
         </div>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>

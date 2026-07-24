@@ -2,24 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Archivo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video - Mundial 2026</title>
     <link rel="stylesheet" href="../../styles.css">
-    <style>
-        .video-container { background: #000; height: 400px; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;}
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Detalle del Video</h1>
-        <a href="../index.html" style="color:white;">Volver a Archivos</a>
+    <header class="detalle-header">
+        <a href="../index.html" class="btn-back">← Volver al Catálogo</a>
     </header>
-    <main>
-        <div class="video-container">
-            [Reproductor de Video]
-        </div>
-        <img src="logo-qatar.png" alt="Logo Qatar 2022" style="max-height:80px;">
-        <h2>Resumen Final de Qatar 2022</h2>
-        <p>Descripción detallada de los momentos clave del torneo...</p>
+
+    <main class="player-main">
+        <div id="loading-container" class="status-msg">Cargando reproductor de video...</div>
+
+        <!-- Tarjeta principal del reproductor -->
+        <article id="record-detail-card" class="record-detail-card" style="display: none;">
+            
+            <!-- Contenedor del video 16:9 -->
+            <div class="video-responsive-wrapper">
+                <iframe id="video-iframe" src="" title="Reproductor de Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <!-- Información detallada y Logo -->
+            <div class="record-info-section">
+                <div class="text-data">
+                    <span id="record-subtitle" class="badge-subtitle">Resumen</span>
+                    <h1 id="record-title" class="title-main">Título del Video</h1>
+                    <p id="record-desc" class="desc-text">Descripción detallada del archivo o partido.</p>
+                </div>
+                
+                <div class="logo-box">
+                    <img id="tournament-logo" src="https://digitalhub.fifa.com/transform/c0288b07-db6c-4081-9fc1-9667bb20bb35/Tournament-thumbnail-4_3-1570px_1178px" alt="Logo Torneo">
+                    <span>Torneo Oficial</span>
+                </div>
+            </div>
+
+        </article>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
