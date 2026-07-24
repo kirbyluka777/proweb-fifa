@@ -2,19 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Próximos Torneos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Próximos Torneos y Eventos - Mundial 2026</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Inyección dinámica de tu Header -->
     <iframe src="../header.html" hidden onload="const doc = this.contentDocument;
     const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
     header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
     </iframe>
-    <main>
-        <ul>
-            <li><a href="#">Mundial Femenino 2027</a></li>
-            <li><a href="#">Mundial Sub-20</a></li>
-        </ul>
+
+    <main class="events-main">
+        <section class="events-hero">
+            <h1>Próximos Torneos y Eventos</h1>
+            <p>Explora las competiciones oficiales de la FIFA y accede a todas sus novedades, calendarios y entradas.</p>
+        </section>
+
+        <!-- Contenedor donde el JS inyectará las tarjetas -->
+        <div id="events-grid" class="events-grid">
+            <div class="status-msg">Cargando eventos oficiales...</div>
+        </div>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
