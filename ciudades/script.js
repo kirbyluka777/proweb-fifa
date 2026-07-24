@@ -25,9 +25,7 @@ function iniciarPagina() {
 }
 
 async function fetchApiData(endpointUrl) {
-
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    return await fetchWithCache(proxyUrl)
+    return await fetchWithCache(endpointUrl)
 }
 
 function parseCitiesResponse(data) {
@@ -43,7 +41,7 @@ function parseCitiesResponse(data) {
 }
 
 async function loadCitiesData() {
-    const endpointUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/cities';
+    const endpointUrl = '/api/v1/cities';
     const citiesGrid = document.getElementById('cities-grid');
 
     if (citiesGrid) {

@@ -1,4 +1,4 @@
-const TEAMS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/teams';
+const TEAMS_API_URL = '/api/v1/teams';
 
 let teams = [];
 let selectedConfederation = 'all';
@@ -10,16 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function requestApi(url) {
-    try {
-        return await fetchJson(url);
-    } catch (directError) {
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-        try {
-            return await fetchJson(proxyUrl);
-        } catch {
-            throw directError;
-        }
-    }
+    return await fetchJson(url);
 }
 
 async function fetchJson(url) {

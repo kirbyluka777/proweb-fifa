@@ -1,6 +1,5 @@
 const DEFAULT_LOGO = '/assets/2026_FIFA_World_Cup_emblem.png';
-const RECORDS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/records/';
-const RECORDS_PROXY_URL = `https://proxy.corsfix.com/?${RECORDS_API_URL}`;
+const RECORDS_API_URL = '/api/v1/records/';
 let activeHls;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +20,7 @@ function getRecordsCollection(data) {
 }
 
 async function fetchRecordById(id) {
-    const data = await fetchWithCache(RECORDS_PROXY_URL, 30 * 60 * 1000);
+    const data = await fetchWithCache(RECORDS_API_URL, 30 * 60 * 1000);
     return getRecordsCollection(data).find(record => String(record?.id) === String(id));
 }
 

@@ -1,5 +1,4 @@
-const SOUND_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/sound';
-const SOUND_PROXY_URL = `https://proxy.corsfix.com/?${SOUND_API_URL}`;
+const SOUND_API_URL = '/api/v1/sound';
 
 function createSoundFeature(feature) {
     const article = document.createElement('article');
@@ -58,7 +57,7 @@ async function loadSound() {
     const features = document.querySelector('#sound-features');
 
     try {
-        renderSound(await fetchWithCache(SOUND_PROXY_URL));
+        renderSound(await fetchWithCache(SOUND_API_URL));
     } catch (error) {
         console.error('No se pudo cargar la banda sonora:', error);
         const status = document.createElement('p');

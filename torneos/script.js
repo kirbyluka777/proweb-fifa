@@ -1,22 +1,14 @@
 const DEFAULT_EVENT_IMAGE = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80';
-const EVENTS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/events';
+const EVENTS_API_URL = '/api/v1/events';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadEvents();
 });
 
 async function fetchApiData(endpointUrl) {
-    try {
-        const res = await fetch(endpointUrl);
-        if (res.ok) return await res.json();
-    } catch (e) {
-        console.warn(`[Intento directo fallido], probando proxy CORS...`);
-    }
-
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    const resProxy = await fetch(proxyUrl);
-    if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
-    return await resProxy.json();
+    const response = await fetch(endpointUrl);
+    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+    return await response.json();
 }
 
 async function loadEvents() {

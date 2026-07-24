@@ -1,4 +1,4 @@
-const RANKING_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/ranking';
+const RANKING_API_URL = '/api/v1/ranking';
 
 let ranking = [];
 let selectedConfederation = 'all';
@@ -23,21 +23,7 @@ async function fetchJson(url) {
 }
 
 async function requestRanking() {
-    try {
-        return await fetchJson(RANKING_API_URL);
-    } catch (directError) {
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(RANKING_API_URL)}`;
-        try {
-            return await fetchJson(proxyUrl);
-        } catch {
-            const fallbackProxyUrl = `https://proxy.cors.sh/${RANKING_API_URL}`;
-            try {
-                return await fetchJson(fallbackProxyUrl);
-            } catch {
-                throw directError;
-            }
-        }
-    }
+    return await fetchJson(RANKING_API_URL);
 }
 
 async function loadRanking() {

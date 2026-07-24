@@ -1,5 +1,4 @@
-const MASCOTS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/mascots';
-const MASCOTS_PROXY_URL = `https://proxy.corsfix.com/?${MASCOTS_API_URL}`;
+const MASCOTS_API_URL = '/api/v1/mascots';
 const COUNTRY_NAMES = {
     Canada: 'Canadá',
     Mexico: 'México',
@@ -52,7 +51,7 @@ async function loadMascots() {
     if (!container) return;
 
     try {
-        const data = await fetchWithCache(MASCOTS_PROXY_URL);
+        const data = await fetchWithCache(MASCOTS_API_URL);
         const mascots = getMascotsCollection(data);
 
         if (!mascots.length) throw new Error('La API no devolvió mascotas.');

@@ -35,9 +35,7 @@ function iniciarPagina() {
 }
 
 async function fetchApiData(endpointUrl) {
-
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    return await fetchWithCache(proxyUrl)
+    return await fetchWithCache(endpointUrl)
 }
 
 function obtenerColeccion(data, propiedad) {
@@ -51,7 +49,7 @@ function obtenerColeccion(data, propiedad) {
 }
 
 async function loadMatchesData(filterParams = {}) {
-    const baseUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/';
+    const baseUrl = '/api/v1/';
     const container = document.getElementById('matches-container');
     const filtroCiudad = document.getElementById('filtro-ciudad');
     const filtroRonda = document.getElementById('filtro-ronda');

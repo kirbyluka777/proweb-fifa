@@ -1,4 +1,4 @@
-const NEWS_API = 'https://wc-api-u378.onrender.com/wc-api/api/v1/news';
+const NEWS_API = '/api/v1/news';
 
 function renderNewsDetail(news) {
     const detail = document.getElementById('news-detail');
@@ -38,11 +38,7 @@ async function loadNewsDetail() {
     if (!id) return;
 
     const apiUrl = `${NEWS_API}/${encodeURIComponent(id)}`;
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-
-    renderNewsDetail(await fetchWithCache(proxyUrl));
+    renderNewsDetail(await fetchWithCache(apiUrl));
 }
 
 document.addEventListener('DOMContentLoaded', loadNewsDetail);

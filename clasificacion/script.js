@@ -1,4 +1,4 @@
-const API_BASE = 'https://wc-api-u378.onrender.com/wc-api/api/v1';
+const API_BASE = '/api/v1';
 
 let standingsByGroup = {};
 let groupNames = [];
@@ -9,8 +9,7 @@ let redrawBracket = () => {};
 
 async function fetchApi(endpoint) {
     const apiUrl = `${API_BASE}/${endpoint}`;
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
-    return await fetchWithCache(proxyUrl)
+    return await fetchWithCache(apiUrl)
 }
 
 function asCollection(data) {

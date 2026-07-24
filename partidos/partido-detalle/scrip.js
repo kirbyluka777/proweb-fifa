@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loadMatchDetails(matchId) {
-    const baseUrl = `https://wc-api-u378.onrender.com/wc-api/api/v1/matches/${matchId}`;
-    const getProxyUrl = (url) => `https://proxy.corsfix.com/?${url}`;
+    const baseUrl = `/api/v1/matches/${encodeURIComponent(matchId)}`;
 
     const matchHeader = document.querySelector('.match-header');
     const highlightsSection = document.getElementById('highlights-section');
@@ -19,7 +18,7 @@ async function loadMatchDetails(matchId) {
 
     try {
 
-        const match = await fetchWithCache(getProxyUrl(baseUrl))
+        const match = await fetchWithCache(baseUrl)
 
         const homeTeam = match.home_team?.name || match.home_team?.country || 'Local';
         const awayTeam = match.away_team?.name || match.away_team?.country || 'Visitante';

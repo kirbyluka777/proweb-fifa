@@ -1,9 +1,8 @@
 async function loadBallData() {
-    const apiUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/ball';
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+    const apiUrl = '/api/v1/ball';
 
     try {
-        const data = await fetchWithCache(proxyUrl)
+        const data = await fetchWithCache(apiUrl)
 
         const images = Array.isArray(data.images_url) ? data.images_url.filter(Boolean) : [];
         const features = Array.isArray(data.features) ? data.features : [];

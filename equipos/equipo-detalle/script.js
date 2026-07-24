@@ -1,4 +1,4 @@
-const TEAMS_API_BASE_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/teams';
+const TEAMS_API_BASE_URL = '/api/v1/teams';
 const POSITION_ORDER = ['Arquero', 'Defensor', 'Mediocampista', 'Delantero'];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,16 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function requestApi(url) {
-    try {
-        return await fetchJson(url);
-    } catch (directError) {
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-        try {
-            return await fetchJson(proxyUrl);
-        } catch {
-            throw directError;
-        }
-    }
+    return await fetchJson(url);
 }
 
 async function fetchJson(url) {

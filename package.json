@@ -1,5 +1,13 @@
 {
+  "name": "proweb-fifa",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2026-07-24"
+  },
   "dependencies": {
     "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
   }
 }

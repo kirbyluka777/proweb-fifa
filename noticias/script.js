@@ -1,4 +1,4 @@
-const NEWS_API = 'https://wc-api-u378.onrender.com/wc-api/api/v1/news';
+const NEWS_API = '/api/v1/news';
 let allNews = [];
 let currentIndex = 1;
 const BATCH_SIZE = 6;
@@ -90,9 +90,7 @@ function renderNextBatch() {
 }
 async function loadNews() {
     try {
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(NEWS_API)}`;
-        
-        allNews = await fetchWithCache(proxyUrl, 30 * 60 * 1000);
+        allNews = await fetchWithCache(NEWS_API, 30 * 60 * 1000);
 
         if (!Array.isArray(allNews) || allNews.length === 0) return;
 

@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchApiData(endpointUrl) {
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
-    return await fetchWithCache(proxyUrl)
+    return await fetchWithCache(endpointUrl)
 }
 
 function validateImageUrl(url) {
@@ -29,7 +28,7 @@ function validateImageUrl(url) {
 }
 
 async function loadCityDetails(id) {
-    const endpointUrl = `https://wc-api-u378.onrender.com/wc-api/api/v1/cities/${id}`;
+    const endpointUrl = `/api/v1/cities/${encodeURIComponent(id)}`;
     const main = document.getElementById('main-content');
 
     try {
@@ -143,7 +142,7 @@ async function loadRealMatches(currentCityId) {
     const matchesList = document.getElementById('matches-list');
     matchesList.innerHTML = '<li class="status-msg">Buscando partidos programados en la API...</li>';
 
-    const matchesEndpoint = 'https://wc-api-u378.onrender.com/wc-api/api/v1/matches';
+    const matchesEndpoint = '/api/v1/matches';
 
     try {
         let rawMatches = await fetchApiData(matchesEndpoint);

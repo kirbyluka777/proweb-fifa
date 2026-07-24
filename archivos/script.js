@@ -1,5 +1,4 @@
-const RECORDS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/records/';
-const RECORDS_PROXY_URL = `https://proxy.corsfix.com/?${RECORDS_API_URL}`;
+const RECORDS_API_URL = '/api/v1/records/';
 const RECORDS_PER_PAGE = 12;
 const DEFAULT_THUMBNAIL = '/assets/2026_FIFA_World_Cup_emblem.png';
 
@@ -92,7 +91,7 @@ function renderRecords() {
 }
 
 async function fetchRecords() {
-    return await fetchWithCache(RECORDS_PROXY_URL, 30 * 60 * 1000);
+    return await fetchWithCache(RECORDS_API_URL, 30 * 60 * 1000);
 }
 
 async function loadRecords() {
