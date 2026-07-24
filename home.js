@@ -2,8 +2,8 @@ const HOME_API = 'https://wc-api-u378.onrender.com/wc-api/api/v1';
 
 async function getHomeData(endpoint) {
     const apiUrl = `${HOME_API}/${endpoint}`;
-    const proxyUrl = `https://proxy.corsfix.com/?${apiUrl}`;
-    return await fetchWithCache(proxyUrl);
+    // const proxyUrl = `https://proxy.corsfix.com/?${apiUrl}`;
+    return await fetchWithCache(apiUrl);
 }
 
 function collection(data) {
