@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadMatchDetails(matchId) {
     const baseUrl = `https://wc-api-u378.onrender.com/wc-api/api/v1/matches/${matchId}`;
-    const getProxyUrl = (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    const getProxyUrl = (url) => `https://proxy.corsfix.com/?${url}`;
 
     const matchHeader = document.querySelector('.match-header');
+    const highlightsSection = document.getElementById('highlights-section');
     const pitchSection = document.querySelector('.pitch');
     const statsSection = document.querySelector('.stats');
     const timelineSection = document.querySelector('.timeline');
@@ -84,6 +85,8 @@ async function loadMatchDetails(matchId) {
         }
 
         matchHeader.innerHTML = headerHtml;
+
+        renderHighlights(match.highlight, highlightsSection);
 
         const homeLineup = match.line_ups?.home;
         const awayLineup = match.line_ups?.away;
@@ -234,12 +237,139 @@ async function loadMatchDetails(matchId) {
             <h1>Error al cargar el partido</h1>
             <p>No se pudo conectar con el servidor o el ID seleccionado no existe.</p>
         `;
+        highlightsSection.hidden = true;
         pitchSection.hidden = true;
         statsSection.hidden = true;
         timelineSection.hidden = true;
         lineupsSection.hidden = true;
     } finally {
         detailPage?.setAttribute('aria-busy', 'false');
+    }
+}
+
+function renderHighlights(highlights, section) {
+    if (!section) return;
+
+    const clips = Array.isArray(highlights)
+        ? highlights.filter(clip => getSafeHttpUrl(clip?.url))
+        : [];
+
+    section.innerHTML = '';
+
+    const heading = document.createElement('div');
+    heading.className = 'section-heading';
+    heading.innerHTML = `
+        <div>
+            <p>Momentos destacados</p>
+            <h2>Highlights</h2>
+        </div>
+        ${clips.length ? `<span class="section-count">${clips.length} videos</span>` : ''}
+    `;
+    section.appendChild(heading);
+
+    if (clips.length === 0) {
+        const emptyState = document.createElement('p');
+        emptyState.className = 'empty-state';
+        emptyState.textContent = 'Los highlights de este partido aún no están disponibles.';
+        section.appendChild(emptyState);
+        return;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'highlights-grid';
+    section.appendChild(grid);
+
+    const loadMoreContainer = document.createElement('div');
+    loadMoreContainer.className = 'highlights-more';
+    const loadMoreButton = document.createElement('button');
+    loadMoreButton.className = 'highlights-more-button';
+    loadMoreButton.type = 'button';
+    loadMoreButton.textContent = 'Ver más highlights';
+    loadMoreContainer.appendChild(loadMoreButton);
+    section.appendChild(loadMoreContainer);
+
+    const batchSize = 6;
+    let renderedCount = 0;
+
+    const renderNextBatch = () => {
+        clips.slice(renderedCount, renderedCount + batchSize).forEach((clip, index) => {
+            grid.appendChild(createHighlightCard(clip, renderedCount + index));
+        });
+
+        renderedCount = Math.min(renderedCount + batchSize, clips.length);
+        loadMoreContainer.hidden = renderedCount >= clips.length;
+    };
+
+    loadMoreButton.addEventListener('click', renderNextBatch);
+    renderNextBatch();
+}
+
+function createHighlightCard(clip, index) {
+    const card = document.createElement('article');
+    card.className = 'highlight-card';
+
+    const link = document.createElement('a');
+    link.className = 'highlight-card__link';
+    link.href = getSafeHttpUrl(clip.url);
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', `Reproducir ${clip.title || 'highlight del partido'} (abre en una pestaña nueva)`);
+
+    const media = document.createElement('span');
+    media.className = 'highlight-card__media';
+
+    const thumbnailUrl = getSafeHttpUrl(clip.thumbnail_url);
+    if (thumbnailUrl) {
+        const image = document.createElement('img');
+        image.src = thumbnailUrl;
+        image.alt = '';
+        image.loading = index < 3 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        image.addEventListener('error', () => {
+            image.remove();
+            media.classList.add('highlight-card__media--fallback');
+        }, { once: true });
+        media.appendChild(image);
+    } else {
+        media.classList.add('highlight-card__media--fallback');
+    }
+
+    const playIcon = document.createElement('span');
+    playIcon.className = 'highlight-card__play';
+    playIcon.setAttribute('aria-hidden', 'true');
+    playIcon.textContent = '▶';
+    media.appendChild(playIcon);
+
+    const body = document.createElement('span');
+    body.className = 'highlight-card__body';
+
+    const subtitle = document.createElement('span');
+    subtitle.className = 'highlight-card__type';
+    subtitle.textContent = clip.subtitle || 'Video del partido';
+
+    const title = document.createElement('strong');
+    title.className = 'highlight-card__title';
+    title.textContent = clip.title || 'Momento destacado';
+
+    const action = document.createElement('span');
+    action.className = 'highlight-card__action';
+    action.textContent = 'Ver video ↗';
+
+    body.append(subtitle, title, action);
+    link.append(media, body);
+    card.appendChild(link);
+
+    return card;
+}
+
+function getSafeHttpUrl(value) {
+    if (typeof value !== 'string' || !value.trim()) return '';
+
+    try {
+        const url = new URL(value);
+        return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+    } catch {
+        return '';
     }
 }
 

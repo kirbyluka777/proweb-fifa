@@ -221,6 +221,171 @@
     text-transform: uppercase;
 }
 
+.section-count {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.highlights {
+    border-top-color: var(--fifa-pink);
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.highlight-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 0.25rem solid var(--fifa-blue);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.highlight-card:nth-child(even) {
+    border-top-color: var(--fifa-pink);
+}
+
+.highlight-card__link {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+}
+
+.highlight-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(37, 101, 255, 0.38), rgba(255, 0, 127, 0.28)),
+        #10101a;
+}
+
+.highlight-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.highlight-card__media--fallback::before {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(255, 255, 255, 0.18);
+    content: "26";
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-style: italic;
+    font-weight: 800;
+}
+
+.highlight-card__play {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    background: var(--fifa-lime);
+    clip-path: var(--skew);
+    color: #10101a;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.highlight-card__body {
+    display: flex;
+    min-height: 9rem;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+.highlight-card__type {
+    margin-bottom: 0.45rem;
+    color: var(--fifa-lime);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.highlight-card__title {
+    color: #ffffff;
+    font-size: 1.05rem;
+    line-height: 1.3;
+}
+
+.highlight-card__action {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    color: var(--fifa-blue);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.highlight-card__link:hover .highlight-card__media img {
+    transform: scale(1.035);
+}
+
+.highlight-card__link:hover .highlight-card__action,
+.highlight-card__link:focus-visible .highlight-card__action {
+    color: #ffffff;
+}
+
+.highlight-card__link:focus-visible {
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: -2px;
+}
+
+.highlights-more {
+    padding: 0 1.5rem 1.5rem;
+    text-align: center;
+}
+
+.highlights-more[hidden] {
+    display: none;
+}
+
+.highlights-more-button {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--fifa-lime);
+    border-radius: 0;
+    background: transparent;
+    color: var(--fifa-lime);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.highlights-more-button:hover,
+.highlights-more-button:focus-visible {
+    background: var(--fifa-lime);
+    color: #10101a;
+}
+
+.highlights-more-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 0.25rem;
+}
+
 .pitch {
     border-top-color: var(--fifa-lime);
 }
@@ -395,6 +560,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .highlights-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .match-insights,
     .pitch-lineup,
     .lineups-grid {
@@ -438,9 +607,18 @@
     }
 
     .match-meta,
+    .highlights-grid,
     .team-pitch ul,
     .team-lineup-col ul {
         grid-template-columns: 1fr;
+    }
+
+    .highlights-grid {
+        padding: 1rem;
+    }
+
+    .highlights-more {
+        padding: 0 1rem 1rem;
     }
 
     .section-heading,
