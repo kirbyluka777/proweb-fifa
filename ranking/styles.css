@@ -1,0 +1,531 @@
+.ranking-page,
+.ranking-page * {
+    box-sizing: border-box;
+}
+
+.ranking-page {
+    max-width: 1200px;
+}
+
+.ranking-heading {
+    margin-bottom: 2rem;
+}
+
+.ranking-heading > p:last-child {
+    max-width: 43rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.ranking-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(16rem, 0.8fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.podium-panel,
+.ranking-summary,
+.ranking-controls,
+.ranking-table-panel {
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(12, 12, 24, 0.68);
+}
+
+.podium-panel {
+    padding: clamp(1.1rem, 3vw, 1.75rem);
+    border-top: 0.35rem solid var(--fifa-blue);
+}
+
+.section-kicker,
+.control-label,
+.summary-label {
+    margin: 0;
+    color: var(--fifa-lime);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.section-heading {
+    margin: 0.2rem 0 1.25rem;
+    color: #fff;
+    font-size: clamp(1.55rem, 4vw, 2.35rem);
+    text-transform: uppercase;
+}
+
+.podium {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas: "second first third";
+    align-items: end;
+    gap: 0.75rem;
+    min-height: 18rem;
+}
+
+.podium-card {
+    --team-accent: var(--fifa-blue);
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 13.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1.2rem 0.75rem 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 0.3rem solid var(--team-accent);
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--team-accent) 15%, transparent), transparent 55%),
+        #151522;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.podium-card:hover,
+.podium-card:focus-visible {
+    transform: translateY(-0.35rem);
+    border-color: var(--team-accent);
+}
+
+.podium-card:focus-visible,
+.filter-button:focus-visible {
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 2px;
+}
+
+.podium-card[data-rank="1"] {
+    grid-area: first;
+    min-height: 17rem;
+    --team-accent: var(--fifa-gold);
+}
+
+.podium-card[data-rank="2"] {
+    grid-area: second;
+    --team-accent: #c8d0dc;
+}
+
+.podium-card[data-rank="3"] {
+    grid-area: third;
+    --team-accent: #cd7f32;
+}
+
+.podium-rank {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.75rem;
+    color: var(--team-accent);
+    font-size: 1.65rem;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.podium-flag {
+    width: 4.25rem;
+    height: 2.85rem;
+    margin-bottom: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: #fff;
+    object-fit: cover;
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.35);
+}
+
+.podium-code-fallback {
+    display: grid;
+    width: 4.25rem;
+    height: 2.85rem;
+    place-items: center;
+    margin-bottom: 0.8rem;
+    background: var(--team-accent);
+    color: #111;
+    font-weight: 800;
+}
+
+.podium-name {
+    overflow: hidden;
+    max-width: 100%;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    font-style: italic;
+    font-weight: 800;
+    line-height: 1.05;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+
+.podium-points {
+    margin-top: 0.45rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.ranking-summary {
+    display: grid;
+    align-content: start;
+    border-top: 0.35rem solid var(--fifa-pink);
+}
+
+.summary-item {
+    padding: 1.35rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.summary-item:last-child {
+    border-bottom: 0;
+}
+
+.summary-value {
+    display: block;
+    margin-top: 0.25rem;
+    color: #fff;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-style: italic;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.ranking-controls {
+    display: grid;
+    grid-template-columns: minmax(14rem, 1fr) minmax(0, 2fr) auto;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1.15rem;
+    border-top: 0.35rem solid var(--fifa-blue);
+}
+
+.search-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.search-input {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 0;
+    background: #090a0e;
+    color: #fff;
+    font: inherit;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.search-input:focus {
+    border-color: var(--fifa-lime);
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 2px;
+}
+
+.confederation-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.filter-button {
+    min-height: 2.35rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #090a0e;
+    color: rgba(255, 255, 255, 0.7);
+    clip-path: var(--skew);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.filter-button:hover,
+.filter-button:focus-visible {
+    border-color: var(--fifa-blue);
+    color: #fff;
+}
+
+.filter-button.active {
+    border-color: transparent;
+    background: var(--a-gradient);
+    color: #fff;
+}
+
+.results-count {
+    min-width: max-content;
+    margin: 0 0 0.55rem;
+    color: var(--fifa-lime);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.ranking-table-panel {
+    overflow: hidden;
+    border-top: 0.35rem solid var(--fifa-pink);
+}
+
+.ranking-table-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ranking-table-heading h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.updated-label {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.ranking-table-wrap {
+    overflow-x: auto;
+}
+
+.ranking-table {
+    min-width: 44rem;
+}
+
+.ranking-table th:first-child,
+.ranking-table td:first-child {
+    width: 5rem;
+}
+
+.ranking-table th:nth-child(2),
+.ranking-table td:nth-child(2) {
+    width: 100%;
+    text-align: left;
+}
+
+.ranking-table td {
+    height: 4rem;
+}
+
+.rank-number {
+    color: #fff;
+    font-size: 1.05rem;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.rank-number.top-rank {
+    color: var(--fifa-lime);
+}
+
+.team-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.team-link:hover,
+.team-link:focus-visible {
+    color: var(--fifa-blue);
+    text-decoration: underline;
+}
+
+.team-link:focus-visible {
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 3px;
+}
+
+.team-flag {
+    width: 2.3rem;
+    height: 1.55rem;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: #fff;
+    object-fit: cover;
+}
+
+.flag-code {
+    display: inline-grid;
+    width: 2.3rem;
+    height: 1.55rem;
+    place-items: center;
+    flex: 0 0 auto;
+    background: rgba(76, 201, 240, 0.18);
+    color: var(--fifa-blue);
+    font-size: 0.62rem;
+    font-weight: 800;
+}
+
+.team-name-wrap {
+    display: grid;
+}
+
+.team-code {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+}
+
+.confederation-tag {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid rgba(76, 201, 240, 0.35);
+    color: var(--fifa-blue);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+.movement {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 700;
+}
+
+.movement-up {
+    color: var(--fifa-lime);
+}
+
+.movement-down {
+    color: #ff7891;
+}
+
+.movement-same {
+    color: rgba(255, 255, 255, 0.48);
+}
+
+.ranking-status {
+    display: grid;
+    min-height: 16rem;
+    place-items: center;
+    align-content: center;
+    gap: 0.8rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.ranking-status p {
+    max-width: 34rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.ranking-status.error p {
+    color: #ffb0bd;
+}
+
+.loading-spinner {
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0.25rem solid rgba(255, 255, 255, 0.18);
+    border-top-color: var(--fifa-lime);
+    border-radius: 50%;
+    animation: ranking-spin 0.8s linear infinite;
+}
+
+.retry-button {
+    min-height: 2.6rem;
+    border: 0;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+@keyframes ranking-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .podium-card {
+        transition: none;
+    }
+
+    .loading-spinner {
+        animation-duration: 1.8s;
+    }
+}
+
+@media (max-width: 850px) {
+    .ranking-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .ranking-summary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .summary-item {
+        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 0;
+    }
+
+    .summary-item:last-child {
+        border-right: 0;
+    }
+
+    .ranking-controls {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+
+    .results-count {
+        margin: 0;
+    }
+}
+
+@media (max-width: 620px) {
+    .ranking-page {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .podium {
+        grid-template-columns: 1fr;
+        grid-template-areas: "first" "second" "third";
+        min-height: 0;
+    }
+
+    .podium-card,
+    .podium-card[data-rank="1"] {
+        min-height: 10rem;
+    }
+
+    .ranking-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-item {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .ranking-table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .updated-label {
+        text-align: left;
+    }
+}

@@ -3,10 +3,7 @@ async function loadBallData() {
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
 
     try {
-        const response = await fetch(proxyUrl);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
+        const data = await fetchWithCache(proxyUrl)
 
         const images = Array.isArray(data.images_url) ? data.images_url.filter(Boolean) : [];
         const features = Array.isArray(data.features) ? data.features : [];

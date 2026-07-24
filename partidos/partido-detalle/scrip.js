@@ -16,7 +16,8 @@ async function loadMatchDetails(matchId) {
     const lineupsSection = document.querySelector('section:last-of-type');
 
     try {
-        const match = fetchWithCache(getProxyUrl(baseUrl))
+
+        const match = await fetchWithCache(getProxyUrl(baseUrl))
 
         // 1. EXTRAER DATOS
         const homeTeam = match.home_team?.name || match.home_team?.country || 'Local';

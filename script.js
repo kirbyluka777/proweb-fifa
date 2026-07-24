@@ -23,7 +23,13 @@ async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
     }
 
     console.log(`[Network Request] Fetching new data: ${url}`);
-    const data = fetchWithCache(url)
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
 
     const cacheData = {
         data: data,
@@ -38,3 +44,39 @@ async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
 
     return data;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const pullTab = document.querySelector('.pull-tab');
+
+    if (!pullTab) return;
+
+    pullTab.addEventListener('click', (e) => {
+        const isExpanded = pullTab.classList.contains('is-expanded');
+        const clickedOnIcon = e.target.closest('.tab-icon');
+
+        if (!isExpanded) {
+            // State 1: Collapsed -> First click expands it and blocks the link
+            e.preventDefault();
+            pullTab.classList.add('is-expanded');
+        } else {
+            // State 2: Already Expanded
+            if (clickedOnIcon) {
+                // Clicking the UN logo again collapses it ("un-expand")
+                e.preventDefault();
+                pullTab.classList.remove('is-expanded');
+            }
+            // If they click the text instead, e.preventDefault() is NOT called, 
+            // so the browser successfully takes them to the link!
+        }
+    });
+    document.addEventListener('click', (e) => {
+        if (!pullTab.contains(e.target)) {
+            pullTab.classList.remove('is-expanded');
+        }
+    });
+    window.addEventListener('scroll', () => {
+        if (pullTab.classList.contains('is-expanded')) {
+            pullTab.classList.remove('is-expanded');
+        }
+    }, { passive: true });
+});

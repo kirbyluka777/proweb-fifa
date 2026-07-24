@@ -42,7 +42,7 @@ async function loadNewsDetail() {
     const response = await fetch(proxyUrl);
     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
 
-    renderNewsDetail(await response.json());
+    renderNewsDetail(await fetchWithCache(proxyUrl));
 }
 
 document.addEventListener('DOMContentLoaded', loadNewsDetail);

@@ -144,7 +144,7 @@ main::before {
     transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), color 0.2s ease;
     z-index: 1000;
 
-    background: none;
+    background: var(--fifa-blue);
     border: none;
     cursor: pointer;
     text-decoration: none;
@@ -168,7 +168,6 @@ main::before {
     position: absolute;
     inset: 0;
 
-    background: var(--fifa-blue);
     clip-path: inherit;
 
     transform: scaleX(0);
@@ -178,16 +177,16 @@ main::before {
     z-index: -1;
 }
 
-.pull-tab:hover {
+.pull-tab:hover, .pull-tab.is-expanded {
     color: black;
     transform: translateX(0); 
     text-decoration: underline;
 }
 
-.pull-tab:hover::before {
+.pull-tab:hover::before, .pull-tab.is-expanded::before {
     transform: scaleX(1); 
 }
-.pull-tab:hover .tab-icon {
+.tab-icon {
     filter: brightness(0);
 }
 
@@ -326,6 +325,7 @@ h1,h2{
 }
 
 .btn {
+    font-weight: bold;
     position: relative;
     display: inline-block;
     overflow: hidden;
@@ -340,6 +340,16 @@ h1,h2{
 
     transition: color 0.2s ease;
     z-index: 1;
+    border: none;
+    cursor: pointer;
+}
+.btn:active {
+    background-color: white;
+    color: black;
+}
+
+.btn:active::before {
+    background-color: white ;
 }
 
 .btn::before {
