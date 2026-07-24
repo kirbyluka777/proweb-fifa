@@ -136,7 +136,13 @@ function createTeamCard(team) {
     const link = document.createElement('a');
     link.className = 'country-card-link';
     const encodedTeamId = encodeURIComponent(team.id);
-    link.href = `/equipos/equipo-detalle/?id=${encodedTeamId}#${encodedTeamId}`;
+
+    // Ensures the current path ends with a slash so it appends correctly
+    const basePath = window.location.pathname.endsWith('/') 
+        ? window.location.pathname 
+        : window.location.pathname + '/';
+
+    link.href = `${basePath}equipo-detalle/?id=${encodedTeamId}#${encodedTeamId}`;
     link.dataset.teamId = team.id;
     link.setAttribute('aria-label', `Ver detalles de ${team.name}`);
 
