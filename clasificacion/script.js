@@ -200,23 +200,32 @@ function teamCell(row) {
     const wrapper = document.createElement('div');
     const position = document.createElement('span');
     const name = document.createElement('span');
+    const team = row.team;
 
     wrapper.className = 'team-cell';
     position.className = 'position';
     position.textContent = row.position;
-    name.textContent = row.team?.name || row.team?.id || '';
+    name.textContent = team?.name || team?.id || '';
     wrapper.append(position);
 
-    const flagUrl = row.team?.flag_url || row.team?.flag_uri;
+    const content = team?.id ? document.createElement('a') : document.createElement('span');
+    content.className = 'team-link';
+    if (team?.id) {
+        content.href = `/equipos/equipo-detalle/?id=${encodeURIComponent(team.id)}`;
+        content.setAttribute('aria-label', `Ver detalles de ${team.name || team.id}`);
+    }
+
+    const flagUrl = team?.flag_url || team?.flag_uri;
     if (flagUrl) {
         const flag = document.createElement('img');
         flag.className = 'team-flag';
         flag.src = flagUrl;
         flag.alt = '';
-        wrapper.append(flag);
+        content.append(flag);
     }
 
-    wrapper.append(name);
+    content.append(name);
+    wrapper.append(content);
     return wrapper;
 }
 
@@ -294,14 +303,18 @@ function matchWinnerId(match) {
 }
 
 function matchTeam(id, score, teamMap, isWinner) {
-    const row = document.createElement('div');
+    const team = teamMap.get(id);
+    const row = team?.id ? document.createElement('a') : document.createElement('div');
     const left = document.createElement('div');
     const name = document.createElement('span');
     const result = document.createElement('strong');
-    const team = teamMap.get(id);
 
     row.className = `bracket-team${isWinner ? ' bracket-team--winner' : ''}`;
     row.title = teamName(id, teamMap);
+    if (team?.id) {
+        row.href = `/equipos/equipo-detalle/?id=${encodeURIComponent(team.id)}`;
+        row.setAttribute('aria-label', `Ver detalles de ${team.name || team.id}`);
+    }
     left.className = 'bracket-team__left';
     name.className = 'bracket-team__name';
     name.textContent = team?.id || id || '';

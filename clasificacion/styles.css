@@ -114,6 +114,27 @@
     font-weight: 600;
 }
 
+.team-link {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.55rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+a.team-link:hover,
+a.team-link:focus-visible {
+    color: var(--fifa-lime);
+    text-decoration: underline;
+}
+
+a.team-link:focus-visible {
+    border-radius: 0.15rem;
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 0.2rem;
+}
+
 .team-flag {
     width: 1.75rem;
     height: 1.15rem;
@@ -361,14 +382,25 @@
     border: 0.0625rem solid var(--bracket-border-mid);
     border-radius: 0.5rem;
     background: var(--bracket-card);
+    color: inherit;
     outline: 0.0625rem solid transparent;
     outline-offset: -0.0625rem;
     cursor: default;
+    text-decoration: none;
     user-select: none;
 }
 
-.bracket-team:hover {
+a.bracket-team {
+    cursor: pointer;
+}
+
+a.bracket-team:hover,
+a.bracket-team:focus-visible {
     background: var(--a-gradient);
+}
+
+a.bracket-team:focus-visible {
+    outline-color: var(--fifa-lime);
 }
 
 .bracket-team--winner {
