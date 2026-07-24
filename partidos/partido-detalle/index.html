@@ -2,66 +2,81 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle del Partido</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Marcador, estadísticas, cronología y alineaciones del partido de la Copa Mundial de la FIFA 2026.">
+    <title>Detalle del Partido - FIFA World Cup 2026</title>
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/partidos/partido-detalle/styles.css">
-    <style>
-        .match-header { text-align: center; background: #004d98; color: white; padding: 2rem; border-radius: 8px; }
-        .pitch { background: #4CAF50; border: 2px solid white; height: 300px; position: relative; margin: 1rem 0; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 1rem;}
-        .alert { background: rgba(0,0,0,0.7); padding: 1rem; font-weight: bold; }
-        .stats, .timeline { background: #fafafa; padding: 1rem; border: 1px solid #ddd; margin-top: 1rem; }
-    </style>
     <script src="/script.js" defer></script>
+    <script src="/partidos/partido-detalle/scrip.js" defer></script>
 </head>
 <body>
-    <header>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => {
+            a.setAttribute('href', a.href);
+            if (new window.URL(a.href).pathname.includes('/partidos/')) {
+                a.classList.add('nav-active');
+            }
+        });
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        header.querySelectorAll('source').forEach(source => source.setAttribute('src', source.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
 
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://7xox9yc4ac.ufs.sh/f/rKw2ZpxQ0UNnuTHomugDTpAwUNP7EFctovdS9aL2CJ840y3B" type="video/mp4">
-        </video>
+    <main class="match-detail-page" id="match-detail" aria-live="polite" aria-busy="true">
+        <a class="back-link" href="/partidos/">
+            <span aria-hidden="true">←</span>
+            Volver a partidos
+        </a>
 
-        <h1>Detalle de Partido</h1>
-        <a href="/partidos/" style="color:white;">Volver a Partidos</a>
+        <header class="match-header detail-card">
+            <p class="match-eyebrow">Copa Mundial de la FIFA 2026</p>
+            <h1>Cargando partido...</h1>
+            <p class="loading-text">Consultando la información oficial del encuentro.</p>
+        </header>
 
-    </header>
-    <main>
-        <div class="match-header">
-            <h2></h2>
-            <p></p>
-            <p></p>
-            <h3>cargando...</h3>
+        <section class="pitch detail-card" aria-label="Alineación inicial">
+            <div class="section-heading">
+                <div>
+                    <p>Once inicial</p>
+                    <h2>Alineación del partido</h2>
+                </div>
+            </div>
+            <div class="alert">Cargando alineaciones...</div>
+        </section>
+
+        <div class="match-insights">
+            <section class="stats detail-card" aria-label="Estadísticas del partido">
+                <div class="section-heading">
+                    <div>
+                        <p>Datos del juego</p>
+                        <h2>Estadísticas</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline detail-card" aria-label="Cronología del partido">
+                <div class="section-heading">
+                    <div>
+                        <p>Minuto a minuto</p>
+                        <h2>Cronología</h2>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <section class="pitch">
-
-            <div class="alert">Alineación no disponible</div>
-        </section>
-
-        <section class="grid">
-            <div class="stats">
-                <h3>Estadísticas y Highlights</h3>
-                <ul>
-                    <li> - </li>
-                    <li> - </li>
-                    <li> - </li>
-                </ul>
+        <section class="lineups-box detail-card" id="lineups-section">
+            <div class="section-heading">
+                <div>
+                    <p>Planteles</p>
+                    <h2>Alineaciones y dirección técnica</h2>
+                </div>
             </div>
-            <div class="timeline">
-                <h3>Cronología</h3>
-                <ul>
-                    <li> - </li>
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h3>Alineaciones y DT</h3>
-            <p><strong>Formación:</strong> - </p>
-            <p><strong>DT:</strong> - </p>
-            <p> - </p>
         </section>
     </main>
-    <script src="/partidos/partido-detalle/scrip.js"></script>
 </body>
 </html>

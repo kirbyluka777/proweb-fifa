@@ -1,65 +1,187 @@
-
-
-.stats, .timeline, .match-header, .lineups-box, .pitch, .pitch-lineup,
-section.stats, section.timeline, div.stats, div.timeline {
-    background: var(--bg-gradient) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-top: 0.35rem solid var(--fifa-blue) !important;
-    padding: 1.5rem !important;
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
-    color: var(--text-main) !important;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
-    height: auto !important;
-    position: static !important;
+* {
+    box-sizing: border-box;
 }
 
-.timeline, section.timeline, div.timeline {
-    border-top-color: var(--fifa-pink) !important;
+.match-detail-page {
+    display: grid;
+    gap: 1rem;
+    max-width: 1200px;
 }
 
-.lineups-box, section:last-of-type {
-    border-top-color: var(--fifa-lime) !important;
-    background: var(--bg-gradient) !important;
+.match-detail-page section {
+    margin: 0;
 }
 
-.pitch, section.pitch {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    display: block !important;
+.back-link {
+    display: inline-flex;
+    width: max-content;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.5rem;
+    color: var(--fifa-lime);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
-.pitch-lineup {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    border-top-color: var(--fifa-lime) !important;
-    background: var(--bg-gradient) !important;
-    margin-top: 1.5rem !important;
+.back-link span {
+    font-size: 1.2rem;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+    color: #ffffff;
+}
+
+.back-link:focus-visible {
+    outline: 2px solid var(--fifa-lime);
+    outline-offset: 0.3rem;
+}
+
+.detail-card {
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-top: 0.35rem solid var(--fifa-blue);
+    background: var(--bg-gradient);
+    color: var(--text-main);
+}
+
+.match-header {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    text-align: center;
+}
+
+.match-eyebrow,
+.section-heading p {
+    margin: 0 0 0.35rem;
+    color: var(--fifa-lime);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.match-header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-style: italic;
+    line-height: 0.95;
+    text-transform: uppercase;
+}
+
+.match-scoreboard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    margin-top: 1.5rem;
+}
+
+.scoreboard-team {
+    display: grid;
+    justify-items: start;
+    gap: 0.25rem;
+}
+
+.scoreboard-team:first-child {
+    justify-items: end;
+    text-align: right;
+}
+
+.scoreboard-team:last-child {
+    text-align: left;
+}
+
+.scoreboard-team span {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.scoreboard-team strong {
+    color: #ffffff;
+    font-size: clamp(1.15rem, 3vw, 2rem);
+    line-height: 1.05;
+}
+
+.scoreboard-flag {
+    width: 3rem;
+    height: 2rem;
+    margin-bottom: 0.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    object-fit: cover;
+}
+
+.scoreboard-score {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #ffffff;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-style: italic;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.scoreboard-score i {
+    color: var(--fifa-lime);
+    font-size: 0.55em;
+    font-style: normal;
+}
+
+.match-meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.match-meta-item {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.match-meta-item span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.match-meta-item strong {
+    color: #ffffff;
+    font-size: 0.85rem;
 }
 
 .status-badge {
     display: inline-block;
-    padding: 0.6rem 1.5rem;
-    font-weight: 800;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     margin-top: 1.2rem;
+    padding: 0.55rem 1.4rem;
     clip-path: var(--skew);
-    color: #fff;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .status-finished {
     background: var(--a-gradient);
-    border: 1px solid var(--fifa-pink);
 }
 
 .status-countdown {
-    background: #000;
-    border-left: 4px solid var(--fifa-gold);
+    border-left: 0.25rem solid var(--fifa-gold);
+    background: #000000;
     color: var(--fifa-gold);
 }
 
@@ -69,98 +191,264 @@ section.stats, section.timeline, div.stats, div.timeline {
 }
 
 @keyframes pulseLive {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.85; }
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.04);
+        opacity: 0.85;
+    }
 }
 
-.stats h3, .timeline h3, .lineups-box h3,
-.stats p, .timeline p, .lineups-box p {
-    color: var(--text-main) !important;
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.stats-list {
-    list-style: none;
+.section-heading h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.pitch {
+    border-top-color: var(--fifa-lime);
+}
+
+.pitch-lineup,
+.lineups-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.team-pitch,
+.team-lineup-col {
+    min-width: 0;
+    padding: 1.5rem;
+}
+
+.team-pitch + .team-pitch,
+.team-lineup-col + .team-lineup-col {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.team-pitch h3,
+.team-lineup-col h3 {
+    margin: 0 0 1rem;
+    color: var(--fifa-lime);
+    font-size: 1.15rem;
+    text-transform: uppercase;
+}
+
+.team-pitch ul,
+.team-lineup-col ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
     padding: 0;
-    margin: 1rem 0 0 0;
+    list-style: none;
+}
+
+.team-pitch li,
+.team-lineup-col li {
+    min-width: 0;
+    padding: 0.55rem 0.45rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    overflow-wrap: anywhere;
+}
+
+.player-number {
+    color: var(--fifa-gold);
+}
+
+.player-position {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.82rem;
+}
+
+.lineup-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.lineup-meta p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.lineup-meta strong {
+    color: #ffffff;
+}
+
+.team-lineup-col h4 {
+    margin: 1.25rem 0 0.4rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.alert,
+.empty-state {
+    margin: 1.5rem;
+    padding: 1rem;
+    border: 1px solid rgba(245, 200, 10, 0.55);
+    background: rgba(245, 200, 10, 0.08);
+    color: var(--fifa-gold);
+    font-weight: 700;
+    text-align: center;
+}
+
+.match-insights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.stats {
+    border-top-color: var(--fifa-blue);
+}
+
+.timeline {
+    border-top-color: var(--fifa-pink);
+}
+
+.stats-list,
+.timeline-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .stats-list li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    padding: 0.8rem 1rem;
+    gap: 1rem;
+    padding: 0.8rem 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 1.05rem;
-    color: var(--text-main) !important;
 }
 
-.stats-list li:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
+.stats-list li:last-child,
+.timeline-item:last-child {
+    border-bottom: 0;
 }
 
 .stat-label {
-    font-weight: 300;
-    color: #d0d5e0 !important;
+    color: rgba(255, 255, 255, 0.72);
 }
 
 .stat-value {
-    font-weight: 600;
-    color: var(--fifa-lime) !important;
-}
-
-.timeline-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 0 0;
+    color: var(--fifa-lime);
+    font-weight: 700;
+    text-align: right;
 }
 
 .timeline-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
     align-items: center;
-    gap: 1rem;
-    padding: 0.8rem 1rem;
-    border-left: 3px solid var(--fifa-blue);
-    background: rgba(0, 0, 0, 0.4) !important;
-    margin-bottom: 0.5rem;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.timeline-item:hover {
-    transform: translateX(5px);
-    background: rgba(255, 255, 255, 0.08) !important;
+    gap: 0.75rem;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .timeline-time {
+    color: var(--fifa-gold);
     font-weight: 800;
-    color: var(--fifa-gold) !important;
-    min-width: 45px;
 }
 
 .timeline-text {
-    color: var(--text-main) !important;
-    font-size: 1rem;
+    color: var(--text-main);
+    overflow-wrap: anywhere;
 }
 
-.lineups-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 1rem;
+.lineups-box {
+    border-top-color: var(--fifa-lime);
 }
 
-.team-lineup-col ul {
-    list-style: none;
-    padding: 0;
+.loading-text,
+.empty-state {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-.team-lineup-col li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-main) !important;
+.match-header.is-error {
+    border-top-color: #ff6b6b;
 }
 
-@media (max-width: 768px) {
-    .pitch-lineup, .lineups-grid {
-        grid-template-columns: 1fr !important;
+@media (max-width: 800px) {
+    .match-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .match-insights,
+    .pitch-lineup,
+    .lineups-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-pitch + .team-pitch,
+    .team-lineup-col + .team-lineup-col {
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 0;
+    }
+}
+
+@media (max-width: 540px) {
+    .match-detail-page {
+        padding: 1rem;
+    }
+
+    .match-scoreboard {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .scoreboard-team:first-child,
+    .scoreboard-team:last-child {
+        justify-items: center;
+        text-align: center;
+    }
+
+    .scoreboard-team:first-child {
+        order: 1;
+    }
+
+    .scoreboard-score {
+        order: 2;
+        justify-content: center;
+    }
+
+    .scoreboard-team:last-child {
+        order: 3;
+    }
+
+    .match-meta,
+    .team-pitch ul,
+    .team-lineup-col ul {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading,
+    .team-pitch,
+    .team-lineup-col,
+    .stats-list li,
+    .timeline-item {
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
 }

@@ -13,7 +13,8 @@ async function loadMatchDetails(matchId) {
     const pitchSection = document.querySelector('.pitch');
     const statsSection = document.querySelector('.stats');
     const timelineSection = document.querySelector('.timeline');
-    const lineupsSection = document.querySelector('section:last-of-type');
+    const lineupsSection = document.getElementById('lineups-section');
+    const detailPage = document.getElementById('match-detail');
 
     try {
 
@@ -21,19 +22,22 @@ async function loadMatchDetails(matchId) {
 
         const homeTeam = match.home_team?.name || match.home_team?.country || 'Local';
         const awayTeam = match.away_team?.name || match.away_team?.country || 'Visitante';
+        const homeFlag = match.home_team?.flag_uri || match.home_team?.flag_url || '';
+        const awayFlag = match.away_team?.flag_uri || match.away_team?.flag_url || '';
         const homeScore = match.home_score?.total ?? 0;
         const awayScore = match.away_score?.total ?? 0;
 
         const dateStr = match.date || 'Por definir';
         const timeStr = match.time || '00:00:00';
         const cityName = match.city?.name || match.city?.city || 'Sede por definir';
-        const stadiumName = match.city?.stadium || match.city?.stadium_name || 'Estadio por definir';
+        const stadiumName = match.city?.stadium?.name || match.city?.stadium_name || 'Estadio por definir';
         const referee = match.referee || 'Por definir';
         const roundNum = match.round;
         const roundName = (roundNum !== undefined && roundNum !== 0) ? `Ronda ${roundNum}` : (match.group ? `Grupo ${match.group}` : 'Fase de Grupos');
+        document.title = `${homeTeam} vs. ${awayTeam} - FIFA World Cup 2026`;
 
         const statusStr = (match.status || '').toLowerCase();
-        const finishedStatuses = ['finished', 'completed', 'full_time', 'ft', 'played'];
+        const finishedStatuses = ['ended', 'finished', 'completed', 'full_time', 'ft', 'played'];
         let isFinished = finishedStatuses.includes(statusStr);
         const isLive = ['live', 'in_progress', '1h', '2h', 'ht'].includes(statusStr);
 
@@ -43,9 +47,31 @@ async function loadMatchDetails(matchId) {
         }
 
         let headerHtml = `
-            <h2>${homeTeam} ${homeScore} - ${awayScore} ${awayTeam}</h2>
-            <p><strong>Fecha:</strong> ${dateStr} | <strong>Hora:</strong> ${timeStr} | <strong>Estadio:</strong> ${stadiumName}, ${cityName}</p>
-            <p><strong>Árbitro:</strong> ${referee} | <strong>Ronda:</strong> ${roundName}</p>
+            <p class="match-eyebrow">${roundName}</p>
+            <h1>${homeTeam} vs. ${awayTeam}</h1>
+            <div class="match-scoreboard">
+                <div class="scoreboard-team">
+                    ${homeFlag ? `<img class="scoreboard-flag" src="${homeFlag}" alt="">` : ''}
+                    <span>Local</span>
+                    <strong>${homeTeam}</strong>
+                </div>
+                <div class="scoreboard-score" aria-label="${homeScore} a ${awayScore}">
+                    <span>${homeScore}</span>
+                    <i>–</i>
+                    <span>${awayScore}</span>
+                </div>
+                <div class="scoreboard-team">
+                    ${awayFlag ? `<img class="scoreboard-flag" src="${awayFlag}" alt="">` : ''}
+                    <span>Visitante</span>
+                    <strong>${awayTeam}</strong>
+                </div>
+            </div>
+            <div class="match-meta">
+                <div class="match-meta-item"><span>Fecha</span><strong>${dateStr}</strong></div>
+                <div class="match-meta-item"><span>Hora</span><strong>${timeStr}</strong></div>
+                <div class="match-meta-item"><span>Estadio</span><strong>${stadiumName}, ${cityName}</strong></div>
+                <div class="match-meta-item"><span>Árbitro</span><strong>${referee}</strong></div>
+            </div>
         `;
 
         if (isFinished) {
@@ -65,56 +91,85 @@ async function loadMatchDetails(matchId) {
         const awayStarters = awayLineup?.starting_players || [];
 
         if (homeStarters.length < 11 || awayStarters.length < 11) {
-            pitchSection.innerHTML = `<div class="alert" style="background:#111; color:#ffb703; padding:1rem; border:1px solid #ffb703;">Alineación no disponible en cancha (Menos de 11 titulares confirmados)</div>`;
+            pitchSection.innerHTML = `
+                <div class="section-heading">
+                    <div>
+                        <p>Once inicial</p>
+                        <h2>Alineación del partido</h2>
+                    </div>
+                </div>
+                <div class="alert">Alineación no disponible: faltan titulares por confirmar.</div>
+            `;
         } else {
             pitchSection.innerHTML = `
+                <div class="section-heading">
+                    <div>
+                        <p>Once inicial</p>
+                        <h2>Alineación del partido</h2>
+                    </div>
+                </div>
                 <div class="pitch-lineup">
                     <div class="team-pitch">
-                        <h4 style="color:var(--fifa-lime); border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:0.5rem;">${homeTeam} (${homeLineup.formation || 'N/A'})</h4>
-                        <p style="line-height:1.8;">${homeStarters.map(p => `<strong>#${p.shirt_number || ''}</strong> ${p.name || p.player_name}`).join('<br>')}</p>
+                        <h3>${homeTeam} · ${homeLineup.formation || 'Por definir'}</h3>
+                        <ul>${homeStarters.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'}</li>`).join('')}</ul>
                     </div>
                     <div class="team-pitch">
-                        <h4 style="color:var(--fifa-lime); border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:0.5rem;">${awayTeam} (${awayLineup.formation || 'N/A'})</h4>
-                        <p style="line-height:1.8;">${awayStarters.map(p => `<strong>#${p.shirt_number || ''}</strong> ${p.name || p.player_name}`).join('<br>')}</p>
+                        <h3>${awayTeam} · ${awayLineup.formation || 'Por definir'}</h3>
+                        <ul>${awayStarters.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'}</li>`).join('')}</ul>
                     </div>
                 </div>
             `;
         }
 
-        const renderPlayersList = (players) => players.map(p => `<li><strong style="color:var(--fifa-gold);">#${p.shirt_number || '-'}</strong> ${p.name || p.player_name || 'Jugador'} ${p.position ? `<span style="color:#aaa; font-size:0.9em;">(${p.position})</span>` : ''}</li>`).join('');
+        const renderPlayersList = (players) => players.map(p => `<li><strong class="player-number">#${p.shirt_number ?? p.number ?? '-'}</strong> ${p.name || p.player_name || 'Jugador'} ${p.position ? `<span class="player-position">(${p.position})</span>` : ''}</li>`).join('');
 
         if (lineupsSection) {
-            lineupsSection.className = 'lineups-box';
             lineupsSection.innerHTML = `
-                <h3>Alineaciones y Dirección Técnica</h3>
+                <div class="section-heading">
+                    <div>
+                        <p>Planteles</p>
+                        <h2>Alineaciones y dirección técnica</h2>
+                    </div>
+                </div>
                 <div class="lineups-grid">
                     <div class="team-lineup-col">
-                        <h4 style="color:var(--fifa-blue); font-size:1.3rem;">${homeTeam}</h4>
-                        <p><strong>Formación:</strong> ${homeLineup?.formation || 'Por definir'}</p>
-                        <p><strong>DT / Coach:</strong> <span style="color:var(--fifa-lime);">${homeLineup?.coach || 'Por definir'}</span></p>
-                        <h5 style="margin-top:1.5rem; border-bottom:1px solid #444; padding-bottom:0.3rem;">Titulares:</h5>
+                        <h3>${homeTeam}</h3>
+                        <div class="lineup-meta">
+                            <p><strong>Formación:</strong> ${homeLineup?.formation || 'Por definir'}</p>
+                            <p><strong>DT:</strong> ${homeLineup?.coach || 'Por definir'}</p>
+                        </div>
+                        <h4>Titulares</h4>
                         <ul>${homeStarters.length ? renderPlayersList(homeStarters) : '<li>Pendiente</li>'}</ul>
-                        <h5 style="margin-top:1.5rem; border-bottom:1px solid #444; padding-bottom:0.3rem;">Sustitutos:</h5>
+                        <h4>Sustitutos</h4>
                         <ul>${homeLineup?.substitutes?.length ? renderPlayersList(homeLineup.substitutes) : '<li>No disponible</li>'}</ul>
                     </div>
                     <div class="team-lineup-col">
-                        <h4 style="color:var(--fifa-pink); font-size:1.3rem;">${awayTeam}</h4>
-                        <p><strong>Formación:</strong> ${awayLineup?.formation || 'Por definir'}</p>
-                        <p><strong>DT / Coach:</strong> <span style="color:var(--fifa-lime);">${awayLineup?.coach || 'Por definir'}</span></p>
-                        <h5 style="margin-top:1.5rem; border-bottom:1px solid #444; padding-bottom:0.3rem;">Titulares:</h5>
+                        <h3>${awayTeam}</h3>
+                        <div class="lineup-meta">
+                            <p><strong>Formación:</strong> ${awayLineup?.formation || 'Por definir'}</p>
+                            <p><strong>DT:</strong> ${awayLineup?.coach || 'Por definir'}</p>
+                        </div>
+                        <h4>Titulares</h4>
                         <ul>${awayStarters.length ? renderPlayersList(awayStarters) : '<li>Pendiente</li>'}</ul>
-                        <h5 style="margin-top:1.5rem; border-bottom:1px solid #444; padding-bottom:0.3rem;">Sustitutos:</h5>
+                        <h4>Sustitutos</h4>
                         <ul>${awayLineup?.substitutes?.length ? renderPlayersList(awayLineup.substitutes) : '<li>No disponible</li>'}</ul>
                     </div>
                 </div>
             `;
         }
 
-        let statsHtml = `<h3>Estadísticas del Partido</h3>`;
+        let statsHtml = `
+            <div class="section-heading">
+                <div>
+                    <p>Datos del juego</p>
+                    <h2>Estadísticas</h2>
+                </div>
+            </div>
+        `;
         const statsGroups = match.statistics || [];
 
         if (statsGroups.length === 0) {
-            statsHtml += `<p style="color:#aaa;">Estadísticas aún no disponibles para este encuentro.</p>`;
+            statsHtml += `<p class="empty-state">Estadísticas aún no disponibles para este encuentro.</p>`;
         } else {
             statsHtml += `<ul class="stats-list">`;
             statsGroups.forEach(group => {
@@ -135,11 +190,18 @@ async function loadMatchDetails(matchId) {
         }
         statsSection.innerHTML = statsHtml;
 
-        let timelineHtml = `<h3>Cronología del Partido</h3>`;
+        let timelineHtml = `
+            <div class="section-heading">
+                <div>
+                    <p>Minuto a minuto</p>
+                    <h2>Cronología</h2>
+                </div>
+            </div>
+        `;
         const events = match.chronology || [];
 
         if (events.length === 0) {
-            timelineHtml += `<p style="color:#aaa;">No se han registrado eventos en este partido.</p>`;
+            timelineHtml += `<p class="empty-state">No se han registrado eventos en este partido.</p>`;
         } else {
             timelineHtml += `<div class="timeline-list">`;
             events.sort((a, b) => (a.time || 0) - (b.time || 0)).forEach(ev => {
@@ -150,7 +212,7 @@ async function loadMatchDetails(matchId) {
                 const sale = ev.player_out?.name || ev.player_out?.player_name ? `🔴 Sale: ${ev.player_out?.name || ev.player_out?.player_name}` : '';
                 const tarjeta = ev.card ? (ev.card.toLowerCase().includes('yellow') || ev.card.toLowerCase().includes('amarilla') ? `🟨 Tarjeta Amarilla` : `🟥 Tarjeta Roja`) : '';
 
-                let desc = `<strong style="color:#fff;">${tipo} ${jugador}</strong> ${tarjeta}`;
+                let desc = `<strong>${tipo} ${jugador}</strong> ${tarjeta}`;
                 if (entra || sale) desc = `${entra} <br> ${sale}`;
 
                 timelineHtml += `
@@ -166,10 +228,18 @@ async function loadMatchDetails(matchId) {
 
     } catch (error) {
         console.error("Error cargando detalle del partido:", error);
+        matchHeader.classList.add('is-error');
         matchHeader.innerHTML = `
-            <h2>Error al cargar el partido</h2>
+            <p class="match-eyebrow">Información no disponible</p>
+            <h1>Error al cargar el partido</h1>
             <p>No se pudo conectar con el servidor o el ID seleccionado no existe.</p>
         `;
+        pitchSection.hidden = true;
+        statsSection.hidden = true;
+        timelineSection.hidden = true;
+        lineupsSection.hidden = true;
+    } finally {
+        detailPage?.setAttribute('aria-busy', 'false');
     }
 }
 
