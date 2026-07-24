@@ -1,0 +1,210 @@
+.about-header {
+    max-width: 55rem;
+}
+
+.about-header p:last-child {
+    max-width: 46rem;
+    margin: 1.25rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+}
+
+.about-section-title {
+    padding-left: 1rem;
+    border-left: 0.3rem solid var(--fifa-pink);
+}
+
+.about-section-title h2 {
+    max-width: 19ch;
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1;
+}
+
+.about-overview {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+    padding-block: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.about-overview__copy p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.76);
+    line-height: 1.7;
+}
+
+.about-overview__copy p:first-child {
+    color: white;
+    font-size: 1.15rem;
+}
+
+.about-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-block: 3rem 4rem;
+    border-block: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.about-details div {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1.25rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.about-details div:last-child {
+    border-right: 0;
+}
+
+.about-details span {
+    color: var(--fifa-lime);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.about-details strong {
+    color: white;
+    font-weight: 600;
+}
+
+.about-technologies,
+.about-team {
+    margin-bottom: 4rem;
+}
+
+.about-technologies__intro {
+    max-width: 44rem;
+    margin: 1.5rem 0 2rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.6;
+}
+
+.about-technologies__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.about-technologies__grid article {
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 0.25rem solid var(--fifa-blue);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.about-technologies__grid article:nth-child(even) {
+    border-top-color: var(--fifa-pink);
+}
+
+.about-technologies__grid span {
+    color: var(--fifa-lime);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.about-technologies__grid h3 {
+    margin: 0.55rem 0;
+    font-size: 1.25rem;
+}
+
+.about-technologies__grid p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.about-technologies__grid code {
+    color: var(--fifa-lime);
+}
+
+.about-team__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.about-team__list article {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.about-team__list span {
+    width: 3.5rem;
+    height: 3.5rem;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    background: var(--a-gradient);
+    clip-path: var(--skew);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.about-team__list h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-style: normal;
+}
+
+.about-contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 0;
+    padding: 1.5rem;
+    border-left: 0.3rem solid var(--fifa-lime);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.about-contact h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.about-contact .btn {
+    flex: 0 0 auto;
+    padding-block: 0.55rem;
+}
+
+@media (max-width: 720px) {
+    .about {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .about-overview,
+    .about-details,
+    .about-technologies__grid,
+    .about-team__list {
+        grid-template-columns: 1fr;
+    }
+
+    .about-details div {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .about-details div:last-child {
+        border-bottom: 0;
+    }
+
+    .about-contact {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

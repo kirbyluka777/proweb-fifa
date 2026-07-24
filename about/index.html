@@ -2,24 +2,135 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Acerca del Proyecto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conoce el proyecto académico Mundial 2026, sus tecnologías y sus integrantes.">
+    <title>Acerca del Proyecto | FIFA World Cup 2026</title>
+    <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/about/styles.css">
+    <script src="/script.js" defer></script>
 </head>
 <body>
-    <iframe src="/header.html" hidden onload="const doc = this.contentDocument;
-    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
-    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
-    </iframe>
-    <main>
-        <section>
-            <h2>Materia: Programación Orientada a la Web</h2>
-            <p>Este sitio web es un proyecto académico desarrollado para cubrir los requerimientos de diseño e implementación del portal de la Copa Mundial de la FIFA 2026.</p>
-            <h3>Integrantes del Grupo</h3>
-            <ul>
-                <li>Estudiante 1</li>
-                <li>Estudiante 2</li>
-            </ul>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
+
+    <main class="about">
+        <header class="page-header about-header">
+            <p class="page-eyebrow">Programación Orientada a la Web</p>
+            <h1>Acerca del proyecto</h1>
+            <p>
+                Mundial 2026 es un proyecto académico de la Escuela de Ingeniería
+                Informática de la Universidad Católica Andrés Bello.
+            </p>
+        </header>
+
+        <section class="about-overview" aria-labelledby="project-title">
+            <div class="about-section-title">
+                <p class="page-eyebrow">El proyecto</p>
+                <h2 id="project-title">Información del torneo en un solo lugar</h2>
+            </div>
+            <div class="about-overview__copy">
+                <p>
+                    El sitio reúne noticias, partidos, clasificaciones, equipos, ranking FIFA,
+                    ciudades anfitrionas y otros contenidos relacionados con la Copa Mundial 2026.
+                </p>
+                <p>
+                    Su objetivo es presentar esta información de forma clara y accesible, con una
+                    identidad visual definida y una experiencia que funciona correctamente tanto
+                    en computadores como en dispositivos móviles.
+                </p>
+            </div>
+        </section>
+
+        <section class="about-details" aria-label="Información académica">
+            <div>
+                <span>Universidad</span>
+                <strong>Universidad Católica Andrés Bello</strong>
+            </div>
+            <div>
+                <span>Cátedra</span>
+                <strong>Programación Orientada a la Web</strong>
+            </div>
+            <div>
+                <span>Profesora</span>
+                <strong>Noraimar Mora</strong>
+            </div>
+        </section>
+
+        <section class="about-technologies" aria-labelledby="technologies-title">
+            <div class="about-section-title">
+                <p class="page-eyebrow">Desarrollo</p>
+                <h2 id="technologies-title">Tecnologías utilizadas</h2>
+            </div>
+            <p class="about-technologies__intro">
+                Se utilizaron herramientas web estándar para lograr una interfaz responsiva y
+                cohesiva, sin recurrir a frameworks externos.
+            </p>
+            <div class="about-technologies__grid">
+                <article>
+                    <span aria-hidden="true">01</span>
+                    <h3>HTML5</h3>
+                    <p>Estructura semántica para organizar el contenido de cada página.</p>
+                </article>
+                <article>
+                    <span aria-hidden="true">02</span>
+                    <h3>CSS3</h3>
+                    <p>Grid, Flexbox, gradientes en capas y <code>clamp()</code> para el diseño responsive.</p>
+                </article>
+                <article>
+                    <span aria-hidden="true">03</span>
+                    <h3>JavaScript</h3>
+                    <p>Interactividad, filtros y presentación dinámica de los datos.</p>
+                </article>
+                <article>
+                    <span aria-hidden="true">04</span>
+                    <h3>API REST</h3>
+                    <p>Consumo de información del torneo con almacenamiento en caché local.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-team" aria-labelledby="team-title">
+            <div class="about-section-title">
+                <p class="page-eyebrow">El grupo</p>
+                <h2 id="team-title">Integrantes</h2>
+            </div>
+            <div class="about-team__list">
+                <article>
+                    <span aria-hidden="true">DC</span>
+                    <h3>Daniela Casanova</h3>
+                </article>
+                <article>
+                    <span aria-hidden="true">RG</span>
+                    <h3>Rebeca Guerra</h3>
+                </article>
+                <article>
+                    <span aria-hidden="true">AB</span>
+                    <h3>Andrés Boon</h3>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-contact" aria-labelledby="contact-title">
+            <div>
+                <p class="page-eyebrow">¿Quieres comunicarte con el equipo?</p>
+                <h2 id="contact-title">Conversemos</h2>
+            </div>
+            <a class="btn" href="/contacto/">Ir a contacto</a>
         </section>
     </main>
+
+    <iframe src="/footer.html" hidden onload="
+        const footer = (this.contentDocument.body || this.contentDocument).children[0];
+        footer.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        this.before(footer);
+        this.remove();
+    "></iframe>
 </body>
 </html>

@@ -2,12 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Contacto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Formulario de contacto del proyecto Mundial 2026.">
+    <title>Contacto | FIFA World Cup 2026</title>
+    <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
-    <style>
-        form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: 0 auto; }
-        input, textarea { padding: 0.5rem; font-size: 1rem; }
-    </style>
+    <link rel="stylesheet" href="/contacto/styles.css">
+    <script src="/script.js" defer></script>
+    <script src="/contacto/script.js" defer></script>
 </head>
 <body>
     <iframe src="/header.html" hidden onload="
@@ -17,24 +19,85 @@
         header.querySelectorAll('a').forEach(a => {
             a.setAttribute('href', a.href);
             const linkPath = new window.URL(a.href).pathname.replace(/\/index\.html$/, '/');
-            if (linkPath === currentPath) {
-                a.classList.add('nav-active');
-            }
+            if (linkPath === currentPath) a.classList.add('nav-active');
         });
         header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
         this.before(header);
         this.remove();
     "></iframe>
-    <main>
-        <form>
-            <label>Nombre:</label>
-            <input type="text" required>
-            <label>Email:</label>
-            <input type="email" required>
-            <label>Mensaje:</label>
-            <textarea rows="5" required></textarea>
-            <button type="submit" class="btn">Enviar</button>
-        </form>
+
+    <main class="contact-page">
+        <header class="page-header contact-header">
+            <p class="page-eyebrow">Estamos para escucharte</p>
+            <h1>Contacto</h1>
+            <p>¿Tienes una pregunta o comentario sobre el proyecto? Envíanos un mensaje.</p>
+        </header>
+
+        <section class="contact-layout" aria-label="Información y formulario de contacto">
+            <aside class="contact-intro">
+                <p class="page-eyebrow">Mundial 2026</p>
+                <h2>Hablemos de fútbol y tecnología</h2>
+                <p>
+                    Completa el formulario y el equipo podrá conocer tus dudas,
+                    sugerencias o comentarios sobre el sitio.
+                </p>
+                <div class="contact-intro__item">
+                    <span aria-hidden="true">01</span>
+                    <div>
+                        <strong>Proyecto académico</strong>
+                        <p>Programación Orientada a la Web</p>
+                    </div>
+                </div>
+                <div class="contact-intro__item">
+                    <span aria-hidden="true">02</span>
+                    <div>
+                        <strong>Conoce al equipo</strong>
+                        <p><a href="/about/">Visita la página del proyecto</a></p>
+                    </div>
+                </div>
+            </aside>
+
+            <form class="contact-form" id="contact-form">
+                <div class="contact-form__heading">
+                    <p class="page-eyebrow">Formulario</p>
+                    <h2>Escríbenos</h2>
+                    <p>Todos los campos son obligatorios.</p>
+                </div>
+
+                <div class="contact-form__row">
+                    <div class="contact-field">
+                        <label for="contact-name">Nombre completo</label>
+                        <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="contact-field">
+                        <label for="contact-email">Correo electrónico</label>
+                        <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" required>
+                    </div>
+                </div>
+
+                <div class="contact-field">
+                    <label for="contact-subject">Asunto</label>
+                    <input id="contact-subject" name="subject" type="text" placeholder="¿En qué podemos ayudarte?" required>
+                </div>
+
+                <div class="contact-field">
+                    <label for="contact-message">Mensaje</label>
+                    <textarea id="contact-message" name="message" rows="7" placeholder="Escribe tu mensaje aquí…" required></textarea>
+                </div>
+
+                <div class="contact-form__footer">
+                    <p>Al enviar, se abrirá tu aplicación de correo con el mensaje preparado.</p>
+                    <button type="submit" class="btn">Enviar mensaje</button>
+                </div>
+            </form>
+        </section>
     </main>
+
+    <iframe src="/footer.html" hidden onload="
+        const footer = (this.contentDocument.body || this.contentDocument).children[0];
+        footer.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        this.before(footer);
+        this.remove();
+    "></iframe>
 </body>
 </html>
