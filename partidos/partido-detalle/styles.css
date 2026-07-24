@@ -1,0 +1,178 @@
+/* =========================================================
+   ESTILOS DEFINITIVOS - DETALLE DEL PARTIDO (SIN SOBREPONER)
+   ========================================================= */
+
+/* Forzar fondo oscuro del tema oficial en TODOS los contenedores inferiores */
+
+
+.stats, .timeline, .match-header, .lineups-box, .pitch, .pitch-lineup,
+section.stats, section.timeline, div.stats, div.timeline {
+    background: var(--bg-gradient) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-top: 0.35rem solid var(--fifa-blue) !important;
+    padding: 1.5rem !important;
+    margin-top: 2rem !important; /* Baja las cajas para que no se sobrepongan */
+    margin-bottom: 2rem !important;
+    color: var(--text-main) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
+    height: auto !important;
+    position: static !important; /* Evita que floten una encima de otra */
+}
+
+/* Colores de borde superiores personalizados */
+.timeline, section.timeline, div.timeline {
+    border-top-color: var(--fifa-pink) !important;
+}
+
+.lineups-box, section:last-of-type {
+    border-top-color: var(--fifa-lime) !important;
+    background: var(--bg-gradient) !important;
+}
+
+/* ELIMINAR LA CANCHA VERDE Y DEJAR SOLO LA CAJA OSCURA DE JUGADORES */
+.pitch, section.pitch {
+    background: transparent !important; /* Elimina el fondo verde sobrante */
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: block !important;
+}
+
+.pitch-lineup {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    border-top-color: var(--fifa-lime) !important;
+    background: var(--bg-gradient) !important; /* Fondo oscuro consistente */
+    margin-top: 1.5rem !important; /* La separa elegantemente del cuadro azul superior */
+}
+
+/* Insignias de estatus (Finalizado, En Vivo, Countdown) */
+.status-badge {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1.2rem;
+    clip-path: var(--skew);
+    color: #fff;
+}
+
+.status-finished {
+    background: var(--a-gradient);
+    border: 1px solid var(--fifa-pink);
+}
+
+.status-countdown {
+    background: #000;
+    border-left: 4px solid var(--fifa-gold);
+    color: var(--fifa-gold);
+}
+
+.status-live {
+    background: #e53935;
+    animation: pulseLive 1.2s infinite;
+}
+
+@keyframes pulseLive {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+/* Asegurar que todos los títulos y textos sean BLANCOS Y LEGIBLES */
+.stats h3, .timeline h3, .lineups-box h3,
+.stats p, .timeline p, .lineups-box p {
+    color: var(--text-main) !important;
+}
+
+/* Listas de Estadísticas - Alto contraste */
+.stats-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+.stats-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.05rem;
+    color: var(--text-main) !important;
+}
+
+.stats-list li:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.stat-label {
+    font-weight: 300;
+    color: #d0d5e0 !important; /* Blanco suave muy legible */
+}
+
+.stat-value {
+    font-weight: 600;
+    color: var(--fifa-lime) !important;
+}
+
+/* Cronología del partido */
+.timeline-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-left: 3px solid var(--fifa-blue);
+    background: rgba(0, 0, 0, 0.4) !important; /* Fondo oscuro interior */
+    margin-bottom: 0.5rem;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.timeline-item:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.timeline-time {
+    font-weight: 800;
+    color: var(--fifa-gold) !important;
+    min-width: 45px;
+}
+
+.timeline-text {
+    color: var(--text-main) !important;
+    font-size: 1rem;
+}
+
+/* Alineaciones y columnas */
+.lineups-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.team-lineup-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.team-lineup-col li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main) !important;
+}
+
+@media (max-width: 768px) {
+    .pitch-lineup, .lineups-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

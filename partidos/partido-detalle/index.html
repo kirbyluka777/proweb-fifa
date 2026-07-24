@@ -1,9 +1,9 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Detalle del Partido</title>
     <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         .match-header { text-align: center; background: #004d98; color: white; padding: 2rem; border-radius: 8px; }
         .pitch { background: #4CAF50; border: 2px solid white; height: 300px; position: relative; margin: 1rem 0; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 1rem;}
@@ -13,8 +13,14 @@
 </head>
 <body>
     <header>
+        <!-- Video de fondo añadido aquí -->
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://7xox9yc4ac.ufs.sh/f/rKw2ZpxQ0UNnuTHomugDTpAwUNP7EFctovdS9aL2CJ840y3B" type="video/mp4">
+        </video>
+
         <h1>Detalle de Partido</h1>
         <a href="../index.html" style="color:white;">Volver a Partidos</a>
+        
     </header>
     <main>
         <div class="match-header">
@@ -53,5 +59,6 @@
             <p>Jugadores iniciales y sustitutos pendientes.</p>
         </section>
     </main>
+    <script src="scrip.js"></script>
 </body>
 </html>
