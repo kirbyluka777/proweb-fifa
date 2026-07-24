@@ -3,7 +3,6 @@ main {
     min-height: 85vh;
 }
 
-/* Filtro de Selección */
 .filter-container {
     margin-bottom: 2rem;
     display: flex;
@@ -35,7 +34,6 @@ main {
     color: #fff;
 }
 
-/* Tarjetas de Ciudades */
 .city-card {
     display: flex;
     flex-direction: column;
@@ -43,7 +41,7 @@ main {
     background: var(--bg-gradient, linear-gradient(135deg, #10101a 0%, #2a1b42 100%)) !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-top: 0.35rem solid var(--fifa-blue, #4cc9f0) !important;
-    padding: 0 !important; /* El padding interno va en .card-content */
+    padding: 0 !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
 }
@@ -99,7 +97,6 @@ main {
     margin-top: 1.2rem;
 }
 
-/* Mensajes de Estado */
 .status-msg {
     color: #fff;
     grid-column: 1 / -1;

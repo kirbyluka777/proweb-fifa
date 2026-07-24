@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const matchId = urlParams.get('id') || 1; 
+    const matchId = urlParams.get('id') || 1;
 
     loadMatchDetails(matchId);
 });
@@ -19,12 +19,11 @@ async function loadMatchDetails(matchId) {
 
         const match = await fetchWithCache(getProxyUrl(baseUrl))
 
-        // 1. EXTRAER DATOS
         const homeTeam = match.home_team?.name || match.home_team?.country || 'Local';
         const awayTeam = match.away_team?.name || match.away_team?.country || 'Visitante';
         const homeScore = match.home_score?.total ?? 0;
         const awayScore = match.away_score?.total ?? 0;
-        
+
         const dateStr = match.date || 'Por definir';
         const timeStr = match.time || '00:00:00';
         const cityName = match.city?.name || match.city?.city || 'Sede por definir';
@@ -32,23 +31,17 @@ async function loadMatchDetails(matchId) {
         const referee = match.referee || 'Por definir';
         const roundNum = match.round;
         const roundName = (roundNum !== undefined && roundNum !== 0) ? `Ronda ${roundNum}` : (match.group ? `Grupo ${match.group}` : 'Fase de Grupos');
-        
-        // 2. VALIDACIÓN INFALIBLE DE ESTATUS Y FECHA
+
         const statusStr = (match.status || '').toLowerCase();
         const finishedStatuses = ['finished', 'completed', 'full_time', 'ft', 'played'];
         let isFinished = finishedStatuses.includes(statusStr);
         const isLive = ['live', 'in_progress', '1h', '2h', 'ht'].includes(statusStr);
 
-        // Si la API no dice "finished", pero la fecha y hora ya pasaron por más de 3 horas, es un partido terminado
         const matchDateObj = new Date(`${dateStr}T${timeStr}`);
         if (!isFinished && !isLive && !isNaN(matchDateObj.getTime())) {
-            // if (matchDateObj.getTime() < Date.now() - (3 * 3600 * 1000)) {
-            //     isFinished = true;
-            // }
             isFinished=true;
         }
 
-        // 3. RENDERIZAR ENCABEZADO
         let headerHtml = `
             <h2>${homeTeam} ${homeScore} - ${awayScore} ${awayTeam}</h2>
             <p><strong>Fecha:</strong> ${dateStr} | <strong>Hora:</strong> ${timeStr} | <strong>Estadio:</strong> ${stadiumName}, ${cityName}</p>
@@ -66,7 +59,6 @@ async function loadMatchDetails(matchId) {
 
         matchHeader.innerHTML = headerHtml;
 
-        // 4. RENDERIZAR ALINEACIONES EN CANCHA (.pitch)
         const homeLineup = match.line_ups?.home;
         const awayLineup = match.line_ups?.away;
         const homeStarters = homeLineup?.starting_players || [];
@@ -89,7 +81,6 @@ async function loadMatchDetails(matchId) {
             `;
         }
 
-        // 5. RENDERIZAR PLANTILLAS Y DT
         const renderPlayersList = (players) => players.map(p => `<li><strong style="color:var(--fifa-gold);">#${p.shirt_number || '-'}</strong> ${p.name || p.player_name || 'Jugador'} ${p.position ? `<span style="color:#aaa; font-size:0.9em;">(${p.position})</span>` : ''}</li>`).join('');
 
         if (lineupsSection) {
@@ -119,10 +110,9 @@ async function loadMatchDetails(matchId) {
             `;
         }
 
-        // 6. RENDERIZAR ESTADÍSTICAS (ALTO CONTRASTE)
         let statsHtml = `<h3>Estadísticas del Partido</h3>`;
         const statsGroups = match.statistics || [];
-        
+
         if (statsGroups.length === 0) {
             statsHtml += `<p style="color:#aaa;">Estadísticas aún no disponibles para este encuentro.</p>`;
         } else {
@@ -145,7 +135,6 @@ async function loadMatchDetails(matchId) {
         }
         statsSection.innerHTML = statsHtml;
 
-        // 7. RENDERIZAR CRONOLOGÍA (LIMPIA Y LEGIBLE)
         let timelineHtml = `<h3>Cronología del Partido</h3>`;
         const events = match.chronology || [];
 

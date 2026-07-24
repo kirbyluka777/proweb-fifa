@@ -44,7 +44,7 @@ async function loadRecordDetail(id) {
 
     try {
         let recordData = await fetchApiData(endpointUrl);
-        
+
         if (typeof recordData === 'string') {
             try { recordData = JSON.parse(recordData); } catch (e) {}
         }
@@ -64,7 +64,6 @@ async function loadRecordDetail(id) {
 function renderPlayer(record) {
     document.title = `${record.title || 'Video'} - Archivos Mundial 2026`;
 
-    // 1. Asignamos la URL al iframe
     const iframe = document.getElementById('video-iframe');
     if (record.url) {
         iframe.src = getEmbedUrl(record.url);
@@ -73,19 +72,16 @@ function renderPlayer(record) {
         return;
     }
 
-    // 2. Llenamos los datos de texto
     document.getElementById('record-title').textContent = record.title || 'Partido de la Copa Mundial';
     document.getElementById('record-subtitle').textContent = record.subtitle || 'Archivo Histórico';
-    
+
     const descElement = document.getElementById('record-desc');
     descElement.textContent = record.description || `Disfruta del resumen completo y los momentos más destacados del partido: ${record.title || ''}.`;
 
-    // 3. Verificamos si la API incluye un logo de torneo o enviamos el oficial por defecto
     const logoImg = document.getElementById('tournament-logo');
     logoImg.src = record.logo_url || record.tournament_logo || DEFAULT_LOGO;
     logoImg.onerror = () => { logoImg.src = DEFAULT_LOGO; };
 
-    // 4. Mostramos el reproductor y ocultamos el mensaje de carga
     document.getElementById('loading-container').style.display = 'none';
     document.getElementById('record-detail-card').style.display = 'block';
 }

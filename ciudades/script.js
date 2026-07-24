@@ -1,9 +1,7 @@
 let globalCitiesList = [];
 
-// Imagen de respaldo por defecto si una ciudad o estadio no tiene imagen válida
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80';
 
-// Respaldos específicos por ciudad para casos donde la API no proporcione imagen
 const CITY_FALLBACK_IMAGES = {
     'toronto': 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=800&q=80',
     'vancouver': 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
@@ -26,14 +24,12 @@ function iniciarPagina() {
     loadCitiesData();
 }
 
-// Conexión resiliente con proxy
 async function fetchApiData(endpointUrl) {
-    
+
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
     return await fetchWithCache(proxyUrl)
 }
 
-// Transforma la estructura de objeto {"1": {...}, "2": {...}} a un Arreglo [...]
 function parseCitiesResponse(data) {
     if (!data) return [];
     if (typeof data === 'string') {
@@ -83,10 +79,10 @@ function filterAndRenderCities(selectedCountry = '') {
 
     if (selectedCountry && selectedCountry.trim() !== '') {
         const filterTerm = selectedCountry.trim().toLowerCase();
-        
+
         filteredCities = globalCitiesList.filter(city => {
             const countryName = String(city.country || '').trim().toLowerCase();
-            
+
             if (filterTerm === 'canada' || filterTerm === 'canadá') {
                 return countryName.includes('canad') || countryName === 'can' || countryName === 'ca';
             } else if (filterTerm === 'mexico' || filterTerm === 'méxico') {
@@ -94,7 +90,7 @@ function filterAndRenderCities(selectedCountry = '') {
             } else if (filterTerm === 'united states' || filterTerm === 'estados unidos' || filterTerm === 'usa') {
                 return countryName.includes('united') || countryName.includes('state') || countryName.includes('usa') || countryName.includes('eeuu') || countryName.includes('estados') || countryName === 'us';
             }
-            
+
             return countryName === filterTerm || countryName.includes(filterTerm);
         });
     }
@@ -118,17 +114,16 @@ function renderCities(citiesToRender, container) {
         const cityName = city.name || 'Ciudad por definir';
         const cityNameLower = cityName.toLowerCase().trim();
 
-        // Imagen de respaldo si no viene en la API
         const fallbackImage = CITY_FALLBACK_IMAGES[cityNameLower] || DEFAULT_IMAGE;
-        
+
         const rawImageUrl = city.image_url || city.stadium?.image_url;
         const imageUrl = (rawImageUrl && String(rawImageUrl).trim() !== '') ? rawImageUrl : fallbackImage;
 
         article.innerHTML = `
             <div class="card-img-wrapper">
-                <img src="${imageUrl}" 
-                     alt="${cityName}" 
-                     class="city-img" 
+                <img src="${imageUrl}"
+                     alt="${cityName}"
+                     class="city-img"
                      onerror="this.onerror=null; this.src='${fallbackImage}';">
             </div>
             <div class="card-content">

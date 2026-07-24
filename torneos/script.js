@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadEvents();
 });
 
-// Función de consulta a la API utilizando proxy como respaldo para evitar problemas de CORS
 async function fetchApiData(endpointUrl) {
     try {
         const res = await fetch(endpointUrl);
@@ -22,11 +21,10 @@ async function fetchApiData(endpointUrl) {
 
 async function loadEvents() {
     const grid = document.getElementById('events-grid');
-    
+
     try {
         let rawEvents = await fetchApiData(EVENTS_API_URL);
-        
-        // Manejo por si el proxy devuelve un string JSON en lugar de un objeto parseado
+
         if (typeof rawEvents === 'string') {
             try { rawEvents = JSON.parse(rawEvents); } catch (e) {}
         }
@@ -53,10 +51,9 @@ async function loadEvents() {
 
 function renderEvents(events) {
     const grid = document.getElementById('events-grid');
-    grid.innerHTML = ''; // Limpiamos el mensaje de carga
+    grid.innerHTML = '';
 
     events.forEach(event => {
-        // Validamos que tengamos los datos mínimos
         if (!event || !event.title) return;
 
         const card = document.createElement('article');

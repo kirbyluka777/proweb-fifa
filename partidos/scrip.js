@@ -1,11 +1,9 @@
-// Global cache for catalogs
 let teamsMap = {};
 let teamFlagsMap = {};
 let citiesMap = {};
 let roundsMap = {};
 let catalogosCargados = false;
 
-// DOM Load Verification
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', iniciarPagina);
 } else {
@@ -33,13 +31,11 @@ function iniciarPagina() {
         });
     }
 
-    // Initial load with no filters
     loadMatchesData({});
 }
 
-// Resilient API Fetch with Proxy Fallback
 async function fetchApiData(endpointUrl) {
-    
+
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
     return await fetchWithCache(proxyUrl)
 }
@@ -58,7 +54,6 @@ async function loadMatchesData(filterParams = {}) {
     }
 
     try {
-        // 1. Load catalogs once
         if (!catalogosCargados) {
             try {
                 const [citiesData, teamsData, roundsData] = await Promise.all([
@@ -104,10 +99,9 @@ async function loadMatchesData(filterParams = {}) {
             }
         }
 
-        // 2. Build URL query parameters
         let matchesUrl = `${baseUrl}matches`;
         const queryParts = [];
-        
+
         if (filterParams.city_id) queryParts.push(`city_id=${encodeURIComponent(filterParams.city_id)}`);
         if (filterParams.round !== undefined && filterParams.round !== '') queryParts.push(`round=${encodeURIComponent(filterParams.round)}`);
         if (filterParams.status) queryParts.push(`status=${encodeURIComponent(filterParams.status)}`);
@@ -117,7 +111,6 @@ async function loadMatchesData(filterParams = {}) {
             matchesUrl += `?${queryParts.join('&')}`;
         }
 
-        // 3. Fetch Matches
         const matchesData = await fetchApiData(matchesUrl);
         const allMatches = Array.isArray(matchesData) ? matchesData : (matchesData.matches || matchesData.data || []);
 
@@ -128,7 +121,6 @@ async function loadMatchesData(filterParams = {}) {
             return;
         }
 
-        // 4. Map IDs to human-readable names
         const parsedMatches = allMatches.map(match => {
             const homeIdStr = (match.home_id !== undefined && match.home_id !== null) ? String(match.home_id).trim() : '';
             const awayIdStr = (match.away_id !== undefined && match.away_id !== null) ? String(match.away_id).trim() : '';
@@ -139,7 +131,7 @@ async function loadMatchesData(filterParams = {}) {
             const awayName = teamsMap[awayIdStr.toLowerCase()] || awayIdStr || 'Por definir';
             const cityName = citiesMap[cityIdStr.toLowerCase()] || (cityIdStr ? `Sede ${cityIdStr}` : 'Sede por definir');
             const roundName = roundsMap[roundIdStr.toLowerCase()] || (roundIdStr ? `Ronda ${roundIdStr}` : 'Fase de Grupos');
-            
+
             let groupName = match.group || '';
             if (groupName && !String(groupName).toLowerCase().includes('grupo') && !String(groupName).toLowerCase().includes('fase')) {
                 groupName = `Grupo ${groupName}`;
@@ -162,20 +154,17 @@ async function loadMatchesData(filterParams = {}) {
             };
         });
 
-        // 5. Local team filter
         let partidosFinales = parsedMatches;
         if (filterParams.team_id) {
-            partidosFinales = parsedMatches.filter(m => 
+            partidosFinales = parsedMatches.filter(m =>
                 m.homeIdStr === filterParams.team_id || m.awayIdStr === filterParams.team_id
             );
         }
 
-        // 6. Populate filter selects on initial load
         if (Object.keys(filterParams).length === 0) {
             configurarLos5Filtros(parsedMatches, { filtroCiudad, filtroRonda, filtroEstatus, filtroGrupo, filtroEquipo });
         }
 
-        // 7. Render
         renderMatches(partidosFinales, container);
 
     } catch (error) {
@@ -215,7 +204,7 @@ function llenarSelectMap(selectElement, mapValues, textoDefecto) {
 
     Array.from(mapValues.entries()).sort((a, b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
         const option = document.createElement('option');
-        option.value = id; 
+        option.value = id;
         option.textContent = name;
         selectElement.appendChild(option);
     });
@@ -319,7 +308,6 @@ function matchWinner(match) {
     return homeScore > awayScore ? 'home' : 'away';
 }
 
-// Generates Team Row conforming to Reference Spec
 function createTeamRow(name, flagUrl, score, isWinner) {
     const row = document.createElement('div');
     row.className = `match-team${isWinner ? ' is-winner' : ''}`;
@@ -360,7 +348,6 @@ function createTeamRow(name, flagUrl, score, isWinner) {
     return row;
 }
 
-// Creates Exact Reference Layout (image_76bf1f.png)
 function createMatchCard(match) {
     const card = document.createElement('a');
     card.className = 'match-card';
@@ -372,16 +359,13 @@ function createMatchCard(match) {
     const homeScore = matchEnded ? match.home_score?.total ?? '0' : '-';
     const awayScore = matchEnded ? match.away_score?.total ?? '0' : '-';
 
-    // 1. Stage Subtitle (e.g., "Third place play-off" / "Grupo A")
     const stageHeader = document.createElement('div');
     stageHeader.className = 'match-card__stage';
     stageHeader.textContent = match.groupName ? `${match.roundName} - ${match.groupName}` : match.roundName;
 
-    // 2. Main Content Grid
     const content = document.createElement('div');
     content.className = 'match-card__content';
 
-    // Teams Column
     const teams = document.createElement('div');
     teams.className = 'match-card__teams';
     teams.append(
@@ -389,11 +373,9 @@ function createMatchCard(match) {
         createTeamRow(match.awayName, match.awayFlag, awayScore, winner === 'away')
     );
 
-    // Vertical Divider
     const divider = document.createElement('div');
     divider.className = 'match-card__divider';
 
-    // Right Meta (Status + Date Stack)
     const meta = document.createElement('div');
     meta.className = 'match-card__meta';
 

@@ -23,7 +23,6 @@
     transform: translateX(-3px);
 }
 
-/* --- Contenedor central --- */
 .player-main {
     max-width: 1000px;
     margin: 2.5rem auto;
@@ -40,11 +39,11 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
 }
 
-/* --- Reproductor Adaptable 16:9 --- */
 .video-responsive-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* Relación de aspecto 16:9 exacta */
+    /* Relación de aspecto 16:9 */
+    padding-bottom: 56.25%;
     background-color: #000000;
 }
 
@@ -57,7 +56,6 @@
     border: none;
 }
 
-/* --- Panel de Información --- */
 .record-info-section {
     padding: 2.5rem;
     display: flex;
@@ -99,7 +97,6 @@
     margin: 0;
 }
 
-/* --- Caja de Logo Oficial --- */
 .logo-box {
     display: flex;
     flex-direction: column;
@@ -128,7 +125,6 @@
     letter-spacing: 0.5px;
 }
 
-/* --- Mensajes de carga --- */
 .status-msg {
     text-align: center;
     padding: 4rem 2rem;

@@ -142,7 +142,6 @@
     text-align: right;
 }
 
-/* Tournament bracket based on the supplied FIFA tournament-brackets module. */
 .tournament-brackets-view {
     --bracket-bg: --bg-gradient;
     --bracket-card: rgb(21, 3, 48);

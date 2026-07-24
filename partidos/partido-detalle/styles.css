@@ -1,8 +1,3 @@
-/* =========================================================
-   ESTILOS DEFINITIVOS - DETALLE DEL PARTIDO (SIN SOBREPONER)
-   ========================================================= */
-
-/* Forzar fondo oscuro del tema oficial en TODOS los contenedores inferiores */
 
 
 .stats, .timeline, .match-header, .lineups-box, .pitch, .pitch-lineup,
@@ -11,15 +6,14 @@ section.stats, section.timeline, div.stats, div.timeline {
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-top: 0.35rem solid var(--fifa-blue) !important;
     padding: 1.5rem !important;
-    margin-top: 2rem !important; /* Baja las cajas para que no se sobrepongan */
+    margin-top: 2rem !important;
     margin-bottom: 2rem !important;
     color: var(--text-main) !important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
     height: auto !important;
-    position: static !important; /* Evita que floten una encima de otra */
+    position: static !important;
 }
 
-/* Colores de borde superiores personalizados */
 .timeline, section.timeline, div.timeline {
     border-top-color: var(--fifa-pink) !important;
 }
@@ -29,9 +23,8 @@ section.stats, section.timeline, div.stats, div.timeline {
     background: var(--bg-gradient) !important;
 }
 
-/* ELIMINAR LA CANCHA VERDE Y DEJAR SOLO LA CAJA OSCURA DE JUGADORES */
 .pitch, section.pitch {
-    background: transparent !important; /* Elimina el fondo verde sobrante */
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
@@ -43,11 +36,10 @@ section.stats, section.timeline, div.stats, div.timeline {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     border-top-color: var(--fifa-lime) !important;
-    background: var(--bg-gradient) !important; /* Fondo oscuro consistente */
-    margin-top: 1.5rem !important; /* La separa elegantemente del cuadro azul superior */
+    background: var(--bg-gradient) !important;
+    margin-top: 1.5rem !important;
 }
 
-/* Insignias de estatus (Finalizado, En Vivo, Countdown) */
 .status-badge {
     display: inline-block;
     padding: 0.6rem 1.5rem;
@@ -81,13 +73,11 @@ section.stats, section.timeline, div.stats, div.timeline {
     50% { transform: scale(1.05); opacity: 0.85; }
 }
 
-/* Asegurar que todos los títulos y textos sean BLANCOS Y LEGIBLES */
 .stats h3, .timeline h3, .lineups-box h3,
 .stats p, .timeline p, .lineups-box p {
     color: var(--text-main) !important;
 }
 
-/* Listas de Estadísticas - Alto contraste */
 .stats-list {
     list-style: none;
     padding: 0;
@@ -110,7 +100,7 @@ section.stats, section.timeline, div.stats, div.timeline {
 
 .stat-label {
     font-weight: 300;
-    color: #d0d5e0 !important; /* Blanco suave muy legible */
+    color: #d0d5e0 !important;
 }
 
 .stat-value {
@@ -118,7 +108,6 @@ section.stats, section.timeline, div.stats, div.timeline {
     color: var(--fifa-lime) !important;
 }
 
-/* Cronología del partido */
 .timeline-list {
     list-style: none;
     padding: 0;
@@ -131,7 +120,7 @@ section.stats, section.timeline, div.stats, div.timeline {
     gap: 1rem;
     padding: 0.8rem 1rem;
     border-left: 3px solid var(--fifa-blue);
-    background: rgba(0, 0, 0, 0.4) !important; /* Fondo oscuro interior */
+    background: rgba(0, 0, 0, 0.4) !important;
     margin-bottom: 0.5rem;
     transition: transform 0.2s ease, background 0.2s ease;
 }
@@ -152,7 +141,6 @@ section.stats, section.timeline, div.stats, div.timeline {
     font-size: 1rem;
 }
 
-/* Alineaciones y columnas */
 .lineups-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

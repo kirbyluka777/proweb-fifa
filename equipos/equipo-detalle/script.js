@@ -60,7 +60,7 @@ function getTeamId() {
     try {
         hashId = decodeURIComponent(rawHash);
     } catch {
-        // Keep the undecoded value so the validation below can reject it safely.
+        // La validación posterior rechaza los ID codificados incorrectamente.
     }
     hashId = hashId.replace(/^id=/i, '');
     const referrerPath = document.referrer ? new URL(document.referrer).pathname : '';

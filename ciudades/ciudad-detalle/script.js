@@ -1,5 +1,5 @@
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80';
-const TORONTO_BACKUP = 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=80'; // Foto de respaldo para Toronto
+const TORONTO_BACKUP = 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=80';
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,13 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCityDetails(cityId);
 });
 
-// Petición multinivel con respaldo de proxies para evitar fallos de CORS
 async function fetchApiData(endpointUrl) {
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
     return await fetchWithCache(proxyUrl)
 }
 
-// Función auxiliar para probar si una imagen existe y carga correctamente
 function validateImageUrl(url) {
     return new Promise((resolve) => {
         if (!url) return resolve(false);
@@ -35,7 +33,7 @@ async function loadCityDetails(id) {
 
     try {
         let cityData = await fetchApiData(endpointUrl);
-        
+
         if (typeof cityData === 'string') {
             try { cityData = JSON.parse(cityData); } catch (e) {}
         }
@@ -46,7 +44,6 @@ async function loadCityDetails(id) {
 
         await renderCityDetails(cityData);
 
-        // Consultamos la API de partidos pasando exactamente el ID de esta ciudad
         loadRealMatches(cityData.id);
 
     } catch (error) {
@@ -57,19 +54,16 @@ async function loadCityDetails(id) {
 
 async function renderCityDetails(city) {
     document.title = `${city.name || 'Ciudad'} - Detalle Mundial 2026`;
-    
-    // Actualiza el texto directamente dentro del banner central
+
     document.getElementById('city-title').textContent = `${city.name || 'Ciudad'} (${city.country || ''})`;
 
     const banner = document.getElementById('city-banner');
-    
-    // 1. Elegimos la imagen inicial (Si es Toronto por nombre o si la API falla, usamos respaldo)
+
     let imageUrl = city.image_url || city.stadium?.image_url;
     if (city.name && city.name.toLowerCase().includes('toronto')) {
         imageUrl = city.image_url || TORONTO_BACKUP;
     }
 
-    // 2. Validamos que la imagen realmente sirva antes de ponerla
     const isValid = await validateImageUrl(imageUrl);
     if (!isValid) {
         imageUrl = (city.name && city.name.toLowerCase().includes('toronto')) ? TORONTO_BACKUP : DEFAULT_IMAGE;
@@ -86,7 +80,7 @@ async function renderCityDetails(city) {
 
     const descContainer = document.getElementById('city-description');
     descContainer.innerHTML = '';
-    
+
     if (Array.isArray(city.description) && city.description.length > 0) {
         city.description.forEach(paragraph => {
             const p = document.createElement('p');
@@ -100,17 +94,16 @@ async function renderCityDetails(city) {
     if (city.stadium) {
         document.getElementById('stadium-section').style.display = 'block';
         document.getElementById('stadium-name').textContent = city.stadium.name || 'Estadio por definir';
-        
+
         const stadiumImg = document.getElementById('stadium-img');
         let stadiumUrl = city.stadium.image_url || imageUrl;
-        
-        // Verificamos también la foto del estadio
+
         const isStadiumValid = await validateImageUrl(stadiumUrl);
         stadiumImg.src = isStadiumValid ? stadiumUrl : imageUrl;
         stadiumImg.onerror = () => { stadiumImg.src = DEFAULT_IMAGE; };
 
-        const cap = city.stadium.capacity 
-            ? `${Number(city.stadium.capacity).toLocaleString()} espectadores` 
+        const cap = city.stadium.capacity
+            ? `${Number(city.stadium.capacity).toLocaleString()} espectadores`
             : 'No disponible';
         document.getElementById('stadium-capacity').textContent = cap;
 
@@ -138,7 +131,6 @@ async function renderCityDetails(city) {
     }
 }
 
-// Consulta de partidos en tiempo real y filtrado estricto por city_id == id
 async function loadRealMatches(currentCityId) {
     const matchesList = document.getElementById('matches-list');
     matchesList.innerHTML = '<li class="status-msg">Buscando partidos programados en la API...</li>';
@@ -147,7 +139,7 @@ async function loadRealMatches(currentCityId) {
 
     try {
         let rawMatches = await fetchApiData(matchesEndpoint);
-        
+
         if (typeof rawMatches === 'string') {
             try { rawMatches = JSON.parse(rawMatches); } catch (e) {}
         }
@@ -174,7 +166,6 @@ async function loadRealMatches(currentCityId) {
     }
 }
 
-// Dibuja la lista real resolviendo correctamente los objetos home_score y away_score
 function renderMatchesList(matches) {
     const matchesList = document.getElementById('matches-list');
     matchesList.innerHTML = '';
@@ -190,14 +181,14 @@ function renderMatchesList(matches) {
 
         const homeTeam = match.home_id || 'Local';
         const awayTeam = match.away_id || 'Visitante';
-        
+
         let scoreText = 'vs';
         if (match.home_score && match.away_score && match.home_score.total !== undefined && match.away_score.total !== undefined) {
             scoreText = `${match.home_score.total} - ${match.away_score.total}`;
         }
 
         const matchTitle = `${homeTeam} ${scoreText} ${awayTeam}`;
-        
+
         let roundText = '';
         if (match.round) {
             roundText = ` | Ronda ${match.round}`;

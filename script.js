@@ -1,10 +1,3 @@
-/**
- * Fetch wrapper that caches JSON responses in localStorage.
- * 
- * @param {string} url - The API endpoint to fetch.
- * @param {number} ttl - Time to live in milliseconds (default: 1 hour).
- * @returns {Promise<any>} The parsed JSON data.
- */
 async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
     const cacheKey = `cache_${url}`;
     const cachedItem = localStorage.getItem(cacheKey);
@@ -24,18 +17,18 @@ async function fetchWithCache(url, ttl = 60 * 60 * 1000) {
 
     console.log(`[Network Request] Fetching new data: ${url}`);
     const response = await fetch(url);
-    
+
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
 
     const cacheData = {
         data: data,
         expiry: new Date().getTime() + ttl
     };
-    
+
     try {
         localStorage.setItem(cacheKey, JSON.stringify(cacheData));
     } catch (e) {
@@ -55,18 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const clickedOnIcon = e.target.closest('.tab-icon');
 
         if (!isExpanded) {
-            // State 1: Collapsed -> First click expands it and blocks the link
             e.preventDefault();
             pullTab.classList.add('is-expanded');
         } else {
-            // State 2: Already Expanded
             if (clickedOnIcon) {
-                // Clicking the UN logo again collapses it ("un-expand")
                 e.preventDefault();
                 pullTab.classList.remove('is-expanded');
             }
-            // If they click the text instead, e.preventDefault() is NOT called, 
-            // so the browser successfully takes them to the link!
         }
     });
     document.addEventListener('click', (e) => {
