@@ -39,12 +39,6 @@ function iniciarPagina() {
 
 // Resilient API Fetch with Proxy Fallback
 async function fetchApiData(endpointUrl) {
-    try {
-        const res = await fetch(endpointUrl);
-        if (res.ok) return await res.json();
-    } catch (e) {
-        console.warn(`[Intento directo fallido para ${endpointUrl}], probando proxy CORS...`, e);
-    }
     
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
     const resProxy = await fetch(proxyUrl);

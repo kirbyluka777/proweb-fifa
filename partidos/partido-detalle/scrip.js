@@ -16,13 +16,7 @@ async function loadMatchDetails(matchId) {
     const lineupsSection = document.querySelector('section:last-of-type');
 
     try {
-        let res = await fetch(baseUrl).catch(() => null);
-        if (!res || !res.ok) {
-            res = await fetch(getProxyUrl(baseUrl));
-        }
-
-        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
-        const match = await res.json();
+        const match = fetchWithCache(getProxyUrl(baseUrl))
 
         // 1. EXTRAER DATOS
         const homeTeam = match.home_team?.name || match.home_team?.country || 'Local';
@@ -47,9 +41,10 @@ async function loadMatchDetails(matchId) {
         // Si la API no dice "finished", pero la fecha y hora ya pasaron por más de 3 horas, es un partido terminado
         const matchDateObj = new Date(`${dateStr}T${timeStr}`);
         if (!isFinished && !isLive && !isNaN(matchDateObj.getTime())) {
-            if (matchDateObj.getTime() < Date.now() - (3 * 3600 * 1000)) {
-                isFinished = true;
-            }
+            // if (matchDateObj.getTime() < Date.now() - (3 * 3600 * 1000)) {
+            //     isFinished = true;
+            // }
+            isFinished=true;
         }
 
         // 3. RENDERIZAR ENCABEZADO
