@@ -2,35 +2,58 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conoce las mascotas oficiales de la Copa Mundial de la FIFA 2026.">
     <title>Mascotas Oficiales | Mundial 2026</title>
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/mascotas/styles.css">
+    <script src="/script.js" defer></script>
     <script src="/mascotas/script.js" defer></script>
 </head>
 <body>
-    <iframe src="/header.html" hidden onload="const doc = this.contentDocument;
-    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
-    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
-    </iframe>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
 
-    <main style="padding: 20px; max-width: 1100px; margin: 0 auto;">
-        <header class="mascotas-header">
-            <p class="mascotas-eyebrow">Copa Mundial 2026</p>
-            <h1>Mascotas Oficiales</h1>
-            <p class="mascotas-intro">
-                Conoce la historia, características y detalles oficiales de las mascotas que darán vida al torneo.
+    <main class="mascots-page">
+        <header class="page-header mascots-header">
+            <p class="page-eyebrow">Canadá · México · Estados Unidos</p>
+            <h1>Mascotas oficiales</h1>
+            <p>
+                Tres anfitriones que representan la cultura, la energía y la pasión
+                de cada país sede.
             </p>
         </header>
 
-        <section class="mascotas-section">
-            <div id="mascotas-container" class="mascotas-grid">
-                <div id="loading-state" class="mascotas-loading">
-                    Cargando...
-                </div>
+        <section class="mascots-introduction" aria-labelledby="mascots-intro-title">
+            <div>
+                <p class="page-eyebrow">Conoce al equipo</p>
+                <h2 id="mascots-intro-title">Tres personalidades, una celebración</h2>
+            </div>
+            <p>
+                Maple™, Zayu™ y Clutch™ llegan al Mundial con estilos diferentes,
+                pero comparten el espíritu de unión que define al torneo de 2026.
+            </p>
+        </section>
+
+        <section aria-label="Listado de mascotas">
+            <div id="mascotas-container" class="mascots-grid" aria-live="polite" aria-busy="true">
+                <p class="mascots-status">Cargando mascotas oficiales…</p>
             </div>
         </section>
     </main>
+
+    <iframe src="/footer.html" hidden onload="
+        const footer = (this.contentDocument.body || this.contentDocument).children[0];
+        footer.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        this.before(footer);
+        this.remove();
+    "></iframe>
 </body>
 </html>

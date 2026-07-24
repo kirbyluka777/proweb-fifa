@@ -2,24 +2,71 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Banda Sonora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Descubre el álbum oficial de la Copa Mundial de la FIFA 2026.">
+    <title>Banda Sonora | Mundial 2026</title>
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
-    <style>.banner-music { background: #333; color: white; padding: 3rem; text-align: center; }</style>
+    <link rel="stylesheet" href="/banda-sonora/styles.css">
+    <script src="/script.js" defer></script>
+    <script src="/banda-sonora/script.js" defer></script>
 </head>
 <body>
-    <iframe src="/header.html" hidden onload="const doc = this.contentDocument;
-    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
-    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
-    </iframe>
-    <main>
-        <div class="banner-music">
-            <h2>Álbum Oficial FIFA World Cup 2026</h2>
-        </div>
-        <p style="text-align:center; margin-top:2rem;">Disfruta de las canciones oficiales del mundial.</p>
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="https://spotify.com" target="_blank" class="btn">Escuchar en Streaming (Enlace Externo)</a>
-        </div>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
+
+    <main class="sound-page">
+        <section class="sound-hero" aria-labelledby="sound-title">
+            <img id="sound-image" class="sound-hero__image" src="" alt="" hidden>
+            <div class="sound-hero__overlay"></div>
+            <div class="sound-hero__content">
+                <p class="page-eyebrow">FIFA Sound</p>
+                <h1 id="sound-title">Álbum oficial del Mundial 2026</h1>
+                <p id="sound-resume">
+                    El fútbol y la música se unen para celebrar la diversidad de la
+                    Copa Mundial más inclusiva de la historia.
+                </p>
+                <a id="sound-link" class="btn sound-hero__button" href="https://fifasound.lnk.to/FWC26Lighter" target="_blank" rel="noopener noreferrer">
+                    Escuchar el álbum
+                    <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="sound-story" aria-labelledby="sound-story-title">
+            <div class="sound-story__heading">
+                <p class="page-eyebrow">Música sin fronteras</p>
+                <h2 id="sound-story-title">El sonido del torneo</h2>
+            </div>
+            <div id="sound-features" class="sound-features" aria-live="polite" aria-busy="true">
+                <p class="sound-status">Cargando información del álbum…</p>
+            </div>
+        </section>
+
+        <section class="sound-highlight" aria-label="Primer lanzamiento del álbum">
+            <span class="sound-highlight__number" aria-hidden="true">01</span>
+            <div>
+                <p class="page-eyebrow">Primer lanzamiento</p>
+                <h2>Lighter</h2>
+                <p>Jelly Roll y Carín León reúnen las voces de dos países anfitriones.</p>
+            </div>
+            <a id="sound-secondary-link" href="https://fifasound.lnk.to/FWC26Lighter" target="_blank" rel="noopener noreferrer">
+                Ir a FIFA Sound <span aria-hidden="true">↗</span>
+            </a>
+        </section>
     </main>
+
+    <iframe src="/footer.html" hidden onload="
+        const footer = (this.contentDocument.body || this.contentDocument).children[0];
+        footer.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        this.before(footer);
+        this.remove();
+    "></iframe>
 </body>
 </html>

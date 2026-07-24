@@ -1,166 +1,218 @@
-.archives-main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    color: #ffffff;
+.archives-header {
+    max-width: 58rem;
 }
 
-/* --- Encabezado --- */
-.archives-hero {
-    text-align: center;
-    margin-bottom: 3rem;
+.archives-header > p:last-child {
+    margin: 1rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.08rem;
 }
 
-.archives-hero h1 {
-    font-size: 2.8rem;
+.archives-toolbar {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 0.3rem solid var(--fifa-blue);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.archives-toolbar h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.archives-search {
+    width: min(100%, 27rem);
+    display: grid;
+    gap: 0.4rem;
+}
+
+.archives-search label {
+    color: white;
+    font-size: 0.7rem;
     font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.archives-hero p {
-    font-size: 1.15rem;
-    color: #cccccc;
-    max-width: 700px;
-    margin: 0 auto;
+.archives-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    outline: 0;
+    background: #10101a;
+    color: white;
+    font: inherit;
 }
 
-/* --- Cuadrícula de Archivos --- */
+.archives-search input::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.archives-search input:focus {
+    border-color: var(--fifa-lime);
+    box-shadow: 0 0 0 2px rgba(184, 255, 82, 0.18);
+}
+
+.archives-results__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.archives-results__heading h2 {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.archives-results__heading p {
+    margin: 0;
+    color: var(--fifa-lime);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
 .records-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    align-items: stretch;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
 }
 
-/* --- Tarjeta de Archivo --- */
 .record-card {
-    background: rgba(25, 25, 45, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
+    min-width: 0;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 0.3rem solid var(--fifa-blue);
+    background: rgba(255, 255, 255, 0.045);
 }
 
-.record-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(255, 0, 127, 0.25);
-    border-color: rgba(255, 0, 127, 0.6);
+.record-card:nth-child(even) {
+    border-top-color: var(--fifa-pink);
 }
 
-/* --- Miniatura con ícono de Play flotante --- */
-.record-thumb-wrapper {
-    width: 100%;
-    height: 190px;
-    background-color: #1a1a2e;
+.record-card__media {
     position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
+    background: #10101a;
 }
 
-.record-thumb-wrapper img {
+.record-card__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.25s ease;
 }
 
-.record-card:hover .record-thumb-wrapper img {
-    transform: scale(1.08);
+.record-card:hover .record-card__media img {
+    transform: scale(1.025);
 }
 
-.play-overlay {
+.record-card__play {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 0, 127, 0.85);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, background 0.3s ease;
+    left: 1rem;
+    bottom: 1rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    display: grid;
+    place-items: center;
+    background: var(--fifa-lime);
+    clip-path: var(--skew);
+    color: #10101a;
+    font-size: 0.9rem;
+    font-weight: 800;
 }
 
-.play-overlay::after {
-    content: '';
-    display: inline-block;
-    margin-left: 4px;
-    border-style: solid;
-    border-width: 8px 0 8px 14px;
-    border-color: transparent transparent transparent #ffffff;
-}
-
-.record-card:hover .play-overlay {
-    transform: translate(-50%, -50%) scale(1.15);
-    background: #ff007f;
-}
-
-/* --- Contenido de texto --- */
-.record-content {
-    padding: 1.5rem;
+.record-card__body {
+    min-height: 9rem;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
 }
 
-.record-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
-    color: #ffffff;
+.record-card__type {
+    margin: 0 0 0.45rem;
+    color: var(--fifa-lime);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.record-subtitle {
-    font-size: 0.95rem;
-    color: #00df89;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
+.record-card__title {
+    margin: 0 0 1.25rem;
+    font-size: 1.15rem;
+    font-style: normal;
+    line-height: 1.25;
 }
 
-/* --- Botón de Ver Video --- */
-.btn-watch {
-    display: block;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: all 0.3s ease;
+.record-card__link {
+    margin-top: auto;
+    color: var(--fifa-blue);
+    font-size: 0.85rem;
+    font-weight: 800;
 }
 
-.btn-watch:hover {
-    background: #ff007f;
-    border-color: #ff007f;
-    color: #ffffff;
-    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+.record-card__link:hover {
+    color: white;
 }
 
-/* --- Mensajes de estado --- */
-.status-msg {
+.records-status {
     grid-column: 1 / -1;
+    margin: 0;
+    padding: 3rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.66);
     text-align: center;
-    padding: 3rem;
-    font-size: 1.2rem;
-    color: #cccccc;
-    background: rgba(25, 25, 45, 0.5);
-    border-radius: 12px;
-    border: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
-.status-msg.error {
-    color: #ff6b6b;
-    border-color: rgba(255, 107, 107, 0.3);
+.records-status--error {
+    color: var(--fifa-gold);
+}
+
+.archives-more {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.archives-more .btn {
+    padding-block: 0.55rem;
+}
+
+@media (max-width: 900px) {
+    .records-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .archives-page {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .archives-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .archives-search {
+        width: 100%;
+    }
+
+    .records-grid {
+        grid-template-columns: 1fr;
+    }
 }

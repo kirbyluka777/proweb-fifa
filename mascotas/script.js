@@ -1,88 +1,72 @@
-async function loadMascotasData() {
-    // Endpoint específico para las mascotas en la API
-    const apiUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/mascots';
+const MASCOTS_API_URL = 'https://wc-api-u378.onrender.com/wc-api/api/v1/mascots';
+const MASCOTS_PROXY_URL = `https://proxy.corsfix.com/?${MASCOTS_API_URL}`;
+const COUNTRY_NAMES = {
+    Canada: 'Canadá',
+    Mexico: 'México',
+    USA: 'Estados Unidos'
+};
 
-    const container = document.getElementById('mascotas-container');
+function getMascotsCollection(data) {
+    if (Array.isArray(data)) return data;
+    return data?.mascots || data?.mascotas || data?.data || [];
+}
+
+function createMascotCard(mascot, index) {
+    const article = document.createElement('article');
+    const media = document.createElement('div');
+    const image = document.createElement('img');
+    const body = document.createElement('div');
+    const country = document.createElement('span');
+    const title = document.createElement('h3');
+    const description = document.createElement('p');
+    const name = mascot.name || `Mascota ${index + 1}`;
+    const paragraphs = Array.isArray(mascot.description)
+        ? mascot.description
+        : [mascot.description || mascot.history || mascot.bio].filter(Boolean);
+
+    article.className = 'mascot-card';
+    media.className = 'mascot-card__media';
+    image.className = 'mascot-card__image';
+    image.src = mascot.image_url || mascot.image || mascot.images?.[0] || '';
+    image.alt = `${name}, mascota oficial del Mundial 2026`;
+    image.loading = index === 0 ? 'eager' : 'lazy';
+    image.decoding = 'async';
+
+    body.className = 'mascot-card__body';
+    country.className = 'mascot-card__country';
+    country.textContent = COUNTRY_NAMES[mascot.country] || mascot.country || mascot.host || 'Mundial 2026';
+    title.className = 'mascot-card__title';
+    title.textContent = name;
+    description.className = 'mascot-card__description';
+    description.textContent = paragraphs.join(' ');
+
+    media.append(image);
+    body.append(country, title, description);
+    article.append(media, body);
+    return article;
+}
+
+async function loadMascots() {
+    const container = document.querySelector('#mascotas-container');
+
+    if (!container) return;
 
     try {
-        const response = await fetch(apiUrl);
-        
-        let responseToUse = response;
-        if (!response.ok) {
-            const fallbackApiUrl = 'https://wc-api-u378.onrender.com/wc-api/api/v1/mascotas';
-            responseToUse = await fetch(fallbackApiUrl);
-        }
+        const data = await fetchWithCache(MASCOTS_PROXY_URL);
+        const mascots = getMascotsCollection(data);
 
-        if (!responseToUse.ok) {
-            throw new Error(`HTTP error! Status: ${responseToUse.status}`);
-        }
+        if (!mascots.length) throw new Error('La API no devolvió mascotas.');
 
-        const data = await responseToUse.json();
-
-        const mascotas = Array.isArray(data) ? data : (data.mascots || data.mascotas || []);
-
-        container.replaceChildren();
-
-        if (mascotas.length > 0) {
-            mascotas.forEach((mascota, index) => {
-                const article = document.createElement('article');
-                article.className = 'card mascota-card';
-
-                const heading = document.createElement('h3');
-                heading.className = 'mascota-card__title';
-                heading.textContent = mascota.name || `Mascota ${index + 1}`;
-                article.appendChild(heading);
-
-                const imageUrl = mascota.image_url || mascota.image || (Array.isArray(mascota.images) ? mascota.images[0] : null);
-                if (imageUrl) {
-                    const image = document.createElement('img');
-                    image.className = 'mascota-card__image';
-                    image.src = imageUrl;
-                    image.alt = mascota.name ? `${mascota.name} — Mascotas Oficiales` : 'Mascota Oficial';
-                    image.loading = 'lazy';
-                    article.appendChild(image);
-                }
-
-                const body = document.createElement('div');
-                body.className = 'mascota-card__body';
-
-                if (mascota.country || mascota.host) {
-                    const countryBadge = document.createElement('span');
-                    countryBadge.className = 'mascota-card__country';
-                    countryBadge.textContent = mascota.country || mascota.host;
-                    body.appendChild(countryBadge);
-                }
-
-                const rawDescription = mascota.description || mascota.history || mascota.bio || '';
-                const descriptions = Array.isArray(rawDescription)
-                    ? rawDescription
-                    : [rawDescription].filter(Boolean);
-
-                descriptions.forEach((description) => {
-                    const paragraph = document.createElement('p');
-                    paragraph.textContent = description;
-                    body.appendChild(paragraph);
-                });
-
-                article.appendChild(body);
-                container.appendChild(article);
-            });
-        } else {
-            const status = document.createElement('p');
-            status.className = 'mascota-status';
-            status.textContent = 'Pronto habrá más información sobre las mascotas oficiales.';
-            container.appendChild(status);
-        }
-
+        container.replaceChildren(...mascots.map(createMascotCard));
     } catch (error) {
-        console.error("Error populating mascotas data:", error);
-        if (container) {
-            const status = document.createElement('p');
-            status.className = 'mascota-status';
-            status.textContent = 'Ocurrió un error al cargar la información de las mascotas.';
-            container.replaceChildren(status);
-        }
+        console.error('No se pudieron cargar las mascotas:', error);
+        const status = document.createElement('p');
+        status.className = 'mascots-status mascots-status--error';
+        status.textContent = 'No pudimos cargar las mascotas en este momento. Intenta nuevamente más tarde.';
+        container.replaceChildren(status);
+    } finally {
+        container.setAttribute('aria-busy', 'false');
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadMascotasData);
+document.addEventListener('DOMContentLoaded', loadMascots);

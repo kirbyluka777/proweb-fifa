@@ -1,0 +1,170 @@
+.sound-hero {
+    position: relative;
+    min-height: 34rem;
+    display: flex;
+    align-items: end;
+    overflow: hidden;
+    margin-bottom: 4rem;
+    border-top: 0.35rem solid var(--fifa-lime);
+    background: linear-gradient(135deg, #10101a 20%, var(--fifa-pink), var(--fifa-blue));
+}
+
+.sound-hero__image,
+.sound-hero__overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sound-hero__image {
+    object-fit: cover;
+}
+
+.sound-hero__overlay {
+    background:
+        linear-gradient(90deg, rgba(16, 16, 26, 0.96) 0%, rgba(16, 16, 26, 0.62) 58%, rgba(16, 16, 26, 0.12) 100%),
+        linear-gradient(0deg, rgba(16, 16, 26, 0.74), transparent 60%);
+}
+
+.sound-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+    padding: clamp(1.5rem, 6vw, 4.5rem);
+}
+
+.sound-hero h1 {
+    max-width: 11ch;
+    margin: 0 0 1rem;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    line-height: 0.86;
+    text-transform: uppercase;
+}
+
+.sound-hero__content > p:not(.page-eyebrow) {
+    max-width: 39rem;
+    margin: 0 0 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.sound-hero__button {
+    padding-block: 0.55rem;
+}
+
+.sound-story {
+    margin-bottom: 4rem;
+}
+
+.sound-story__heading {
+    padding-left: 1rem;
+    border-left: 0.3rem solid var(--fifa-pink);
+}
+
+.sound-story__heading h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.sound-features {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.sound-feature {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 0.3rem solid var(--fifa-blue);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.sound-feature h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.08;
+}
+
+.sound-feature__copy p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.65;
+}
+
+.sound-feature__copy p:last-child {
+    margin-bottom: 0;
+}
+
+.sound-status {
+    margin: 0;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.68);
+    text-align: center;
+}
+
+.sound-status--error {
+    color: var(--fifa-gold);
+}
+
+.sound-highlight {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0;
+    padding: 1.5rem;
+    border-left: 0.3rem solid var(--fifa-lime);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sound-highlight__number {
+    color: var(--fifa-pink);
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.sound-highlight h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.sound-highlight div > p:last-child {
+    margin: 0.25rem 0 0;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.sound-highlight > a {
+    color: var(--fifa-blue);
+    font-weight: 800;
+}
+
+.sound-highlight > a:hover {
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .sound-page {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .sound-hero {
+        min-height: 30rem;
+    }
+
+    .sound-feature,
+    .sound-highlight {
+        grid-template-columns: 1fr;
+    }
+
+    .sound-highlight {
+        align-items: start;
+    }
+}

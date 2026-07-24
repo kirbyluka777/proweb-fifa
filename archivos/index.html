@@ -2,31 +2,64 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archivos y Resúmenes del Torneo - Mundial 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Videos, goles y resúmenes del archivo del Mundial 2026.">
+    <title>Archivos del Torneo | Mundial 2026</title>
     <link rel="icon" href="/assets/2026_FIFA_World_Cup_emblem.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/archivos/styles.css">
+    <script src="/script.js" defer></script>
+    <script src="/archivos/script.js" defer></script>
 </head>
 <body>
-    <!-- Inyección dinámica de tu Header -->
-    <iframe src="/header.html" hidden onload="const doc = this.contentDocument;
-    const header = (doc.body || doc).children[0];header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
-    header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));this.before(header);this.remove();">
-    </iframe>
+    <iframe src="/header.html" hidden onload="
+        const doc = this.contentDocument;
+        const header = (doc.body || doc).children[0];
+        header.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        header.querySelectorAll('img').forEach(img => img.setAttribute('src', img.src));
+        this.before(header);
+        this.remove();
+    "></iframe>
 
-    <main class="archives-main">
-        <section class="archives-hero">
-            <h1>Archivos del Torneo</h1>
-            <p>Revive los mejores momentos, goles inolvidables y resúmenes de partidos históricos de la Copa Mundial.</p>
+    <main class="archives-page">
+        <header class="page-header archives-header">
+            <p class="page-eyebrow">FIFA World Cup 2026</p>
+            <h1>Archivos del torneo</h1>
+            <p>Goles, resúmenes y momentos para volver a vivir el fútbol.</p>
+        </header>
+
+        <section class="archives-toolbar" aria-label="Buscar en el archivo">
+            <div class="archives-toolbar__copy">
+                <p class="page-eyebrow">Videoteca</p>
+                <h2>Explora el catálogo</h2>
+            </div>
+            <div class="archives-search">
+                <label for="records-search">Buscar videos</label>
+                <input id="records-search" type="search" placeholder="Equipo, partido o momento…" autocomplete="off">
+            </div>
         </section>
 
-        <!-- Contenedor dinámico de los videos -->
-        <div id="records-grid" class="records-grid">
-            <div class="status-msg">Cargando catálogo de videos...</div>
-        </div>
+        <section class="archives-results" aria-labelledby="results-title">
+            <div class="archives-results__heading">
+                <h2 id="results-title">Videos disponibles</h2>
+                <p id="records-count" aria-live="polite">Cargando catálogo…</p>
+            </div>
+
+            <div id="records-grid" class="records-grid" aria-live="polite" aria-busy="true">
+                <p class="records-status">Conectando con el archivo…</p>
+            </div>
+
+            <div class="archives-more">
+                <button id="records-more" class="btn" type="button" hidden>Mostrar más</button>
+            </div>
+        </section>
     </main>
 
-    <script src="/archivos/script.js"></script>
+    <iframe src="/footer.html" hidden onload="
+        const footer = (this.contentDocument.body || this.contentDocument).children[0];
+        footer.querySelectorAll('a').forEach(a => a.setAttribute('href', a.href));
+        this.before(footer);
+        this.remove();
+    "></iframe>
 </body>
 </html>

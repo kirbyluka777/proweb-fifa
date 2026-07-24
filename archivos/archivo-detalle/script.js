@@ -1,4 +1,4 @@
-const DEFAULT_LOGO = 'https://digitalhub.fifa.com/transform/c0288b07-db6c-4081-9fc1-9667bb20bb35/Tournament-thumbnail-4_3-1570px_1178px';
+const DEFAULT_LOGO = '/assets/2026_FIFA_World_Cup_emblem.png';
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,17 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchApiData(endpointUrl) {
-    try {
-        const res = await fetch(endpointUrl);
-        if (res.ok) return await res.json();
-    } catch (e) {
-        console.warn(`[Intento directo fallido], probando proxy CORS...`);
-    }
-
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(endpointUrl)}`;
+    const proxyUrl = `https://proxy.corsfix.com/?${endpointUrl}`;
     const resProxy = await fetch(proxyUrl);
     if (!resProxy.ok) throw new Error(`Error HTTP: ${resProxy.status}`);
     return await resProxy.json();
+}
+
+function getEmbedUrl(rawUrl) {
+    try {
+        const url = new URL(rawUrl);
+
+        if (url.hostname.includes('youtube.com') && url.pathname === '/watch') {
+            const videoId = url.searchParams.get('v');
+            return videoId ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}` : rawUrl;
+        }
+
+        if (url.hostname === 'youtu.be') {
+            const videoId = url.pathname.replace('/', '');
+            return videoId ? `https://www.youtube.com/embed/${encodeURIComponent(videoId)}` : rawUrl;
+        }
+    } catch {
+        return rawUrl;
+    }
+
+    return rawUrl;
 }
 
 async function loadRecordDetail(id) {
@@ -54,7 +67,7 @@ function renderPlayer(record) {
     // 1. Asignamos la URL al iframe
     const iframe = document.getElementById('video-iframe');
     if (record.url) {
-        iframe.src = record.url;
+        iframe.src = getEmbedUrl(record.url);
     } else {
         showError("El enlace de reproducción para este video no está disponible.");
         return;
