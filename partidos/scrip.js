@@ -192,17 +192,34 @@ function configurarLos5Filtros(matches, selectores) {
     });
 
     llenarSelectMap(selectores.filtroCiudad, ciudades, "Filtro: Ciudad");
-    llenarSelectMap(selectores.filtroRonda, rondas, "Filtro: Ronda");
+    llenarSelectMap(selectores.filtroRonda, rondas, "Filtro: Ronda", compararRondas);
     llenarSelectSet(selectores.filtroEstatus, estatuses, "Filtro: Estatus");
     llenarSelectSet(selectores.filtroGrupo, grupos, "Filtro: Grupo");
     llenarSelectMap(selectores.filtroEquipo, equipos, "Filtro: Equipo");
 }
 
-function llenarSelectMap(selectElement, mapValues, textoDefecto) {
+function compararRondas([idA, nombreA], [idB, nombreB]) {
+    const rondaA = Number(idA);
+    const rondaB = Number(idB);
+
+    if (Number.isFinite(rondaA) && Number.isFinite(rondaB)) {
+        return rondaA - rondaB;
+    }
+
+    return nombreA.localeCompare(nombreB, 'es', {
+        numeric: true,
+        sensitivity: 'base'
+    });
+}
+
+function llenarSelectMap(selectElement, mapValues, textoDefecto, comparar) {
     if (!selectElement) return;
     selectElement.innerHTML = `<option value="">${textoDefecto}</option>`;
 
-    Array.from(mapValues.entries()).sort((a, b) => a[1].localeCompare(b[1])).forEach(([id, name]) => {
+    const opciones = Array.from(mapValues.entries());
+    opciones.sort(comparar || ((a, b) => a[1].localeCompare(b[1], 'es')));
+
+    opciones.forEach(([id, name]) => {
         const option = document.createElement('option');
         option.value = id;
         option.textContent = name;
